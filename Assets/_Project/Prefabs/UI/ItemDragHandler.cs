@@ -8,8 +8,11 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     private Transform _originalSlot; // Remembers where the item started
     private CanvasGroup _canvasGroup; // Used to make the item transparent to raycasts
-    
-    
+
+    void Awake()
+    {
+        _canvasGroup = GetComponent<CanvasGroup>();
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         _originalSlot = transform.parent; // Save OG parent
