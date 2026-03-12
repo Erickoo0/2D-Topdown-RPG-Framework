@@ -10,8 +10,10 @@ This project will also serve as a future template for other 2D Top down RPG game
 * **Decoupling Logic:** Utilizing **S.O.L.I.D. principles**, Abstractions, and Interfaces to ensure game systems function independently.
 * **Readability & Clean Code:** Writing maintainable code that is easy to modify via the Inspector for "designers" to use.
 * **Unity Mastery:** Bridging the gap from GameMaker by mastering Unity-specific features and component-based architecture.
+  
+-------------------
 
-** 📅Development Log
+## 📅Development Log
 ### March 3 - 7
 * **Foundations:** Established project architecture, implemented top-down movement, physics, basic UI, animations, and Save system using JSON.
 ### March 8 – 12
