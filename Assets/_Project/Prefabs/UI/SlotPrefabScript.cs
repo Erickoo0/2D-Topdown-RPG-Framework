@@ -1,35 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, IStorageSlot
 {
-    public int slotIndex; // Unique Id of slot (Set within the InventoryManager.cs)
-    public ItemData itemData; // Local reference to item
+    public int slotScriptIndex;
+    public ItemData itemData;
     
-    [Header("Sprite References")]
-    [SerializeField] private Image itemIconDisplay;
+    public ItemData Item => itemData;
+    public int Index => slotScriptIndex;
 
-    private void Awake()
-    {
-        // Ensure we start clean
-        UpdateSlot(null);
-    }
-    
+    [SerializeField] private Image itemIconDisplay;
 
     public void UpdateSlot(ItemData newItem)
     {
         itemData = newItem;
-
-        if (itemData != null)
-        {
-            itemIconDisplay.sprite = itemData.itemIcon;
-            itemIconDisplay.enabled = true;
-        }
-        else
-        {
-            itemIconDisplay.sprite = null;
-            itemIconDisplay.enabled = false;
-        }
-        
+        bool hasItem = itemData != null;
+        itemIconDisplay.sprite = hasItem ? itemData.itemIcon : null;
+        itemIconDisplay.enabled = hasItem;
     }
 }

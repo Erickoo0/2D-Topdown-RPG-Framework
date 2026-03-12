@@ -100,9 +100,8 @@ GameObject:
   - component: {fileID: 8672253263237646042}
   - component: {fileID: 1653169546430742395}
   - component: {fileID: 4093301680912315300}
-  - component: {fileID: 1684399452918127590}
   m_Layer: 5
-  m_Name: SlotPrefab
+  m_Name: UISlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,19 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0bb759c7964ae44ba72141e2efc721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
-  slotIndex: 0
+  slotScriptIndex: 0
   itemData: {fileID: 0}
   itemIconDisplay: {fileID: 174074170466327514}
---- !u!114 &1684399452918127590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8313952776952612514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fab5c7f543962934eb53df5e53980ab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDragHandler
-  iconTransform: {fileID: 3966138024015354962}
