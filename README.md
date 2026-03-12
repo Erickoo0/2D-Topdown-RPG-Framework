@@ -2,6 +2,7 @@
 ### Unity / C# Practice / Template Building
 
 A technical project, using a youtube tutorial series as reference (but heavily changing the code) to implement all the C# fundamentals I know into making game systems.
+
 This project will also serve as a future template for other 2D Top down RPG games in the future by making generic and flexible systems that work for many types of games.
 
 ----------------
@@ -18,10 +19,10 @@ This project will also serve as a future template for other 2D Top down RPG game
 * **Foundations:** Established project architecture, implemented top-down movement, physics, basic UI, animations, and Save system using JSON.
 ### March 8 – 12
 * **Inventory System:** Developed a modular system broken down into specialized components:
-* ***Applied many concepts like Singleton Pattern, Observer Pattern, and Scriptable Objects for the first time.
+  * Applied many concepts like Singleton Pattern, Observer Pattern, and Scriptable Objects for the first time.
     * `InventoryManager` (Logic)
     * `InventoryUI` (Visuals)
-    * `ItemDatabase` (Data)
-    * `PhysicalItem` & `Dragging` (Interaction)
+    * `ItemData` (Data)
+    * `ItemObject` & `DragManager` (Interaction)
  
-> **Status:** 🚧 Ongoing Project. Currently focusing on [Save System.
+> **Status:** 🚧 Ongoing Project. Currently focusing on [Save System].
