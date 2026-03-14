@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Image = UnityEngine.UI.Image;
+using TMPro;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// A centralized manager that handles drag-and-drop logic for any <see cref="IStorageSlot"/>.
@@ -11,13 +13,18 @@ public class DragManager : MonoBehaviour
 {
     public static DragManager Instance { get; private set; }
 
-    private Image _ghostIcon; // A single image that follows the player
-    private RectTransform _ghostIconRect;
+    [Header("References")]
+    [SerializeField] private Image ghostIcon; // A single image that follows the player
+    [SerializeField] private TMP_Text ghostName;
+    [SerializeField] private TMP_Text ghostStack;
+        
     private IStorageSlot _sourceSlot;
     private Vector2 _currentMousePosition;
+    private RectTransform _ghostIconRect;
     
+    // Raycast Variables
     private PointerEventData _eventData;
-    private List<RaycastResult> _raycastResults = new List<RaycastResult>();
+    private readonly List<RaycastResult> _raycastResults = new List<RaycastResult>();
     
     private void Awake()
     {
@@ -31,38 +38,21 @@ public class DragManager : MonoBehaviour
         
         _eventData = new PointerEventData(EventSystem.current);
 
-        // Get the Ghost Icon image from Drag Manager's children
-        _ghostIcon = GetComponentInChildren<Image>();
-        _ghostIconRect = _ghostIcon.GetComponent<RectTransform>();
-        if (_ghostIcon != null)
-        {
-            _ghostIcon.enabled = false;
-            _ghostIcon.raycastTarget = false;
-        }
+        _ghostIconRect = ghostIcon.GetComponent<RectTransform>();
+        ToggleGhost(false);
     }
 
     private void Update()
     {
         if (Pointer.current == null) return;
-        
+
         // Updates mouse position
         _currentMousePosition = Pointer.current.position.ReadValue();
         
         // Detects Input
-        if (Pointer.current.press.wasPressedThisFrame)
-        {
-            StartDrag();
-        }
-
-        if (Pointer.current.press.isPressed)
-        {
-            WhileDragging();
-        }
-
-        if (Pointer.current.press.wasReleasedThisFrame)
-        {
-            EndDrag();
-        }
+        if (Pointer.current.press.wasPressedThisFrame) StartDrag();
+        if (Pointer.current.press.isPressed) WhileDragging();
+        if (Pointer.current.press.wasReleasedThisFrame) EndDrag();
     }
 
     private void StartDrag()
@@ -71,18 +61,21 @@ public class DragManager : MonoBehaviour
 
         if (_sourceSlot != null && _sourceSlot.Item != null)
         {
-            // Takes the item from source slot and enables ghost icon
-            _ghostIcon.sprite = _sourceSlot.Item.Data.itemIcon;
-            _ghostIcon.enabled = true;
-            _ghostIcon.transform.position = _currentMousePosition;
+            // Update visuals from source data
+            ghostIcon.sprite = _sourceSlot.Item.Data.itemIcon;
+            ghostName.text = _sourceSlot.Item.Data.itemName;
+            ghostStack.text = _sourceSlot.Item.stackSize.ToString();
+            ToggleGhost(true);
+            _ghostIconRect.position = _currentMousePosition;
             
-            _sourceSlot.SetIconVisibility(false);
+            // Hide item from source slot to "pick it up"
+            _sourceSlot.SetVisibility(false);
         }
     }
 
     private void WhileDragging()
     {
-        if (_ghostIcon.enabled)
+        if (ghostIcon.enabled)
         {
             _ghostIconRect.position = _currentMousePosition;
         }
@@ -111,10 +104,23 @@ public class DragManager : MonoBehaviour
         }
         
         // Clean up
-        _ghostIcon.sprite = null;
-        _ghostIcon.enabled = false;
+        ToggleGhost(false);
+        _sourceSlot.SetVisibility(true);
         _sourceSlot = null;
  
+    }
+
+    private void ToggleGhost(bool toggle)
+    {
+        _ghostIconRect.gameObject.SetActive(toggle);
+        ghostIcon.enabled = toggle;
+        ghostName.enabled = toggle;
+        ghostStack.enabled = toggle;
+
+        if (_sourceSlot != null)
+        { 
+            _sourceSlot.SetVisibility(!toggle);
+        }
     }
     
     // ReSharper disable Unity.PerformanceAnalysis

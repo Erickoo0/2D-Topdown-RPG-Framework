@@ -5,5 +5,5 @@ public interface IStorageSlot
     ItemInstance Item { get; }
     int Index { get; }
     void UpdateSlot(ItemInstance newItem);
-    void SetIconVisibility(bool state);
+    void SetVisibility(bool state);
 }

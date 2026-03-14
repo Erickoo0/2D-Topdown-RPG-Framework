@@ -10,6 +10,7 @@ public class Slot : MonoBehaviour, IStorageSlot
     public ItemInstance Item => itemInstance;
     public int Index => slotScriptIndex;
 
+    [Header("UI References")]
     [SerializeField] private Image itemIconDisplay;
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI itemStackText;
@@ -17,48 +18,37 @@ public class Slot : MonoBehaviour, IStorageSlot
     public void UpdateSlot(ItemInstance newItem)
     {
         itemInstance = newItem;
-        bool hasItem = itemInstance != null && itemInstance.Data != null;
-
-        if (hasItem)
-        {
-            // 1. Update Visuals
-            itemIconDisplay.sprite = itemInstance.Data.itemIcon;
-            itemIconDisplay.enabled = true;
-
-            // 2. Update Text Info
-            itemNameText.text = itemInstance.Data.itemName;
-
-            // 3. Handle Stack Counter
-            if (itemInstance.Data.isStackable && itemInstance.stackSize > 1)
-            {
-                itemStackText.text = itemInstance.stackSize.ToString();
-                itemStackText.enabled = true;
-            }
-            else
-            {
-                itemStackText.enabled = false;
-            }
-        }
-        else
-        {
-            // Reset/Clear everything if there is no item
-            itemIconDisplay.sprite = null;
-            itemIconDisplay.enabled = false;
-        
-            itemNameText.text = "";
-            itemStackText.enabled = false;
-        }
+        // Refresh the UI state immediately when data changes
+        SetVisibility(true);
     }
 
-    public void SetIconVisibility(bool state)
+    public void SetVisibility(bool state)
     {
-        // If the slot is empty, we don't want the icon enabled anyway
-        if (itemInstance == null) 
+        bool hasItem = itemInstance != null && itemInstance.Data != null;
+        
+        // Final condition: Show only if requested AND an item exists
+        bool showElements = state && hasItem;
+
+        // Apply to Icon
+        if (itemIconDisplay != null)
         {
-            itemIconDisplay.enabled = false;
-            return;
+            itemIconDisplay.sprite = hasItem ? itemInstance.Data.itemIcon : null;
+            itemIconDisplay.enabled = showElements;
         }
 
-        itemIconDisplay.enabled = state;
+        // Apply to Name
+        if (itemNameText != null)
+        {
+            itemNameText.text = hasItem ? itemInstance.Data.itemName : "";
+            itemNameText.enabled = showElements;
+        }
+
+        // Apply to Stack Count
+        if (itemStackText != null)
+        {
+            bool shouldShowStack = showElements && itemInstance.Data.isStackable && itemInstance.stackSize > 1;
+            itemStackText.text = shouldShowStack ? itemInstance.stackSize.ToString() : "";
+            itemStackText.enabled = shouldShowStack;
+        }
     }
 }
