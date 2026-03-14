@@ -4,13 +4,22 @@ using UnityEngine;
 public class CameraPersistance : MonoBehaviour, ISaveable
 {
     private CinemachineConfiner2D _confiner;
-     
-    private void Awake() => _confiner = GetComponent<CinemachineConfiner2D>();
+
+    // This property ensures _confiner is never null (race condition against SaveController Awake() if we used Awake())
+    private CinemachineConfiner2D Confiner
+    {
+        get
+        {
+            if (_confiner == null) _confiner = GetComponent<CinemachineConfiner2D>();
+            return _confiner;
+        }
+    }
+    
 
     public void PopulateSaveData(SaveData saveData)
     {
         // If the _confiner has a BoundingShape2D save its Name to JSON, otherwise pass an empty string
-        saveData.mapBoundaryName = _confiner.BoundingShape2D != null ? _confiner.BoundingShape2D.gameObject.name : "";
+        saveData.mapBoundaryName = Confiner.BoundingShape2D != null ? Confiner.BoundingShape2D.gameObject.name : "";
     }
 
     public void LoadFromSaveData(SaveData saveData)
@@ -23,8 +32,8 @@ public class CameraPersistance : MonoBehaviour, ISaveable
             if (boundaryObject != null)
             {
                 // Assign current camera BoundingShape2D to the one in SaveData
-                _confiner.BoundingShape2D = boundaryObject.GetComponent<Collider2D>();
-                _confiner.InvalidateBoundingShapeCache();
+                Confiner.BoundingShape2D = boundaryObject.GetComponent<Collider2D>();
+                Confiner.InvalidateBoundingShapeCache();
             }
         }
     }

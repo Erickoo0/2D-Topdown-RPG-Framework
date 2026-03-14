@@ -9,7 +9,7 @@ public class SaveController : MonoBehaviour
 {
     private string _savePath;
 
-    private void Awake()
+    private void Start()
     {
         // Define where the save file lives "persistentDataPath" is a special unity folder
         // that works across Windows, Mac, Andriod, and IOS
