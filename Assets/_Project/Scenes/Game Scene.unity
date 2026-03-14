@@ -1718,6 +1718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6e6cfb90354d043ae0e278c4436526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+  itemDatabase: {fileID: 11400000, guid: 3b630eecc46bad1479c373a2a9c8c82e, type: 2}
   inventorySize: 20
   itemsList: []
 --- !u!1 &715869077
@@ -1749,7 +1750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f8064df67f4674b9bbb21170664b97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveController
-  itemDatabase: {fileID: 11400000, guid: 3b630eecc46bad1479c373a2a9c8c82e, type: 2}
 --- !u!4 &715869079
 Transform:
   m_ObjectHideFlags: 0
@@ -2307,6 +2307,7 @@ GameObject:
   - component: {fileID: 1033843163}
   - component: {fileID: 1033843166}
   - component: {fileID: 1033843167}
+  - component: {fileID: 1033843168}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -2435,6 +2436,18 @@ MonoBehaviour:
     MaxWindowSize: 0
     Padding: 0
   m_LegacyMaxWindowSize: -2
+--- !u!114 &1033843168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033843162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549f86b1ba658dc449ebff5685087618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraPersistance
 --- !u!1 &1037332581
 GameObject:
   m_ObjectHideFlags: 0
@@ -16304,6 +16317,7 @@ GameObject:
   - component: {fileID: 1894244088}
   - component: {fileID: 1894244091}
   - component: {fileID: 1894244090}
+  - component: {fileID: 1894244093}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -16600,6 +16614,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.6736898, y: 0.43915495}
   m_EdgeRadius: 0
+--- !u!114 &1894244093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894244084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e527e2e92e6a14ba3863300117b43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPersistance
 --- !u!1 &1927972054
 GameObject:
   m_ObjectHideFlags: 0

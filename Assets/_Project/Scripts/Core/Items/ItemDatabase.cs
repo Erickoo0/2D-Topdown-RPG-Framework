@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Linq;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "ItemDatabase", menuName = "Inventory/Database")]
@@ -8,34 +7,37 @@ public class ItemDatabase : ScriptableObject
     [Tooltip("Add every ItemData in the game here")]
     public List<ItemData> allItems;
     
+    // Key: Items String ID
+    // Value: Items ItemData
     private Dictionary<string, ItemData> _itemDictionary;
 
     /// <summary>
-    /// Builds the dictionary, called once when loading a save file
+    /// Converts ItemsLIst into an ItemsDictionary
+    /// Called from InventoryManager
     /// </summary>
     public void Initialize()
     {
+        // Create a fresh dictionary
         _itemDictionary = new Dictionary<string, ItemData>();
 
-        foreach (var item in allItems)
+        // Loop through every item in the database
+        foreach (ItemData itemData in allItems)
         {
-            if (item != null && !string.IsNullOrEmpty(item.itemID))
+            // Pairs itemID to itemData, returns warning if itemID has already been previously used
+            if (!_itemDictionary.TryAdd(itemData.itemID, itemData))
             {
-                if (!_itemDictionary.ContainsKey(item.itemID))
-                {
-                    _itemDictionary.Add(item.itemID, item);
-                }
-                else
-                {
-                    Debug.LogWarning($"[ItemDatabase] Duplicate Item ID found: {item.itemID}. IDs must be unique!");
-                }
+                Debug.LogWarning($"[ItemDatabase] Duplicate Item ID found: {itemData.itemID}. IDs must be unique!");
             }
         }
     }
 
     public ItemData GetItem(string itemID)
     {
+        // Safety Check: If the dictionary hasnt been built yet, build it now
         if (_itemDictionary == null) Initialize();
-        return _itemDictionary.TryGetValue(itemID, out ItemData item) ? item : null;
+        
+        // If the ID exists, returns the Item, else return null
+        // ReSharper disable once PossibleNullReferenceException
+        return _itemDictionary.GetValueOrDefault(itemID);
     }
 }

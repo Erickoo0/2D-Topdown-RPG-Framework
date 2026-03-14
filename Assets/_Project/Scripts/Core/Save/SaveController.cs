@@ -1,6 +1,5 @@
 using System.IO;
-using System.Collections.Generic;
-using Unity.Cinemachine;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -8,47 +7,31 @@ using UnityEngine;
 /// </summary>
 public class SaveController : MonoBehaviour
 {
-    [Header("Databases")] 
-    public ItemDatabase itemDatabase;
-    
     private string _savePath;
-    private CinemachineConfiner2D _confiner;
 
     private void Awake()
     {
-        // Find the Cinemachine Confiner 2D in the scene
-        _confiner = GameObject.FindAnyObjectByType<CinemachineConfiner2D>();   
-        
         // Define where the save file lives "persistentDataPath" is a special unity folder
         // that works across Windows, Mac, Andriod, and IOS
         _savePath = Path.Combine(Application.persistentDataPath, "Save.json");
         
-        // Ensure item database is ready before loading
-        if (itemDatabase != null) itemDatabase.Initialize();
         // Load the game at start
         LoadGame();
     }
 
-    public void SaveGame()
+    private void SaveGame()
     {
-        // Locate the player object in the scene using its tag
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        // Exit early if no player or confiner
-        if (player == null || _confiner == null) return;
+        // Create a new instance of our data container and fill it with current data
+        SaveData saveData = new SaveData();
         
-        // Create a new instance of our data container and fill it with current info
-        SaveData saveData = new SaveData
-        {
-            playerPosition = player.transform.position,
-            
-            // If the camera has a boundary assigned, save its name so we can find it again
-            mapBoundaryName = _confiner.BoundingShape2D != null? _confiner.BoundingShape2D.gameObject.name : "",
-            
-            // Get the inventory data
-            inventoryData = InventoryManager.Instance.GetInventorySaveData()
-        };
+        // Find everything that wants to be saved
+        var saveables = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ISaveable>();
 
+        foreach (var s in saveables)
+        {
+            s.PopulateSaveData(saveData);
+        }
+        
         // Convert the SaveData object into a JSON string (text)
         string json = JsonUtility.ToJson(saveData);
         
@@ -58,45 +41,35 @@ public class SaveController : MonoBehaviour
         Debug.Log("Game Saved to: {_savePath}");
     }
 
-    public void LoadGame()
+    private void LoadGame()
     {
-        // 1. Check if the file actually exists before trying to read it
-        if (File.Exists(_savePath))
+        // 1. Check if the file actually exists
+        if (!File.Exists(_savePath))
         {
-            // 2. Read the text from the file and convert it back into a SaveData object
-            SaveData saveData = JsonUtility.FromJson<SaveData>(File.ReadAllText(_savePath));
+            Debug.Log("No save file found. Creating a fresh one.");
+            SaveGame(); // Create an initial save if none exists
+            return;
+        }
 
-            // 3. Restore the Player position
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null) player.transform.position = saveData.playerPosition;
-            
-            // 4. Restore the camera boundary
-            if (!string.IsNullOrEmpty(saveData.mapBoundaryName) && _confiner != null)
-            {
-                // Find the GameObject in scene that matches the mapBoundaryName
-                GameObject boundaryObject = GameObject.Find(saveData.mapBoundaryName);
-                if (boundaryObject != null)
-                {
-                    // Get the collider from the GameObject
-                    var collider = boundaryObject.GetComponent<Collider2D>();
-                    _confiner.BoundingShape2D = collider;
-                    _confiner.InvalidateBoundingShapeCache();//Recalculates bounding shape
-                }
-            }
-            
-            // ---> LOAD the inventory data
-            if (InventoryManager.Instance != null && itemDatabase != null)
-            {
-                InventoryManager.Instance.LoadInventoryData(saveData.inventoryData, itemDatabase);
-            }
-            
-            Debug.Log("Game Loaded!");
-        }
-        else
+        // 2. Read the text and turn it back into our data object
+        string json = File.ReadAllText(_savePath);
+        SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
+
+        // 3. Find every script in the scene that implements ISaveable
+        // Note: 'FindObjectsByType' is available in newer Unity versions; 
+        // for older versions, use FindObjectsOfType<MonoBehaviour>()
+        var allScripts = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None);
+    
+        foreach (var script in allScripts)
         {
-            // If no save file exists, create one immediately
-            SaveGame();
+            if (script is ISaveable saveable)
+            {
+                // 4. Pass the loaded box to the script so it can restore itself
+                saveable.LoadFromSaveData(loadedData);
+            }
         }
+
+        Debug.Log("Game Loaded Successfully via ISaveable!");
     }
 }
 

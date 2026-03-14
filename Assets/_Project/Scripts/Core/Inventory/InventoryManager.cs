@@ -6,18 +6,20 @@ using System.Collections.Generic;
 /// Manages the global player inventory using a Singleton pattern. 
 /// Handles item storage, addition, and swapping, while notifying listeners of slot changes via events.
 /// </summary>
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, ISaveable
 {
     // Singleton Pattern: Accessible from any script
     public static InventoryManager Instance { get; private set; }
 
     // Observer Pattern: This event signals a slot has changed and displays the slot index number
     public event Action<int> OnSlotUpdated;
+    
+    [Header("Item Database")] 
+    public ItemDatabase itemDatabase; // Drag our database here
 
     [Header("Inventory Settings")]
     [SerializeField] private int inventorySize = 20;
     
-
     // An empty array of items 
     public ItemInstance[] itemsList;
 
@@ -31,14 +33,12 @@ public class InventoryManager : MonoBehaviour
         }
 
         Instance = this; // Assign This ID to variable
+        
+        if (itemDatabase != null) itemDatabase.Initialize();
 
         InitializeInventory();
     }
-
-    /// <summary>
-    /// Initializes an empty array to hold our items.
-    /// We do it here in case we change inventorySize in a save file later
-    /// </summary>
+    
     private void InitializeInventory()
     {
         itemsList = new ItemInstance[inventorySize];
@@ -51,18 +51,15 @@ public class InventoryManager : MonoBehaviour
         { 
             for (int i = 0; i < itemsList.Length; i++)
             {
-                // Find the same item in inventory
-                if (itemsList[i] != null && itemsList[i].Data == item.Data)
-                {
-                    // Check if the stack has room
-                    if (itemsList[i].stackSize < itemsList[i].Data.maxStackSize)
-                    {
-                        itemsList[i].stackSize += item.stackSize;
-                        //If we exceed max, we can split remainder, but for now, keeping it simple
-                        OnSlotUpdated?.Invoke(i);
-                        return true;
-                    }
-                }
+                // Skip empty slots and slots with different items
+                if (itemsList[i] == null || itemsList[i].Data != item.Data) continue;
+                
+                // Skip full slots
+                if (itemsList[i].stackSize >= itemsList[i].Data.maxStackSize) continue;
+                
+                itemsList[i].stackSize += item.stackSize;
+                OnSlotUpdated?.Invoke(i);
+                return true;
             }
         }
         
@@ -77,7 +74,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        return false; // If itemsList is full
+        return false; // If inventory is full
     }
     
     public void SwapItems(int indexA, int indexB)
@@ -100,6 +97,7 @@ public class InventoryManager : MonoBehaviour
         
         // Spawn the item
         GameObject droppedItem = Instantiate(itemsList[index].Data.itemObject, spawnPosition,  Quaternion.identity );
+        // If droppedItem has compoent ItemObject, then attach it to the variable itemObject, else pass
         if (droppedItem.TryGetComponent(out ItemObject itemObject))
         {
             itemObject.InitializeItem(itemsList[index]);
@@ -110,17 +108,17 @@ public class InventoryManager : MonoBehaviour
         OnSlotUpdated?.Invoke(index);
     }
 
-    /// <summary>
-    /// Packages current inventory into lightweight structs for saving
-    /// </summary>
-    public List<SavedSlot> GetInventorySaveData()
+    public void PopulateSaveData(SaveData saveData)
     {
+        // Create a list of SavedSlots
         List<SavedSlot> savedSlots = new List<SavedSlot>();
-
+        
+        // Loops through inventory and adds any non-empty slots into the savedSlots array
         for (int i = 0; i < itemsList.Length; i++)
         {
             if (itemsList[i] != null && itemsList[i].Data != null)
             {
+                // Create SavedSlots passing slot index #, itemID, and stackSize
                 savedSlots.Add(new SavedSlot
                 {
                     index = i,
@@ -129,35 +127,33 @@ public class InventoryManager : MonoBehaviour
                 });
             }
         }
-        return savedSlots;
+        
+        // Send the SavedSLots list to SaveData
+        saveData.savedSlotList = savedSlots;
     }
-
-    /// <summary>
-    /// Rebuilds the inventory from saved data using the ItemDatabase.
-    /// </summary>
-    public void LoadInventoryData(List<SavedSlot> savedData, ItemDatabase database)
+    
+    public void LoadFromSaveData(SaveData saveData)
     {
-        // 1. Clear current inventory
+        // Clear current inventory
         InitializeInventory(); 
 
-        // 2. Rebuild instances
-        foreach (var savedSlot in savedData)
+        // Rebuild instances from the data inside the "box"
+        foreach (SavedSlot savedSlot in saveData.savedSlotList)
         {
             // Safety check: ensure index is within bounds
-            if (savedSlot.index >= 0 && savedSlot.index < inventorySize)
+            if (savedSlot.index < 0 || savedSlot.index >= itemsList.Length) continue;
+        
+            // Convert the itemIDs from savedSlot into ItemData
+            ItemData itemData = itemDatabase.GetItem(savedSlot.itemID);
+        
+            if (itemData == null)
             {
-                ItemData data = database.GetItem(savedSlot.itemID);
-                
-                if (data != null)
-                {
-                    // Recreate the unique instance!
-                    itemsList[savedSlot.index] = new ItemInstance(data, savedSlot.itemStackSize);
-                }
-                else
-                {
-                    Debug.LogWarning($"Could not find item with ID: {savedSlot.itemID} in database.");
-                }
+                Debug.LogWarning($"[Inventory] Could not find item with ID: {savedSlot.itemID} in database.");
+                continue;
             }
+            
+            // Use the ItemData to add ItemInstances to the itemsList
+            itemsList[savedSlot.index] = new ItemInstance(itemData, savedSlot.itemStackSize);
         }
 
         // 3. Notify the UI to refresh ALL slots
@@ -166,4 +162,5 @@ public class InventoryManager : MonoBehaviour
             OnSlotUpdated?.Invoke(i);
         }
     }
+
 }
