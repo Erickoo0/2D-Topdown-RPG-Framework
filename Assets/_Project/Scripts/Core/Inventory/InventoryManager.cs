@@ -94,6 +94,17 @@ public class InventoryManager : MonoBehaviour, ISaveable
         Debug.unityLogger.Log("Iventory is full");
         return false; // If inventory is full
     }
+
+    public void RemoveItems(int index)
+    {
+        if (index < 0 || index >= itemsList.Length) return;
+        ItemInstance item = itemsList[index];
+        item.stackSize--;
+        if (item.stackSize <= 0) itemsList[index] = null;
+
+        
+        OnSlotUpdated?.Invoke(index);
+    }
     
     public void SwapItems(int indexA, int indexB)
     {

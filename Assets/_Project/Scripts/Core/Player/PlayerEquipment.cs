@@ -11,6 +11,8 @@ public class PlayerEquipment : MonoBehaviour
         InventoryManager.Instance.OnActiveSlotIndexChanged += SetActiveSlotIndex;
         // Listens for when data inside any slot changes (Add, Drop, Swap)
         InventoryManager.Instance.OnSlotUpdated += SetSlotData;
+        // Listens for when Use Item Key is pressed
+        HotbarManager.Instance.OnUseItemInput += TryUseActiveItem;
     }
 
     private void OnDestroy()
@@ -19,6 +21,11 @@ public class PlayerEquipment : MonoBehaviour
         {
             InventoryManager.Instance.OnActiveSlotIndexChanged -= SetActiveSlotIndex;
             InventoryManager.Instance.OnSlotUpdated -= SetSlotData;
+        }
+
+        if (HotbarManager.Instance != null)
+        {
+            HotbarManager.Instance.OnUseItemInput -= TryUseActiveItem;
         }
     }
 
@@ -66,6 +73,20 @@ public class PlayerEquipment : MonoBehaviour
         if (_currentActiveItem.TryGetComponent(out ItemObject itemObjectScript))
         {
             itemObjectScript.InitializeItem(itemInSlot);
+        }
+    }
+
+    private void TryUseActiveItem()
+    {
+        // Checks if the current active item has an IUsable interface and activates its Use()
+        if (_currentActiveItem != null && _currentActiveItem.TryGetComponent(out IUsable useableItem))
+        {
+            useableItem.Use();
+            InventoryManager.Instance.RemoveItems(_currentActiveSlotIndex);
+        }
+        else
+        {
+            Debug.unityLogger.Log("This item has no IUsable Interface");
         }
     }
 }

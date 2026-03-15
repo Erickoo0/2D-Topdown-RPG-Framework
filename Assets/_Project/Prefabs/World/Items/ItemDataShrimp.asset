@@ -16,6 +16,7 @@ MonoBehaviour:
   itemIcon: {fileID: 868504884959497903, guid: 808226a120eb10b44bc224b1af6f5649, type: 3}
   itemName: Shrimp
   itemDescription: A delicious shrimp
-  itemObject: {fileID: 3666771714786422289, guid: 763ed809e310f934ab2388063799c3e8, type: 3}
+  itemObject: {fileID: 5923910964434330379, guid: dae7e1ad1539ef849a751c174901c5f8, type: 3}
   isStackable: 1
   maxStackSize: 60
+  isUsable: 0

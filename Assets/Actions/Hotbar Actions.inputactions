@@ -14,6 +14,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UseSlotItem",
+                    "type": "Button",
+                    "id": "9a0425ad-2914-4650-b4ba-1e9a1edb9e9f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -113,6 +122,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SelectSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d60d6f2-4084-4603-a4c9-1b887950d672",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseSlotItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

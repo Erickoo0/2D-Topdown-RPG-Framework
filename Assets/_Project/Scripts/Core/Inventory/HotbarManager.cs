@@ -1,21 +1,30 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class HotbarManager : MonoBehaviour
 {
+    public static HotbarManager Instance { get; private set; }
+
     // Reference to Hotbar Actions
     private PlayerInput _playerInput; 
+    
+    public event Action OnUseItemInput;
 
     private void Awake()
-    {
+    {        
+        if (Instance != null && Instance != this)
+        {
+            Debug.unityLogger.Log("Multiple HotbarManagers detected. Disabling script.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this; // Assign This ID to variable
+        
         _playerInput = GetComponent<PlayerInput>();
     }
-
-    /// <summary>
-    ///  Moves the selection frame
-    /// </summary>
-    private void OnSelectSlot(InputAction.CallbackContext context)
+    
+    public void OnSelectSlot(InputAction.CallbackContext context)
     {
         // Detects key pressed down input
         if (context.ReadValueAsButton())
@@ -43,8 +52,15 @@ public class HotbarManager : MonoBehaviour
             }
         }
     }
-
-    // Method to enable/disable hotbar input
+    
+    public void OnUseItem(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnUseItemInput?.Invoke();
+        }
+    }
+    
     public void SetHotbarActive(bool active)
     {
         if (active) _playerInput.ActivateInput();
