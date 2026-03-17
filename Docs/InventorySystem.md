@@ -1,53 +1,93 @@
-# 📦 Technical Deep Dive: Inventory System
+# Inventory System Technical Deep Dive
 
-## **Architecture Overview**
-The inventory system is built on a **Decoupled Data-Driven Architecture**. By separating the data (Logic) from the representation (UI), the system is highly scalable, performance-optimized, 
-avoids the "spaghetti code", and is extremely modular. 
+A modular inventory system built in **Unity / C#** with a focus on **clean architecture**, **event-driven updates**, and **extensibility**.
 
 ---
 
-## **1. The Data Model (The "Four-Tier" System)**
-To optimize memory and ensure clean serialization, items are split into four distinct classes:
+## Overview
 
-* **ItemData (ScriptableObject):** The "Blueprint." Contains immutable data like icons, names, descriptions, and prefabs.
-* **ItemInstance (C# Class):** The "Individual Item." Tracks dynamic state such as `stackSize` and `durability`. 
-* **ItemObject (MonoBehaviour):** The "Physical World Item." Handles item pickup, physics, and effects for items on the ground.
-* **ItemDatabase (ScriptableObject):** The "Map." Maps unique IDs to `ItemData` for efficient JSON saving and loading.
+The inventory is built around a **single source of truth**: `InventoryManager`.
 
----
+Key design ideas:
+- **`ItemData`** defines static item info using `ScriptableObject`
+- **`ItemInstance`** stores runtime item state such as stack count
+- **`InventoryManager`** owns all inventory contents and logic
+- **UI updates react to events** instead of polling every frame
+- **The hotbar is the first section of the inventory**
+- **Save/load uses item IDs**, not direct object references
 
-## **2. InventoryManager (Single Source of Truth)**
-The `InventoryManager` is a Singleton that acts as the central authority for all inventory logic and holds all Inventory data. 
-
-### **Key Responsibilities:**
-1.  **State Management:** Holds the master `ItemInstance[]` array.
-2.  **Logic Operations:** Handles the math for stacking logic, item swapping in inventory, adding and dropping items.
-3.  **Observer Pattern:** Uses **C# Actions** (`OnSlotUpdated`) to notify listeners that a slot/item has been updated without needing hard references to the UI.
+This keeps the system easy to reason about while leaving room for future features.
 
 ---
 
-## **3. InventoryUI & SlotUI (The Passive View)**
-Following the **Passive View pattern**, the IventoryUI & SlotUI holds no item data and is strictly for visualization.
+## Data Model and Item Flow
 
-### **InventoryUI**
-* **Dynamic Generation:** Programmatically spawns `SlotUI` prefabs based on the `InventoryManager`'s size.
-* **Targeted Refresh:** Listens for update events and only refreshes the specific slot index that changed, rather than rebuilding the entire grid.
+The inventory separates **static item data** from **dynamic item data**:
 
-### **SlotUI**
-* **Zero Data Ownership:** The slot does not "hold" an item. It holds a `slotIndex` and pulls data from the InventoryManager only when needed.
-* **Interface Implementation & Polymorphism:** Implements `IStorageSlot`, allowing external systems (like the DragManager) to interact with any slot type polymorphically.
+- **`ItemData`** is the shared blueprint for an item type  
+  Includes ID, icon, name, description, prefab reference, and booleans
+
+- **`ItemInstance`** is the live item stack
+  Holds a reference to `ItemData` and holds dynamic information like durability, or stack size
+
+This avoids duplicating static data across slots and creates a flexible base for future per-item properties.
+
+The same model is also used across the full item lifecycle:
+- **world pickups** are represented by `ItemObject`
+- **inventory slots** store `ItemInstance`
+- **save data** stores item ID, slot index, and stack size
+- **loaded items** are rebuilt through `ItemDatabase`
+
+Using IDs for persistence keeps save data lightweight and avoids relying on direct scene or prefab references.
 
 ---
 
-## **4. S.O.L.I.D. Principles Applied**
-* **Single Responsibility:** Logic (Manager), Display (UI), and Data (ScriptableObjects) are strictly separated.
-* **Interface Segregation:** Systems like the `DragManager` depend on the `IStorageSlot` interface rather than a concrete `SlotUI` class.
-* **Dependency Inversion:** High-level UI logic depends on abstractions (Interfaces/Events), making it easy to add Chests or Vendors later.
+## Inventory, Hotbar, and Equipment
+
+`InventoryManager` stores the inventory as a fixed-size array of `ItemInstance` and handles:
+- adding and stacking items
+- removing items
+- swapping slots
+- dropping items
+- notifying other systems when data changes
+
+The hotbar is not a separate inventory. It is simply the **first section of the same slot array**.
+
+This keeps the architecture simpler by avoiding duplicated logic between inventory and hotbar systems.
+
+`HotbarManager` listens for Hotbar related input and handles active item selection , while `PlayerEquipment` listens for active slot changes and spawns the selected item prefab as the equipped object. If that object implements `IUsable`, it can perform item-specific behavior when used.
+
+This keeps item usage **component-driven** and avoids hardcoding item behavior into the inventory manager.
 
 ---
 
-## **Future Expandability**
-Because the system is decoupled via the `IStorageSlot` interface, the system is ready for:
-* **Equipment Systems** (using the same slot logic but filtered by item type).
-* **Chest/Storage Systems** (pointing the UI to a different `ItemInstance` array).
-* **Sorting Algorithms** (manipulating the array in the Manager without breaking the UI).
+## UI and Event-Driven Updates
+
+The UI is built as a **reactive presentation layer**.
+
+`InventoryUI` creates the slot UI and listens for inventory events. Each slot:
+- knows its index
+- reads data directly from `InventoryManager`
+- refreshes only when its slot changes through events sent from `InventoryManager`
+
+This event-driven approach improves:
+- separation of concerns
+- decoupling between gameplay and UI
+- maintainability as the system grows
+
+Rather than treating the UI as a second owner of inventory data, it stays synchronized by responding to changes from the manager.
+
+---
+
+## Summary
+
+This inventory system is built around:
+- **centralized state management** through a single inventory manager
+- **separation of static and runtime item data** using `ItemData` and `ItemInstance`
+- **event-driven updates** between inventory, UI, and equipment systems
+- **a unified inventory and hotbar model** using one shared slot array
+- **ScriptableObject-based item definitions** for clean content authoring
+- **ID-based save/load flow** for stable persistence
+- **extensible item behavior** through interfaces and runtime instances
+
+The result is a compact system with clear ownership, reactive UI updates, and a consistent flow between world items, inventory storage, and player interaction.
