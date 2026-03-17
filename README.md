@@ -41,7 +41,7 @@ Below are links to the internal documentation detailing the mechanics, challenge
 | :--- | :--- | :--- |
 | **Input System** | FIller text. | [View Doc](./Doc/Movement.md) |
 | **Items System** | 3 Part Item System ItemData(Static Data) -> ItemInstance(Dynamic Data) -> ItemObject(Physics Data). | [View Doc](./Doc/Combat.md) |
-| **Inventory System** | Uses slots class as base that holds arrays of ItemInstance. InventoryManager(Data), InventoryUI(UI), HotbarManager(UI), PlayerEquipment(Data). | [View Doc](./Doc/Inventory.md) |
+| **Inventory System** | Uses slots class as base that holds arrays of ItemInstance. InventoryManager(Data), InventoryUI(UI), HotbarManager(UI), PlayerEquipment(Data). | [View Doc](./Doc/InventorySystem.md) |
 | **Animation System** | Proximity-based detection using the Strategy pattern. | [View Doc](./Doc/Interactions.md) |
 
 ---
