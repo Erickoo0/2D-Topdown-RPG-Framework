@@ -10,6 +10,10 @@ public class Health : MonoBehaviour
     public int healthMax = 100;
     
     private int _healthCurrent = 10;
+    private float _healthHealPerCount;
+    private float _healthHealCountRemaining;
+    private int _healthHealDuration;
+    private float _healthHealTimer;
 
     // Health Property
     public int HealthCurrent
@@ -30,14 +34,23 @@ public class Health : MonoBehaviour
        // _healthCurrent = healthMax;
     }
 
-    public void HealHeath(int amount)
+    public void HealthHealInstant(int amount)
     {
         if (amount <= 0) return;
         HealthCurrent += amount;
         Debug.unityLogger.Log($"{gameObject.name}: Health healed by {amount}");
     }
 
-    public void TakeHealthDamage(int amount)
+    public void HealthHealOverTime(int amount, float duration, int count)
+    {
+        if (amount <= 0) return;
+        _healthHealCountRemaining = count;
+        _healthHealPerCount = (float)amount / count;
+        _healthHealDuration = (int)(duration / count);
+        _healthHealTimer = 0;
+    }
+
+    public void HealthDamageInstant(int amount)
     {
         if (amount <= 0) return;
         HealthCurrent -= amount;
