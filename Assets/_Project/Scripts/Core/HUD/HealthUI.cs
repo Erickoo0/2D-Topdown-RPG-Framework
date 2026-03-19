@@ -1,29 +1,27 @@
-using Unity;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
-    [SerializeField] private Image healthBarFill;
+    [SerializeField] private Image hpBarFill;
     //[SerializeField] private Text healthText;
-    private Health Health;
+    private Health health;
 
     private void Start()
     {
-        Health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
-        Health.OnHealthChanged += UpdateHealthUI;
-        UpdateHealthUI(Health.HealthCurrent);
+        health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+        health.OnHpUpdated += UpdateHealthUI;
+        UpdateHealthUI(health.HpCurrent);
     }
 
     private void OnDestroy()
     {
-        Health.OnHealthChanged -= UpdateHealthUI;
+        health.OnHpUpdated -= UpdateHealthUI;
     }
 
-    private void UpdateHealthUI(int currentHealth)
+    private void UpdateHealthUI(float hpCurrent)
     {
-        float healthPercent = (float)currentHealth / Health.healthMax;
-        healthBarFill.fillAmount = healthPercent;
+        float hpPercent = hpCurrent / health.hpMax;
+        hpBarFill.fillAmount = hpPercent;
     }
-
 }

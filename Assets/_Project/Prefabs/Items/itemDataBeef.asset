@@ -10,19 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fb634dd7941d1640ab67538c39a7894, type: 3}
-  m_Name: New Consumable Item
+  m_Name: itemDataBeef
   m_EditorClassIdentifier: Assembly-CSharp::ItemDataConsumable
-  itemID: beeeef
-  itemIcon: {fileID: 9188993890971629821, guid: 5478eba99f3f598429fb63ed7b733e25, type: 3}
-  itemName: beeef
-  itemDescription: beeeeeeeeef
-  itemObject: {fileID: 3666771714786422289, guid: 763ed809e310f934ab2388063799c3e8, type: 3}
+  itemID: 
+  itemIcon: {fileID: 0}
+  itemName: 
+  itemDescription: 
+  itemObject: {fileID: 0}
   isStackable: 0
   maxStackSize: 60
-  isUsable: 1
-  healthHealAmount: 10
-  healthHealCount: 1
-  healthHealDurationTick: 2
-  manaHealAmount: 0
-  manaHealCount: 1
-  manaHealDurationTick: 2
+  isUsable: 0
+  hpHealAmount: 0
+  hpHealDuration: 0
+  mpHealAmount: 0
+  mpHealDuration: 0

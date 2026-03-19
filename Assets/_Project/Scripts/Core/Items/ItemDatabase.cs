@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// The Map: Connects ItemData.itemID to the ItemData in a Dictionary
 /// </summary>
-[CreateAssetMenu(fileName = "ItemDatabase", menuName = "Inventory/Database")]
+[CreateAssetMenu(fileName = "ItemDatabase", menuName = "Item/Database")]
 public class ItemDatabase : ScriptableObject
 {
     [Tooltip("Add every ItemData in the game here")]
