@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb634dd7941d1640ab67538c39a7894, type: 3}
   m_Name: ItemDataPoisonBerry
   m_EditorClassIdentifier: Assembly-CSharp::ItemDataConsumable
-  itemID: 
-  itemIcon: {fileID: 0}
-  itemName: 
-  itemDescription: 
-  itemObject: {fileID: 0}
-  isStackable: 0
+  itemID: PoisonBerry
+  itemIcon: {fileID: -4787621849507200261, guid: a5809f7487b03e34dae4aae7b34a8742, type: 3}
+  itemName: Poison Berry
+  itemDescription: A poison berry
+  itemObject: {fileID: 3666771714786422289, guid: 763ed809e310f934ab2388063799c3e8, type: 3}
+  isStackable: 1
   maxStackSize: 60
-  isUsable: 0
-  hpHealAmount: 0
+  isUsable: 1
+  hpHealAmount: -20
   hpHealDuration: 0
-  mpHealAmount: 0
+  mpHealAmount: -15
   mpHealDuration: 0

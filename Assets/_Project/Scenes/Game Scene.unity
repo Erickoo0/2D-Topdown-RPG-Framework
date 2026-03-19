@@ -2554,6 +2554,56 @@ Transform:
   - {fileID: 193065290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &986300771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 986300772}
+  - component: {fileID: 986300773}
+  m_Layer: 0
+  m_Name: Floating Text Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &986300772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986300771}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1598360438}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &986300773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986300771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 053e000611ea9ec4699496a2d68687f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatingTextManager
+  textPrefab: {fileID: 8990258307671335826, guid: c78809c0f99278c418543cde6fdc15b1, type: 3}
+  poolSize: 20
+  yOffset: 1
+  xOffset: 0
+  randomYRange: 0.2
+  randomXRange: 0.5
 --- !u!1 &1003934884
 GameObject:
   m_ObjectHideFlags: 0
@@ -15607,8 +15657,9 @@ GameObject:
   - component: {fileID: 1430858751}
   - component: {fileID: 1430858750}
   - component: {fileID: 1430858749}
-  - component: {fileID: 1430858752}
   - component: {fileID: 1430858753}
+  - component: {fileID: 1430858752}
+  - component: {fileID: 1430858754}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -15712,7 +15763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3333051ddc97cda4e88901963c23d257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthUI
-  healthBarFill: {fileID: 834241000}
+  hpBarFill: {fileID: 834241000}
 --- !u!114 &1430858753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15739,6 +15790,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1430858754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430858747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d2fe945c2e4d14b9e70bdae5adbba2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ManaUI
+  mpBarFill: {fileID: 1622385923}
 --- !u!1 &1443419146
 GameObject:
   m_ObjectHideFlags: 0
@@ -16783,6 +16847,7 @@ Transform:
   - {fileID: 1951512957}
   - {fileID: 1946756652}
   - {fileID: 590843576}
+  - {fileID: 986300772}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1622385921
@@ -17242,6 +17307,7 @@ GameObject:
   - component: {fileID: 1894244093}
   - component: {fileID: 1894244094}
   - component: {fileID: 1894244095}
+  - component: {fileID: 1894244096}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -17563,7 +17629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1453edbed7a90d94ba048cdc92aa6d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEquipment
-  _parentTransform: {fileID: 478019865}
+  parentTransform: {fileID: 0}
 --- !u!114 &1894244095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17576,7 +17642,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b738caa94a6360641b76c8902eb4eb18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  healthMax: 100
+  hpMax: 100
+  hpCurrent: 85
+--- !u!114 &1894244096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894244084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba49149783c3044cb0541b20f880836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Mana
+  mpMax: 100
+  mpCurrent: 85
 --- !u!1 &1927972054
 GameObject:
   m_ObjectHideFlags: 0

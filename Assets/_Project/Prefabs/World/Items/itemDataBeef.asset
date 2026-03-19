@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb634dd7941d1640ab67538c39a7894, type: 3}
   m_Name: itemDataBeef
   m_EditorClassIdentifier: Assembly-CSharp::ItemDataConsumable
-  itemID: 
-  itemIcon: {fileID: 0}
-  itemName: 
-  itemDescription: 
-  itemObject: {fileID: 0}
-  isStackable: 0
+  itemID: Beef
+  itemIcon: {fileID: 1917982649346762048, guid: 748a419f398cfd14cbd7511826f4634e, type: 3}
+  itemName: Beef
+  itemDescription: Beeeeeef
+  itemObject: {fileID: 3666771714786422289, guid: 763ed809e310f934ab2388063799c3e8, type: 3}
+  isStackable: 1
   maxStackSize: 60
-  isUsable: 0
-  hpHealAmount: 0
-  hpHealDuration: 0
-  mpHealAmount: 0
-  mpHealDuration: 0
+  isUsable: 1
+  hpHealAmount: 20
+  hpHealDuration: 2
+  mpHealAmount: 30
+  mpHealDuration: 4
