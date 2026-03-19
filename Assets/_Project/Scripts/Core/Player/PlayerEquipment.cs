@@ -4,7 +4,7 @@ public class PlayerEquipment : MonoBehaviour
 {
     [Header("Equipment Settings")]
     [Tooltip("The transform where the instantiated item will be parented")]
-    [SerializeField] private Transform _parentTransform;
+    [SerializeField] private Transform parentTransform;
     
     private GameObject _currentActiveItem;
     private int _currentActiveSlotIndex = -1;
@@ -61,7 +61,7 @@ public class PlayerEquipment : MonoBehaviour
         if (itemInSlot == null || itemInSlot.Data == null || itemInSlot.Data.itemObject == null) return;
         
         // Spawn the Item Object
-        _currentActiveItem = Instantiate(itemInSlot.Data.itemObject, _parentTransform);
+        _currentActiveItem = Instantiate(itemInSlot.Data.itemObject, parentTransform);
         
         // Reset position
         _currentActiveItem.transform.localPosition = Vector3.zero;
@@ -82,15 +82,20 @@ public class PlayerEquipment : MonoBehaviour
 
     private void TryUseActiveItem()
     {
-        // Checks if the current active item has an IUsable interface and activates its Use()
-        if (_currentActiveItem != null && _currentActiveItem.TryGetComponent(out IUsable useableItem))
+        if (_currentActiveSlotIndex < 0) return;
+
+        ItemInstance activeItem = InventoryManager.Instance.itemsList[_currentActiveSlotIndex];
+        
+        if (activeItem == null || activeItem.Data == null) return;
+
+        if (activeItem.Data.isUsable == true)
         {
-            useableItem.Use();
-            InventoryManager.Instance.RemoveItems(_currentActiveSlotIndex);
-        }
-        else
-        {
-            Debug.unityLogger.Log("This item has no IUsable Interface");
+            bool wasUsed = activeItem.Data.Use(gameObject, activeItem);
+            if (wasUsed)
+            {
+                InventoryManager.Instance.RemoveItems(_currentActiveSlotIndex);
+            }
+            return;
         }
     }
 }
