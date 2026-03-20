@@ -56,8 +56,6 @@ public class SaveController : MonoBehaviour
         SaveData loadedData = JsonUtility.FromJson<SaveData>(json);
 
         // 3. Find every script in the scene that implements ISaveable
-        // Note: 'FindObjectsByType' is available in newer Unity versions; 
-        // for older versions, use FindObjectsOfType<MonoBehaviour>()
         var allScripts = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None);
     
         foreach (var script in allScripts)

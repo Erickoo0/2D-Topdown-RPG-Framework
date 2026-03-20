@@ -25,7 +25,7 @@ public class MapTransitioner : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Checks if enough time has passed since the last transition by comparing current time to last transition time
+        // Checks if enough time has passed since the last transition by comparing current time to last transition time
         if (Time.time < _lastTransitionTIme + transitionCooldown)
         {
             return;
@@ -35,8 +35,11 @@ public class MapTransitioner : MonoBehaviour
             _confiner.BoundingShape2D = targetMapBoundry;
             _confiner.InvalidateBoundingShapeCache();
             
-            //Updates shared timer to the current time
+            //U pdates shared timer to the current time
             _lastTransitionTIme = Time.time;
+            
+            // Tell MapManager to update its map tile
+            MapManager.Instance?.HighlightTile(targetMapBoundry.name);
         }
     }
 }
