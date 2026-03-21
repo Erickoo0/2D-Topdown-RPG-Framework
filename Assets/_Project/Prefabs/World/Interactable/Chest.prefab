@@ -180,5 +180,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chest
   chestOpenedSprite: {fileID: -562807627, guid: e74a92725c934554f86a6492ea7a86ef, type: 3}
-  itemData: {fileID: 11400000, guid: e0dc600b517fe9f4db1460e4581704a4, type: 2}
-  dropAmount: 2
+  chestContents:
+  - itemData: {fileID: 11400000, guid: 100db236c2a3c8d438e5b5f38f7577b9, type: 2}
+    dropAmount: 1
+  - itemData: {fileID: 11400000, guid: e0dc600b517fe9f4db1460e4581704a4, type: 2}
+    dropAmount: 3
+  - itemData: {fileID: 11400000, guid: 8499a701070f6ef40aa142455e36e4a7, type: 2}
+    dropAmount: 4
+  spreadRadius: 1.5

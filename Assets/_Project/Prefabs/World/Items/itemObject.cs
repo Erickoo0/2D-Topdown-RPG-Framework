@@ -11,6 +11,8 @@ public class ItemObject : MonoBehaviour
     [SerializeField] private float bounceDuration = 0.5f;
     [SerializeField] private float bounceHeight = 0.65f;
     [SerializeField] private int bounceCount = 3;
+    [SerializeField] private float flyDuration = 0.4f;
+    [SerializeField] private float jumpPower = 1.2f;
     
     private ItemInstance _itemInstance;
     private SpriteRenderer _spriteRenderer;
@@ -24,14 +26,14 @@ public class ItemObject : MonoBehaviour
         if (startingItemData != null) InitializeItem(new ItemInstance(startingItemData));
         
     }
-    
-    public void InitializeItem(ItemInstance newItemInstance)
+
+    public void InitializeItem(ItemInstance newItemInstance, Vector3? dropTarget = null)
     {
         _itemInstance = newItemInstance;
         _spriteRenderer.sprite = _itemInstance.Data.itemIcon;
         gameObject.name = _itemInstance.Data.itemName;
 
-        PlaySpawnAnimation();
+        PlaySpawnAnimation(dropTarget);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -46,30 +48,39 @@ public class ItemObject : MonoBehaviour
         TryPickup(collision);
     }
 
-    private void PlaySpawnAnimation()
+    private void PlaySpawnAnimation(Vector3? dropTarget)
     {
         _canBePickedUp = false;
         
-        Vector3 startPosition = transform.position; //Save the initial position
-
-        // Create a bounce sequence using DOTween (Group multiple tweens together)
-        Sequence bounceSequence = DOTween.Sequence();
+        // Create a sequence jump -> bounce
+        Sequence spawnSequence = DOTween.Sequence();
         
+        // Final position is either the provided target, or its current position if spawned directly
+        Vector3 finalPosition = dropTarget ?? transform.position;
+        
+        // 1. Fly to dropTarget if it has been provided by a source
+        if (dropTarget.HasValue)
+        {
+            // Adds DOJump animation to the spawnSequence
+            spawnSequence.Append(transform.DOJump(finalPosition, jumpPower, 1, flyDuration).SetEase(Ease.Linear));
+        }
+        
+        // 2. Bounce Logic
         for (int i = 0; i < bounceCount; i++)
         {
             // Decrease the height and duration each bounce
             float currentBounceHeight = bounceHeight * (1f - (i * 0.4f));
             float currentDuration = bounceDuration * (1f - (i * 0.2f));
         
-            // Control bounce up
-            bounceSequence.Append(transform.DOMoveY(startPosition.y + currentBounceHeight, currentDuration / 2)
+            // Adds DOMoveY (Up) to the spawnSequence
+            spawnSequence.Append(transform.DOMoveY(finalPosition.y + currentBounceHeight, currentDuration / 2)
                 .SetEase(Ease.OutQuad));
-            // Control bounce down
-            bounceSequence.Append(transform.DOMoveY(startPosition.y, currentDuration / 2)
+            // Adds DOMoveY (Down) to the spawnSequence
+            spawnSequence.Append(transform.DOMoveY(finalPosition.y, currentDuration / 2)
                 .SetEase(Ease.InQuad));
         }
-        
-        bounceSequence.OnComplete(() => _canBePickedUp = true);
+        // 3. Enable Pickup logic ONLY after the entire sequence finishes
+        spawnSequence.OnComplete(() => _canBePickedUp = true);
     }
 
     private void TryPickup(Collider2D collision)

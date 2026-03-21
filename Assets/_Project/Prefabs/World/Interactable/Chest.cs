@@ -1,5 +1,7 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using DG.Tweening;
 
 public class Chest : MonoBehaviour, IInteractable
 {
@@ -8,12 +10,22 @@ public class Chest : MonoBehaviour, IInteractable
     public Sprite chestOpenedSprite;
     
     [Header("Chest Contents")]
-    public ItemData itemData; // The Data of the item that will be dropped when the chest is opened
-    public int dropAmount = 1;
-
+    // The list of items to drop
+    public List<ItemDrop> chestContents = new List<ItemDrop>(); 
+    
+    [Header("Drop Settings")]
+    [SerializeField] private float spreadRadius = 1.5f;
+    
+    [System.Serializable]
+    public struct ItemDrop
+    {
+        public ItemData itemData;
+        public int dropAmount;
+    }
+    
     public void Start()
     {
-        if (ChestID == null) GlobalHelper.GenerateUniqueID(gameObject);
+        if (string.IsNullOrEmpty(ChestID)) GlobalHelper.GenerateUniqueID(gameObject);
     }
 
     public bool CanInteract()
@@ -24,28 +36,52 @@ public class Chest : MonoBehaviour, IInteractable
     public void Interact()
     {
         if (!CanInteract()) return;
-        
-        // Open Chest
         OpenChest();
     }
 
     public void OpenChest()
     {
-        // Set Opened
+        // If the chest is already opened, do nothing
+        if (IsOpened) return;
         SetOpened(true);
         
-        // Drop Item Logic
-        if (itemData == null) return;
-        // Create an instance from the ItemData
-        ItemInstance instance = new ItemInstance(itemData, dropAmount); // 1 item by default
-        
-        // Spawn the physical object
-        GameObject droppedItemObj = Instantiate(itemData.itemObject, transform.position + Vector3.down, Quaternion.identity);
-        
-        // Initialize it with the instance
-        if (droppedItemObj.TryGetComponent(out ItemObject itemObject))
+        if (chestContents == null || chestContents.Count == 0) return;
+
+        // 1. Count how many physical objects to spawn
+        int itemsToDrop = 0;
+        foreach (ItemDrop itemDrop in chestContents)
         {
-            itemObject.InitializeItem(instance);
+            if (itemDrop.itemData != null) itemsToDrop++;
+        }
+        
+        // 2. Calculate angle between each item
+        float angleStep = 360f / itemsToDrop;
+        float currentAngle = UnityEngine.Random.Range(0f, 360f);
+        
+        foreach (ItemDrop itemDrop in chestContents)
+        {
+            if (itemDrop.itemData == null)
+            {
+                Debug.LogWarning("Chest item is null!");
+                continue;
+            }
+            
+            // 3. Calculate the target position for each item
+            Vector3 spawnPos = transform.position;
+            Vector3 targetPos = CalculateDropPosition(currentAngle);
+            
+            // 2. Spawn the object at the spawnPos
+            GameObject droppedItemObj = Instantiate(itemDrop.itemData.itemObject, spawnPos, Quaternion.identity);
+            
+            // 3. Check if the droppedItemObj has ItemObject component, if so, initialize it
+            if (droppedItemObj.TryGetComponent(out ItemObject itemObject))
+            {
+                ItemInstance itemInstance = new ItemInstance(itemDrop.itemData, itemDrop.dropAmount); // Create an item instance
+                itemObject.InitializeItem(itemInstance, targetPos);
+            }
+            
+            // 4. Inccrement the angle for the next item
+            currentAngle += angleStep;
         }
     }
 
@@ -54,8 +90,25 @@ public class Chest : MonoBehaviour, IInteractable
         IsOpened = opened;
         if (IsOpened)
         {
-            GetComponent<SpriteRenderer>().sprite = chestOpenedSprite;
+            if (TryGetComponent(out SpriteRenderer sr))
+            {
+                sr.sprite = chestOpenedSprite;
+            }
         }
+    }
+
+    public Vector3 CalculateDropPosition(float angleDegrees)
+    {
+        // 1. Convert angle from degrees to radian
+        float angleRad = angleDegrees * Mathf.Deg2Rad;
         
+        // 2. Get the normalized x and y direction
+        Vector2 direction = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));    
+        // 3. Pick a random distance to keep the spread feeling organic
+        float distance = UnityEngine.Random.Range(0.5f, spreadRadius);
+        Vector2 finalOffset = direction * distance;
+        
+        // 4. Return the final position
+        return transform.position + new Vector3(finalOffset.x, finalOffset.y - 0.5f, 0);
     }
 }
