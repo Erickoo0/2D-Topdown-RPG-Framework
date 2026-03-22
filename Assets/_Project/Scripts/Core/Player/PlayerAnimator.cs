@@ -13,14 +13,14 @@ public class PlayerAnimator : MonoBehaviour
 
     void FixedUpdate()
     {
-        float speed = _playerMovement._moveInput.magnitude;
+        float speed = _playerMovement.moveInput.magnitude;
         if (speed > 0.1f)
         {
             _animator.SetBool("IsWalking", true);
-            _animator.SetFloat("InputX", _playerMovement._moveInput.x);
-            _animator.SetFloat("InputY", _playerMovement._moveInput.y);
-            _animator.SetFloat("LastInputX", _playerMovement._moveInput.x);
-            _animator.SetFloat("LastInputY", _playerMovement._moveInput.y);
+            _animator.SetFloat("InputX", _playerMovement.moveInput.x);
+            _animator.SetFloat("InputY", _playerMovement.moveInput.y);
+            _animator.SetFloat("LastInputX", _playerMovement.moveInput.x);
+            _animator.SetFloat("LastInputY", _playerMovement.moveInput.y);
         }
         else
         {

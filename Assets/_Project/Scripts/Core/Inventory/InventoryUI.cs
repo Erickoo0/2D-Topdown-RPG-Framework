@@ -8,9 +8,10 @@ using System.Collections.Generic;
 public class InventoryUI : MonoBehaviour
 {
     
-    [SerializeField] private GameObject slotPrefab; // The Slots to spawn
-    [SerializeField] private Transform inventoryParent;
-    [SerializeField] private Transform hotbarParent;
+    [SerializeField] private GameObject inventorySlotPrefab; // Inventory slot to spawn
+    [SerializeField] private GameObject hotbarSlotPrefab; // Hotbar slot to spawn
+    [SerializeField] private Transform inventoryPanel;
+    [SerializeField] private Transform hotbarPanel;
     [SerializeField] private int hotbarSize;
 
     [Header("Selection Frame Settings")] 
@@ -59,10 +60,11 @@ public class InventoryUI : MonoBehaviour
         for (int i = 0; i < InventoryManager.Instance.itemsList.Length; i++)
         {
             // Determine if this slot should go to hotbar or inventory
-            Transform targetParent = (i < hotbarSize) ? hotbarParent : inventoryParent;
+            Transform targetParent = (i < hotbarSize) ? hotbarPanel : inventoryPanel;
             
             // Instantiate the slots
-            GameObject slot = Instantiate(slotPrefab, targetParent);
+            GameObject prefab = (i < hotbarSize) ? hotbarSlotPrefab : inventorySlotPrefab;
+            GameObject slot = Instantiate(prefab, targetParent);
             
             if (slot.TryGetComponent(out InventorySlotUI storageSlot))
             {

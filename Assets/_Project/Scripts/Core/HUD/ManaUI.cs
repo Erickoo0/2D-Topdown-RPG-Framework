@@ -1,10 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ManaUI : MonoBehaviour
 {
     [SerializeField] private Image mpBarFill;
-    //[SerializeField] private Text healthText;
+    [SerializeField] TextMeshProUGUI mpText;
     private Mana mana;
 
     private void Start()
@@ -23,5 +24,6 @@ public class ManaUI : MonoBehaviour
     {
         float mpPercent = mpCurrent / mana.mpMax;
         mpBarFill.fillAmount = mpPercent;
+        mpText.text = ($"Mp: {mpCurrent}/{mana.mpMax}");
     }
 }
