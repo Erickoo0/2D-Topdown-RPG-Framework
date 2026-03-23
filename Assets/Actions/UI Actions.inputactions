@@ -1,9 +1,9 @@
 {
     "version": 1,
-    "name": "Hotbar Actions",
+    "name": "UI Actions",
     "maps": [
         {
-            "name": "HotbarMap",
+            "name": "UI",
             "id": "bd15ee5d-33fa-4c8d-8650-367528cd355a",
             "actions": [
                 {
@@ -19,6 +19,15 @@
                     "name": "UseSlotItem",
                     "type": "Button",
                     "id": "9a0425ad-2914-4650-b4ba-1e9a1edb9e9f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OpenPauseMenu",
+                    "type": "Button",
+                    "id": "f8732eb9-61d9-4978-b7f1-d4fc470cb241",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -133,6 +142,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "UseSlotItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "309ab42b-90e0-4f13-bbae-2dddfe28353e",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenPauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

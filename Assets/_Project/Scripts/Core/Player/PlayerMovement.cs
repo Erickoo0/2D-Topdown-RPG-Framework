@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     private Rigidbody2D _rb;
     
-    public Vector2 _moveInput;
+    public Vector2 moveInput;
 
     void Start()
     {
@@ -15,12 +15,19 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        _rb.linearVelocity = _moveInput * moveSpeed * Time.fixedDeltaTime;
+        if (!PauseManager.IsGamePaused)
+        {
+            _rb.linearVelocity = moveInput * (moveSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            _rb.linearVelocity = Vector2.zero;
+        }
     }
 
     public void Move(InputAction.CallbackContext context)
     {
-        _moveInput = context.ReadValue<Vector2>();
+        moveInput = context.ReadValue<Vector2>();
     }
 }
 

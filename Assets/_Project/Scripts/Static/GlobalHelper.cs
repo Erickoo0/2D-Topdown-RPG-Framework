@@ -17,4 +17,6 @@ public static class GlobalHelper
         int index = Mathf.FloorToInt(Time.time * speed) % itemData.itemIconAnimated.Length;  
         return itemData.itemIconAnimated[index];
     }
+    
+    
 }
