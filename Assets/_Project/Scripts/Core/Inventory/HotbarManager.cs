@@ -7,7 +7,7 @@ public class HotbarManager : MonoBehaviour
     public static HotbarManager Instance { get; private set; }
 
     // Reference to Hotbar Actions
-    private PlayerInput _playerInput; 
+    private PlayerInput _actionInput; 
     
     public event Action OnUseItemInput;
 
@@ -21,7 +21,7 @@ public class HotbarManager : MonoBehaviour
         }
         Instance = this; // Assign This ID to variable
         
-        _playerInput = GetComponent<PlayerInput>();
+        _actionInput = GetComponent<PlayerInput>();
     }
     
     public void OnSelectSlot(InputAction.CallbackContext context)
@@ -63,7 +63,7 @@ public class HotbarManager : MonoBehaviour
     
     public void SetHotbarActive(bool active)
     {
-        if (active) _playerInput.ActivateInput();
-        else _playerInput.DeactivateInput();
+        if (active) _actionInput.ActivateInput();
+        else _actionInput.DeactivateInput();
     }
 }

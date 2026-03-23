@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Handles saving and loading player data and camera boundaries using JSON
 /// </summary>
-public class SaveController : MonoBehaviour
+public class SaveManager : MonoBehaviour
 {
     private string _savePath;
 
@@ -19,7 +19,7 @@ public class SaveController : MonoBehaviour
         LoadGame();
     }
 
-    private void SaveGame()
+    public void SaveGame()
     {
         // Create a new instance of our data container and fill it with current data
         SaveData saveData = new SaveData();
@@ -41,7 +41,7 @@ public class SaveController : MonoBehaviour
         Debug.Log("Game Saved to: {_savePath}");
     }
 
-    private void LoadGame()
+    public void LoadGame()
     {
         // 1. Check if the file actually exists
         if (!File.Exists(_savePath))
