@@ -2103,6 +2103,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 8645516860717331379, guid: 9859b4eb84e898641a0a122f791e49d6, type: 3}
+      propertyPath: dialogueName
+      value: Master Lee
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645516860717331379, guid: 9859b4eb84e898641a0a122f791e49d6, type: 3}
+      propertyPath: dialoguePortrait
+      value: 
+      objectReference: {fileID: -7527145504033472756, guid: 42155942c8627f140895934d1507bf57, type: 3}
     - target: {fileID: 8938039652768275651, guid: 9859b4eb84e898641a0a122f791e49d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.16012
@@ -19678,6 +19686,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7727475895176093707, guid: b6e58374c712a6349a0b42f2d38ee67a, type: 3}
+      propertyPath: dialogueName
+      value: Princess Fiona
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727475895176093707, guid: b6e58374c712a6349a0b42f2d38ee67a, type: 3}
+      propertyPath: dialoguePortrait
+      value: 
+      objectReference: {fileID: -7527145504033472756, guid: 3b21c4da88d7c0b4bb1ac44deda024ea, type: 3}
     - target: {fileID: 8645021498701586464, guid: b6e58374c712a6349a0b42f2d38ee67a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.95
@@ -20235,6 +20251,8 @@ GameObject:
   - component: {fileID: 1894244095}
   - component: {fileID: 1894244096}
   - component: {fileID: 1894244097}
+  - component: {fileID: 1894244100}
+  - component: {fileID: 1894244099}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -20651,6 +20669,36 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.5}
   m_Radius: 1.5
+--- !u!114 &1894244099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894244084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
+  m_CategoryHash: 0.009161512
+  m_labelHash: 1.3971405e-28
+  m_SpriteKey: 0
+  m_SpriteHash: 163368403
+--- !u!114 &1894244100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894244084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 690c36863b63d7040930e28d09c67a4a, type: 3}
 --- !u!1 &1927972054
 GameObject:
   m_ObjectHideFlags: 0
