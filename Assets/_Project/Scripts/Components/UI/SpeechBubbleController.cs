@@ -17,6 +17,7 @@ public class SpeechBubbleController : MonoBehaviour
 
     private float timer;
     private GameObject currentBubble;
+    private TypeWriter typeWriter;
     
     private void Start() => SetRandomWaitTime();
 
@@ -40,10 +41,10 @@ public class SpeechBubbleController : MonoBehaviour
         currentBubble = Instantiate(speechBubblePrefab, transform.position + spawnOffset, Quaternion.identity, transform);
         
         // 2. Find the TextMeshPro component in the children and set the text
-        TextMeshPro textMesh = currentBubble.GetComponentInChildren<TextMeshPro>();
-        if (textMesh != null) textMesh.text = speechBubbleLines[Random.Range(0, speechBubbleLines.Length)];
+        TypeWriter typewriter = currentBubble.GetComponentInChildren<TypeWriter>();
+        if (typewriter != null) typewriter.StartTyping(speechBubbleLines[Random.Range(0, speechBubbleLines.Length)]);
         
-        // 3. Set alive timer
+        // 3. Set alive timer 
         timer = speechBubbleDuration;
     }
 

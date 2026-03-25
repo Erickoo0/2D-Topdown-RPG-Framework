@@ -2,21 +2,20 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
 public class TypeWriter : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float typingSpeed = 0.01f;
 
-    private TextMeshProUGUI _textComponent;
+    private TMP_Text _textComponent;
     private Coroutine _typingCoroutine;
     private string _fullText;
 
     // Public property so other scripts can check if its currently typing
     public bool IsTyping { get; private set; }
-    
-    private void Awake() => _textComponent = GetComponent<TextMeshProUGUI>();
 
+    private void Awake() => _textComponent = GetComponent<TMP_Text>();
+    
     public void StartTyping(string textToType)
     {
         _fullText = textToType;
