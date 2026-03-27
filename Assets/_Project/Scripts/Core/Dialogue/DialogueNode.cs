@@ -12,6 +12,7 @@ public class DialogueNode : ScriptableObject
 [System.Serializable]
 public class DialogueOption
 {
+    public string optionName;
     public string text;
     public DialogueOption nextNode;
 }

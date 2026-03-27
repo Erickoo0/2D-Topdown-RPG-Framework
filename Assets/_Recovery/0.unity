@@ -6970,6 +6970,7 @@ MonoBehaviour:
   dialogueName: {fileID: 692116143}
   dialogueBody: {fileID: 1139868756}
   dialoguePortrait: {fileID: 2147404120}
+  dialogueOptionButton: {fileID: 8149746560361534457, guid: 03f0997d4ec632641be01e71b7bcc5cf, type: 3}
 --- !u!1 &1399743304
 GameObject:
   m_ObjectHideFlags: 0

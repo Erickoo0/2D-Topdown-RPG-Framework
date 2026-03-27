@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: TestDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueNode
   text: Hello, this dialogue is a test to see if we can even spawn 1 line of dialogue.
-  dialogueOptions: []
+  dialogueOptions:
+  - optionName: test 1
+    text: hellooooooo
+  - optionName: test 2
+    text: hellooooooo
+  - optionName: test 3
+    text: hellooooooo
