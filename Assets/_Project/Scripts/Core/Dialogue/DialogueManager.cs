@@ -12,10 +12,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TypeWriter dialogueBody;
     [SerializeField] private Image dialoguePortrait;
 
-    private string[] dialogueLines;
-    private int dialogueLineIndex;
-
-    //private int inputTimer;
+    [Header("Dialogue UI Prefabs")] 
+    [SerializeField] private GameObject dialogueOptionButton;
+    private DialogueNode _currentNode;
 
     private void Awake()
     {
@@ -29,7 +28,7 @@ public class DialogueManager : MonoBehaviour
         Instance = this;
     }
     
-    public void ControlDialogue(string name, string[] body, Sprite portrait)
+    public void ControlDialogue(string name, DialogueNode body, Sprite portrait)
     {
         // Enable the dialogue panel if it's not already active'
         if (!dialoguePanel.gameObject.activeSelf)
@@ -40,32 +39,20 @@ public class DialogueManager : MonoBehaviour
         {
             // 1. If typewriter is still typing, finish it instantly
             if (dialogueBody.IsTyping) dialogueBody.FinishInstantly();
-            // 2. If typewriter is done typing, move to the next line
-            else if (dialogueLineIndex < dialogueLines.Length - 1)
-            {
-                dialogueLineIndex++;
-                dialogueBody.StartTyping(dialogueLines[dialogueLineIndex]);
-            }
-            // 3. If no more lines, close the dialogue
-            else
-            {
-                CloseDialogue();
-            }
+            else CloseDialogue();
         }
 
     }
     
-    private void SetDialogue(string name, string[] body, Sprite portrait)
+    private void SetDialogue(string name, DialogueNode body, Sprite portrait)
     {
         // Set the name, portrait, and index
         dialogueName.text = name;
         dialoguePortrait.sprite = portrait;
-        dialogueLineIndex = 0;
         
         // Set the body
-        dialogueLines = body;
         dialoguePanel.gameObject.SetActive(true);
-        dialogueBody.StartTyping(dialogueLines[dialogueLineIndex]);
+        dialogueBody.StartTyping(body);
         
         // Pause the game
         PauseManager.SetPause(true);

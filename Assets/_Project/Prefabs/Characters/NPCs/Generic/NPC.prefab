@@ -255,11 +255,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Npc
   dialogueName: Bobby
-  dialogueLines:
-  - Hi, my name is Bobby.
-  - Nice to meet you.
-  - Im a test NPC meant for testing new features!
   dialoguePortrait: {fileID: -7527145504033472756, guid: 4ec53bce811d1f64a947aabac05f8f16, type: 3}
+  dialogueStartNode: {fileID: 11400000, guid: 266eea354707b494aa0137695923e637, type: 2}
 --- !u!95 &3597365950157330232
 Animator:
   serializedVersion: 7
@@ -352,12 +349,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22b118d02523bf4e839eff9262a3a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeechBubbleManager
-  speechBubble: {fileID: 8936567896374602222, guid: 2c8d6c5837f715f46a7e77ff2af6fd88, type: 3}
+  speechBubblePrefab: {fileID: 0}
   speechBubbleLines:
   - Hello Man
   - Is this thing working?
   - testing 1,2,3
-  speechBubbleTypeSpeed: 0.05
+  spawnOffset: {x: 0, y: 1, z: 0}
   speechBubbleMinWaitTime: 3
   speechBubbleMaxWaitTime: 9
   speechBubbleDuration: 2.5
