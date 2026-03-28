@@ -35,7 +35,7 @@ public class Health : MonoBehaviour
             {
                 float difference = hpCurrent - hpPrevious;
                 int differenceRounded = Mathf.RoundToInt(difference);
-                CombatEvents.RequestFloatingText(differenceRounded, transform.position);
+                EventBus.RequestFloatingText(differenceRounded, transform.position);
                 
                 OnHpUpdated?.Invoke(hpCurrent);
             }

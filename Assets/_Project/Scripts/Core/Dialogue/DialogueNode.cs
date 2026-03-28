@@ -6,7 +6,7 @@ public class DialogueNode : ScriptableObject
 {
     public string[] dialogueLines;
     public DialogueOption[] dialogueOptions;
-    
+    public string dialogueEvent;
 }
 
 [System.Serializable]

@@ -160,6 +160,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             // Execute Code Method here
+            if (_currentNode.dialogueEvent != null) EventBus.RequestDialogueEvent( _currentNode.dialogueEvent);
             CloseDialogue();
         }
     }

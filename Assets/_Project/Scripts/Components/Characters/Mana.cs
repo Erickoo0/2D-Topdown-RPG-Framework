@@ -33,7 +33,7 @@ public class Mana : MonoBehaviour
             {
                 float difference = mpCurrent - mpPrevious;
                 int differenceRounded = Mathf.RoundToInt(difference);
-                CombatEvents.RequestFloatingText(differenceRounded, transform.position);
+                EventBus.RequestFloatingText(differenceRounded, transform.position);
                 OnMpUpdated?.Invoke(mpCurrent);
             }
         }

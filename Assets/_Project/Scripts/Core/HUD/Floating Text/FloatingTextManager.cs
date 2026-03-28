@@ -27,8 +27,8 @@ public class FloatingManager : MonoBehaviour
     }
     
     // Subscribes to CombatEvents
-    private void OnEnable() => CombatEvents.OnFloatingTextRequested += SpawnFloatingNumber;
-    private void OnDisable() => CombatEvents.OnFloatingTextRequested -= SpawnFloatingNumber;
+    private void OnEnable() => EventBus.OnFloatingTextRequested += SpawnFloatingNumber;
+    private void OnDisable() => EventBus.OnFloatingTextRequested -= SpawnFloatingNumber;
 
 
     private void SpawnFloatingNumber(int amount, Vector3 position)
