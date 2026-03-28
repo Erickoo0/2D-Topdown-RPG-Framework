@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb1411f2ace4a1ab2532817c7aa94f8, type: 3}
   m_Name: TestDialogue3
   m_EditorClassIdentifier: Assembly-CSharp::DialogueNode
-  dialogueLines: []
+  dialogueLines:
+  - yayy, im glad to hear that!
   dialogueOptions: []
+  dialogueEvent: 

@@ -12,6 +12,7 @@ public static class EventBus
     }
     
     
+    
     //--------------------------Combat Events-------------------------
     // Signals when a floating text gets requested
     public static event Action<int, Vector3> OnFloatingTextRequested;

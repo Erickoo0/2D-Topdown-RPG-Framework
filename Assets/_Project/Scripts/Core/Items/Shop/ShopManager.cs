@@ -1,8 +1,20 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class ShopManager : MonoBehaviour
 {
     public static ShopManager Instance { get; private set; }
+
+    [Header("References")] 
+    [SerializeField] private GameObject shopMainPanel;
+    [SerializeField] private GameObject shopItemPanel;
+    [SerializeField] private GameObject shopItemPrefab;
+    [SerializeField] private InputAction menuKey;
+    
+    private void OnEnable() => menuKey.Enable();
+    
+    private void OnDisable() => menuKey.Disable();
     
     private void Awake()
     {
@@ -19,8 +31,19 @@ public class ShopManager : MonoBehaviour
         EventBus.OnDialogueEventRequested += SetupShop;
     }
 
+    private void Update()
+    {
+        if  (menuKey.WasPressedThisFrame())
+        {
+            if (shopMainPanel.activeSelf) shopMainPanel.SetActive(false);
+        }
+    }
+    
     private void SetupShop(string dialogueEvent)
     {
-        Debug.unityLogger.Log($"Setting up shop for action {dialogueEvent}");
+        if (dialogueEvent == "ShopOpen")
+        {
+            shopMainPanel.SetActive(true);
+        }
     }
 }

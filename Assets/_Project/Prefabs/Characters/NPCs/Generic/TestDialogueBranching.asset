@@ -12,5 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb1411f2ace4a1ab2532817c7aa94f8, type: 3}
   m_Name: TestDialogueBranching
   m_EditorClassIdentifier: Assembly-CSharp::DialogueNode
-  text: 
-  dialogueOptions: []
+  dialogueLines:
+  - Hello
+  - 'This is a test of '
+  - 'the new dialogue system '
+  - Is it good?
+  dialogueOptions:
+  - optionName: Yes! Now open shop!!!
+    nextNode: {fileID: 0}
+  - optionName: No its horrible!
+    nextNode: {fileID: 11400000, guid: 3fd5a02c6e450e1459d4c22630f751a5, type: 2}
+  dialogueEvent: OpenShop
