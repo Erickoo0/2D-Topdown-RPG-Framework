@@ -22,4 +22,4 @@ MonoBehaviour:
     nextNode: {fileID: 0}
   - optionName: No its horrible!
     nextNode: {fileID: 11400000, guid: 3fd5a02c6e450e1459d4c22630f751a5, type: 2}
-  dialogueEvent: OpenShop
+  dialogueEvent: ShopOpen

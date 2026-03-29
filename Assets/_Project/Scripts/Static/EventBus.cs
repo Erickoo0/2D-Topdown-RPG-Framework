@@ -5,10 +5,10 @@ public static class EventBus
 {
     //-----------------------Dialogue Events--------------------------
     //Signals when a dialogue option is selected that has an action
-    public static Action<string> OnDialogueEventRequested;
-    public static void RequestDialogueEvent(string dialogueEvent)
+    public static Action<string, object> OnDialogueEventRequested;
+    public static void RequestDialogueEvent(string dialogueEvent, object data)
     {
-        OnDialogueEventRequested?.Invoke(dialogueEvent);
+        OnDialogueEventRequested?.Invoke(dialogueEvent, data);
     }
     
     

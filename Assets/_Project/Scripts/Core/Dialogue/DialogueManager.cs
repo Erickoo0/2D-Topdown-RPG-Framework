@@ -6,15 +6,11 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
     
-    [Header("Reference Data")] 
-    [SerializeField] private Image dialoguePanel;
-    [SerializeField] private TextMeshProUGUI dialogueName;
-    [SerializeField] private TypeWriter dialogueBody;
-    [SerializeField] private Image dialoguePortrait;
-
-    [Header("Dialogue UI Prefabs")] 
-    [SerializeField] private GameObject dialogueOptionButton;
-    private GameObject[] _dialogueOptionButtons;
+    // References
+    private DialogueUI _dialogueUI;
+    private DialogueOptionController _dialogueOptionController;
+    
+    private Npc _currentSpeaker;
     private DialogueNode _currentNode;
     private int _currentLineIndex;
     private bool _isWaitingChoice = false;
@@ -29,139 +25,136 @@ public class DialogueManager : MonoBehaviour
         }
 
         Instance = this;
+        
+        // Set the references
+        _dialogueUI = GetComponent<DialogueUI>();
+        _dialogueOptionController = GetComponent<DialogueOptionController>();
    }
     
-    public void ControlDialogue(string name, DialogueNode body, Sprite portrait)
+    public void ControlDialogue(Npc speaker)
     {
-        // Enable the dialogue panel if it's not already active'
-        if (!dialoguePanel.gameObject.activeSelf) 
+        // Set the speaker passed from the interacted entity
+        _currentSpeaker = speaker;
+        
+        if (!_dialogueUI.IsVisible)
         {
-            SetDialogue(name, body, portrait);
+            StartDialogue();
         }
         else
         {
-            // 1. If typewriter is still typing, finish it instantly (even if options are on screen)
-            if (dialogueBody.IsTyping) dialogueBody.FinishInstantly();
-            
-            // 2. If typing is finished, check if we are waiting for a choice, do nothing
-            else if (_isWaitingChoice) return;
-            
-            // 3. Otherwise, go to the next line / close the dialogue
-            else ContinueDialogue();
+            HandleInput();
         }
     }
-    
-    private void SetDialogue(string name, DialogueNode body, Sprite portrait)
+
+    private void HandleInput()
     {
-        // Clear leftover buttons if they exist
-        DestroyOptions();
-        
-        //Set the Node
-        _currentNode = body;
+        // 1. If still typing, finish instantly
+        if (_dialogueUI.IsTyping)
+        {
+            _dialogueUI.FinishLineEarly();
+        }
+        // 2. If waiting for option selection, do nothing
+        else if (_isWaitingChoice)
+        {
+            return;
+        }
+        // 3. Continue
+        else
+        {
+            ContinueDialogue();
+        }
+    }
+
+    private void StartDialogue()
+    {
+        // Set the startinf data
+        _currentNode = _currentSpeaker.DialogueStartNode;
         _currentLineIndex = 0;
         _isWaitingChoice = false;
         
-        // Set the name, portrait, and index
-        dialogueName.text = name;
-        dialoguePortrait.sprite = portrait;
-        
-        // Set the options
-        if (_currentNode.dialogueOptions != null) _dialogueOptionButtons = new GameObject[body.dialogueOptions.Length];
-        
-        // Set the body
-        dialoguePanel.gameObject.SetActive(true);
-        
-        // Pause the game
+        _dialogueOptionController.ClearOptions();
+        _dialogueUI.ShowUI(true);
         PauseManager.SetPause(true);
         
-        // Play Line and Check Options
-        PlayLineAndCheckOptions();
-    }
-    
-    private void CloseDialogue()
-    {
-        DestroyOptions();
-        dialoguePanel.gameObject.SetActive(false);
-        // Unpause the game
-        PauseManager.SetPause(false);
+        UpdateDisplay();
     }
 
     private void ContinueDialogue()
     {
         _currentLineIndex++;
-        
-        // 1. Are there still lines left to continue?
-        if (_currentLineIndex < _currentNode.dialogueLines.Length)  PlayLineAndCheckOptions();
-            else CloseDialogue();
-    }
 
-    private void PlayLineAndCheckOptions()
-    {
-        // 1. Start the Typewriter
-        dialogueBody.StartTyping(_currentNode.dialogueLines[_currentLineIndex]);
-        
-        // 2. Is this the LAST line in the array?
-        if (_currentLineIndex == _currentNode.dialogueLines.Length - 1)
+        if (_currentLineIndex < _currentNode.dialogueLines.Length)
         {
-            // 3. Does this node have options to display?
-            if (_currentNode.dialogueOptions != null && _currentNode.dialogueOptions.Length > 0)
-            {
-                _isWaitingChoice = true;
-                CreateOptions();
-            }
-        }
-    }
-
-    private void CreateOptions()
-    {
-        if (_currentNode == null) return;
-        if (_currentNode.dialogueOptions == null) return;
-        
-        for (int i = 0; i < _currentNode.dialogueOptions.Length; i++)
-        {
-            // Capture the index for the listener (C# for loop quirk with using i directly in delegates)
-            int index = i;
-            DialogueNode targetNode = _currentNode.dialogueOptions[index].nextNode;
-            
-            var yOffset= 270 + (i * 110);
-            var xOffset = 590;
-            
-            // Pass the NPC name and the index of the option to the listener
-            string optionText = _currentNode.dialogueOptions[i].optionName;
-            
-            // Create the button
-            _dialogueOptionButtons[i] = Instantiate(dialogueOptionButton, dialoguePanel.transform.position + new Vector3(xOffset, yOffset, 0), Quaternion.identity, dialoguePanel.transform);
-            
-            // Get the TextMeshProUGUI component in the button prefab and set the text
-            _dialogueOptionButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = optionText;
-            
-            // Get the Button component and add a listener to it
-            _dialogueOptionButtons[i].GetComponent<Button>().onClick.AddListener(() => OnOptionSelected(targetNode));
-        }
-    }
-
-    private void DestroyOptions()
-    {
-        if (_dialogueOptionButtons != null)
-        {
-            foreach (var button in _dialogueOptionButtons)
-            {
-                Destroy(button);
-            }
-        }
-    }
-
-    public void OnOptionSelected(DialogueNode nextNode)
-    {
-        if (nextNode != null)
-        {
-            SetDialogue(dialogueName.text, nextNode, dialoguePortrait.sprite);
+            UpdateDisplay();
         }
         else
         {
-            // Execute Code Method here
-            if (_currentNode.dialogueEvent != null) EventBus.RequestDialogueEvent( _currentNode.dialogueEvent);
             CloseDialogue();
         }
+    }
+
+    private void UpdateDisplay()
+    {
+        // Tell the Dialogue UI class to update the UI with the new line
+        string currentLine = _currentNode.dialogueLines[_currentLineIndex];
+        _dialogueUI.UpdateUI(_currentSpeaker.DialogueName, currentLine, _currentSpeaker.DialoguePortrait);
+        
+        CheckForOptions();
+    }
+
+    private void CheckForOptions()
+    {
+        // Check if dialogue is on the last line
+        bool isLastLine = _currentLineIndex == _currentNode.dialogueLines.Length - 1;
+        bool hasOptions = _currentNode.dialogueOptions != null && _currentNode.dialogueOptions.Length > 0;
+
+        // Tell the Option Controller to create buttons if on the last line
+        if (isLastLine && hasOptions)
+        {
+            _isWaitingChoice = true;
+            _dialogueOptionController.CreateButtons(_currentNode.dialogueOptions, OnOptionSelected);        }
+    }
+
+    // Callback Function passed to the Buttons (activates on button click)
+    public void OnOptionSelected(DialogueNode nextNode)
+    {
+        // Tell the Option Controller to delete the options
+        _isWaitingChoice = false;
+        _dialogueOptionController.ClearOptions();
+
+        // Move to the next node if it exists
+        if (nextNode != null)
+        {
+            _currentNode = nextNode;
+            _currentLineIndex = 0;
+            UpdateDisplay();
+        }
+        else // If no nextNode
+        {
+            HandleDialogueEvents(_currentNode.dialogueEvent);
+            CloseDialogue();
+        }
+    }
+
+    private void HandleDialogueEvents(string eventName)
+    {
+        if (string.IsNullOrEmpty(eventName)) return;
+
+        switch (eventName)
+        {
+            case "ShopOpen":
+                EventBus.RequestDialogueEvent(eventName, _currentSpeaker.ShopList);
+                break;
+            
+            // Future Events here
+        }
+    }
+    
+    private void CloseDialogue()
+    {
+        _dialogueOptionController.ClearOptions();
+        _dialogueUI.ShowUI(false);
+        _currentNode = null;
+        PauseManager.SetPause(false);
     }
 }
