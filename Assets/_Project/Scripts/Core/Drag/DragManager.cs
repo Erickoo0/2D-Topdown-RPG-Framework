@@ -61,13 +61,13 @@ public class DragManager : MonoBehaviour
         if (_sourceSlot != null && _sourceSlot.itemInstance != null)
         {
             // Set the text
-            ghostName.text = _sourceSlot.itemInstance.Data.itemName;
+            ghostName.text = _sourceSlot.itemInstance.Data.ItemName;
             ghostStack.text = _sourceSlot.itemInstance.stackSize.ToString();
             _ghostIconRect.position = _currentMousePosition;
             
             // If not animated, set the sprite
-            if (!_sourceSlot.itemInstance.Data.animated)
-                ghostIcon.sprite = _sourceSlot.itemInstance.Data.itemIconAnimated[0];
+            if (_sourceSlot.itemInstance.Data.ItemIcon.Length == 1)
+                ghostIcon.sprite = _sourceSlot.itemInstance.Data.ItemIcon[0];
             
             // Hide item from source slot to "pick it up"
             ToggleGhost(true);
@@ -79,7 +79,7 @@ public class DragManager : MonoBehaviour
         if (!ghostIcon.enabled) return;
         
         _ghostIconRect.position = _currentMousePosition;
-        if (_sourceSlot.itemInstance.Data.animated) 
+        if (_sourceSlot.itemInstance.Data.ItemIcon.Length > 1) 
             ghostIcon.sprite = GlobalHelper.GetAnimatedSprite(_sourceSlot.itemInstance.Data);
     }
 

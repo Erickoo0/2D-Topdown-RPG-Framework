@@ -13,15 +13,17 @@ public class InventorySlotUI : MonoBehaviour, IStorageSlot
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI itemStackText;
 
+    private bool _isAnimted = false
+    
     private bool _isBeingDragged = false;
 
     private void Update()
     {
         // Only run this if the item is valid, animated, and not hidden by dragging
-        if (itemInstance?.Data != null && itemInstance.Data.animated && !_isBeingDragged)
-        {
-            itemIconDisplay.sprite = GlobalHelper.GetAnimatedSprite(itemInstance.Data);
-        }
+        if (itemInstance?.Data == null && !itemInstance.Data.IsAnimated && _isBeingDragged)
+            return;
+        
+        itemIconDisplay.sprite = GlobalHelper.GetAnimatedSprite(itemInstance.Data);
     }
     
     public void RefreshSlotUI()
@@ -36,7 +38,7 @@ public class InventorySlotUI : MonoBehaviour, IStorageSlot
         
         // If not animated, set the sprite
         if (hasItem && !itemInstance.Data.animated)
-            itemIconDisplay.sprite = item.Data.itemIconAnimated[0];
+            itemIconDisplay.sprite = item.Data.itemIcon[0];
         
         
         itemIconDisplay.enabled = shouldShow;

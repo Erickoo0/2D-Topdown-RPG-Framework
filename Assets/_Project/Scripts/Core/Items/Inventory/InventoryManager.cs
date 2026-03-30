@@ -48,14 +48,14 @@ public class InventoryManager : MonoBehaviour, ISaveable
     public bool AddItems(ItemInstance item)
     {
         // Try to stack first if the item is stackable
-        if (item.Data.isStackable == true)
+        if (item.Data.IsStackable == true)
         { 
             for (int i = 0; i < itemsList.Length; i++)
             {
                 // Skip empty slots and slots with different items
                 if (itemsList[i] == null || itemsList[i].Data != item.Data) continue;
                 
-                int spaceLeft = itemsList[i].Data.maxStackSize - itemsList[i].stackSize;
+                int spaceLeft = itemsList[i].Data.MaxStackSize - itemsList[i].stackSize;
                 
                 // Skip full slots
                 if (spaceLeft <= 0) continue;
@@ -71,7 +71,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
                 // If partial new stack fits in current slow
                 else
                 {
-                    itemsList[i].stackSize = itemsList[i].Data.maxStackSize;
+                    itemsList[i].stackSize = itemsList[i].Data.MaxStackSize;
                     item.stackSize -= spaceLeft;
                     OnSlotUpdated?.Invoke(i);
                     // Do not return true yet, code continues to find open slot for remainder
@@ -124,7 +124,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
         if (itemsList[index] == null) return;
         
         // Spawn the item
-        GameObject droppedItem = Instantiate(itemsList[index].Data.itemObject, spawnPosition,  Quaternion.identity );
+        GameObject droppedItem = Instantiate(itemsList[index].Data.ItemObject, spawnPosition,  Quaternion.identity );
         // If droppedItem has compoent ItemObject, then attach it to the variable itemObject, else pass
         if (droppedItem.TryGetComponent(out ItemObject itemObject))
         {
@@ -157,7 +157,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
                 savedSlots.Add(new SavedSlot
                 {
                     index = i,
-                    itemID = itemsList[i].Data.itemID,
+                    itemID = itemsList[i].Data.ItemID,
                     itemStackSize = itemsList[i].stackSize
                 });
             }

@@ -67,8 +67,8 @@ public class ShopManager : MonoBehaviour
             var buttonComponent = shopItem.GetComponent<Button>();
 
             // Update the data
-            iconComponent.sprite = shopItemData.itemIconAnimated[0];
-            nameComponent.text = shopItemData.itemName;
+            iconComponent.sprite = shopItemData.ItemIcon[0];
+            nameComponent.text = shopItemData.ItemName;
             
             // Add click event listener to button
             buttonComponent.onClick.AddListener(() =>

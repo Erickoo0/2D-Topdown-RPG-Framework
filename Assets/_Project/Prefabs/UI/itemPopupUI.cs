@@ -26,7 +26,7 @@ public class ItemPopup : MonoBehaviour
         itemStackSize.text = itemInstance.stackSize.ToString();
         
         if (!itemInstance.Data.animated)
-            itemIcon.sprite = itemInstance.Data.itemIconAnimated[0];
+            itemIcon.sprite = itemInstance.Data.itemIcon[0];
         
         Destroy(gameObject, lifetime);
         

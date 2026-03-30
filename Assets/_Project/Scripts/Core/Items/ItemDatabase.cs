@@ -32,16 +32,16 @@ public class ItemDatabase : ScriptableObject
                 continue;
             }
             // Pairs itemID to itemData, returns warning if itemID has already been previously used
-            if (!_itemDictionary.TryAdd(itemData.itemID, itemData))
+            if (!_itemDictionary.TryAdd(itemData.ItemID, itemData))
             {
-                Debug.LogWarning($"[ItemDatabase] Duplicate Item ID found: {itemData.itemID}. IDs must be unique!");
+                Debug.LogWarning($"[ItemDatabase] Duplicate Item ID found: {itemData.ItemID}. IDs must be unique!");
             }
         }
     }
 
     public ItemData GetItem(string itemID)
     {
-        // Safety Check: If the dictionary hasnt been built yet, build it now
+        // Safety Check: If the dictionary hasn't been built yet, build it now
         if (_itemDictionary == null) Initialize();
         
         // If the ID exists, returns the Item, else return null

@@ -1,32 +1,44 @@
 using UnityEngine;
-using System.Collections.Generic;
 
-/// <summary>
-/// The Blueprint: Static Item Data
-/// </summary>
 [CreateAssetMenu(fileName = "New Item", menuName = "Item/Item")]
 public class ItemData : ScriptableObject
 {
     [Header("Item ID")] 
-    [Tooltip("This must be unique for every item")]
-    public string itemID;
+    [SerializeField] private string itemID;
+    public string ItemID => itemID;
 
-    [Header("Item Data")] 
-    public Sprite[] itemIconAnimated;
-    //public Sprite itemIcon;
-    public string itemName;
-    [TextArea] public string itemDescription;
-    public GameObject itemObject; // The physical item that gets picked up
+    [Header("Item Visuals")] 
+    [SerializeField] private Sprite[] itemIcon;
+    public Sprite[] ItemIcon => itemIcon;
+    public bool IsAnimated => itemIcon != null && itemIcon.Length > 1;
+  
+
+    [SerializeField] private string itemName;
+    public string ItemName => itemName;
+
+    [SerializeField, TextArea] private string itemDescription;
+    public string ItemDescription => itemDescription;
+
+    [Header("Economics")]
+    [SerializeField] private int itemValue; // Changed to int for easier math!
+    public int ItemValue => itemValue;
+
+    [SerializeField] private GameObject itemObject; 
+    public GameObject ItemObject => itemObject;
 
     [Header("Item Properties")] 
-    public bool animated;
-    public bool isStackable;
-    public int maxStackSize = 60;
+    [SerializeField] private bool isStackable;
+    public bool IsStackable => isStackable;
+
+    [SerializeField] private int maxStackSize = 60;
+    public int MaxStackSize => maxStackSize;
     
-    public bool isUsable;
+    [SerializeField] private bool isUsable;
+    public bool IsUsable => isUsable;
 
     public virtual bool Use(GameObject user, ItemInstance itemInstance)
     {
+        Debug.Log($"Using {itemName}");
         return false;
     }
 }

@@ -4,8 +4,8 @@ using TMPro;
 
 public class HotbarSlotUI : MonoBehaviour, IStorageSlot
 {
-    public int slotScriptIndex;
-    public int Index => slotScriptIndex;
+    //public int slotScriptIndex;
+    [field: SerializeField] public int Index { get; private set; }
     public ItemInstance itemInstance => InventoryManager.Instance.itemsList[slotScriptIndex];
 
     [Header("UI References")]
@@ -15,13 +15,13 @@ public class HotbarSlotUI : MonoBehaviour, IStorageSlot
 
     private bool _isBeingDragged = false;
 
+    private bool ShouldAnimate => itemInstance?.Data != null && itemInstance.Data.IsAnimated && !_isBeingDragged;
+
     private void Update()
     {
-        // Only run this if the item is valid, animated, and not hidden by dragging
-        if (itemInstance?.Data != null && itemInstance.Data.animated && !_isBeingDragged)
-        {
+        if (ShouldAnimate)
             itemIconDisplay.sprite = GlobalHelper.GetAnimatedSprite(itemInstance.Data);
-        }
+        
     }
     
     public void RefreshSlotUI()
@@ -31,12 +31,12 @@ public class HotbarSlotUI : MonoBehaviour, IStorageSlot
         bool shouldShow = hasItem && !_isBeingDragged; // Hides elements while being dragged
 
         // Set the text
-        itemNameText.text = hasItem ? item.Data.itemName : null;
+        itemNameText.text = hasItem ? item.Data.ItemName : null;
         itemStackText.text = hasItem ? item.stackSize.ToString() : null;
         
         // If not animated, set the sprite
-        if (hasItem && !itemInstance.Data.animated)
-            itemIconDisplay.sprite = item.Data.itemIconAnimated[0];
+        if (hasItem && itemInstance.Data.ItemIcon.Length == 1)
+            itemIconDisplay.sprite = item.Data.ItemIcon[0];
         
         
         itemIconDisplay.enabled = shouldShow;

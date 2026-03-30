@@ -59,10 +59,10 @@ public class PlayerEquipment : MonoBehaviour
         if (_currentActiveItem != null) Destroy(_currentActiveItem);
         
         // Safety Check: If slot is empty or null
-        if (itemInSlot == null || itemInSlot.Data == null || itemInSlot.Data.itemObject == null) return;
+        if (itemInSlot == null || itemInSlot.Data == null || itemInSlot.Data.ItemObject == null) return;
         
         // Spawn the Item Object
-        _currentActiveItem = Instantiate(itemInSlot.Data.itemObject, parentTransform);
+        _currentActiveItem = Instantiate(itemInSlot.Data.ItemObject, parentTransform);
         
         // Reset position
         _currentActiveItem.transform.localPosition = Vector3.zero;
@@ -83,7 +83,7 @@ public class PlayerEquipment : MonoBehaviour
         
         if (activeItem == null || activeItem.Data == null) return;
 
-        if (activeItem.Data.isUsable == true)
+        if (activeItem.Data.IsUsable == true)
         {
             bool wasUsed = activeItem.Data.Use(gameObject, activeItem);
             if (wasUsed)
