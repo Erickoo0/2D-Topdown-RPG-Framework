@@ -3,6 +3,34 @@
     "name": "UI Actions",
     "maps": [
         {
+            "name": "Player",
+            "id": "06119b85-eec4-4f1e-863a-46dc24af70aa",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "daeef2b7-ba73-4549-be77-1a3cdbab78d6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f2eccb07-9d39-4f51-a5f3-3340dddc00ed",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "UI",
             "id": "bd15ee5d-33fa-4c8d-8650-367528cd355a",
             "actions": [

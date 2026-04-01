@@ -11,8 +11,12 @@ public static class EventBus
         OnDialogueEventRequested?.Invoke(dialogueEvent, data);
     }
     
-    
-    
+    //-----------------------UI Events--------------------------
+    public static event Action<GameObject> OnMenuOpenRequested;
+    public static void RequestOpenMenu(GameObject menu) => OnMenuOpenRequested?.Invoke(menu);
+
+    public static event Action<GameObject> OnMenuCloseRequested;
+    public static void RequestCloseMenu(GameObject menu = null) => OnMenuCloseRequested?.Invoke(menu);
     //--------------------------Combat Events-------------------------
     // Signals when a floating text gets requested
     public static event Action<int, Vector3> OnFloatingTextRequested;

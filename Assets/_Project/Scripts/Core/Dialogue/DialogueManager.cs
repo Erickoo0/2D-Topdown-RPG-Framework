@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -31,21 +32,6 @@ public class DialogueManager : MonoBehaviour
         _dialogueOptionController = GetComponent<DialogueOptionController>();
    }
     
-    public void ControlDialogue(Npc speaker)
-    {
-        // Set the speaker passed from the interacted entity
-        _currentSpeaker = speaker;
-        
-        if (!_dialogueUI.IsVisible)
-        {
-            StartDialogue();
-        }
-        else
-        {
-            HandleInput();
-        }
-    }
-
     private void HandleInput()
     {
         // 1. If still typing, finish instantly
@@ -65,30 +51,58 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void StartDialogue()
+    public void StartDialogue(Npc speaker)
     {
-        // Set the startinf data
+        // Guard Clause
+        if (_dialogueUI.IsVisible) return;
+        
+        // Set the starting data
+        _currentSpeaker = speaker;
         _currentNode = _currentSpeaker.DialogueStartNode;
         _currentLineIndex = 0;
         _isWaitingChoice = false;
         
         _dialogueOptionController.ClearOptions();
-        _dialogueUI.ShowUI(true);
-        PauseManager.SetPause(true);
+        
+        EventBus.RequestOpenMenu(_dialogueUI.DialoguePanel);
         
         UpdateDisplay();
     }
 
+    public void OnAdvanceDialogueInput(InputAction.CallbackContext context)
+    {
+        if (!context.performed || !_dialogueUI.IsVisible) return; 
+        
+        // 1. If still typing, finish instantly
+        if (_dialogueUI.IsTyping)
+        {
+            _dialogueUI.FinishLineEarly();
+        }
+        // 2. If waiting for option selection, do nothing
+        else if (_isWaitingChoice)
+        {
+            return;
+        }
+        // 3. Continue
+        else
+        {
+            ContinueDialogue();
+        }
+    }
+
     private void ContinueDialogue()
     {
+        // Advance the line index
         _currentLineIndex++;
 
+        // Update the display to show new line index
         if (_currentLineIndex < _currentNode.dialogueLines.Length)
         {
             UpdateDisplay();
         }
         else
         {
+            // Close the dialogue system if we have reached the end
             CloseDialogue();
         }
     }
@@ -153,8 +167,8 @@ public class DialogueManager : MonoBehaviour
     private void CloseDialogue()
     {
         _dialogueOptionController.ClearOptions();
-        _dialogueUI.ShowUI(false);
         _currentNode = null;
-        PauseManager.SetPause(false);
+        
+        EventBus.RequestCloseMenu(_dialogueUI.DialoguePanel);      
     }
 }

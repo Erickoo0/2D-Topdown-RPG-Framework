@@ -5510,7 +5510,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 974902116}
-  - component: {fileID: 974902118}
   - component: {fileID: 974902117}
   m_Layer: 0
   m_Name: Pause Manager
@@ -5546,106 +5545,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b006feed3e332f4f8d749decc5eda1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseManager
-  pauseMenu: {fileID: 546063922}
+  pauseMenuPanel: {fileID: 546063922}
   saveManager: {fileID: 715869078}
---- !u!114 &974902118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974902115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 7957f4c247996044585230b86c38b20d, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 21191374-2f08-43b4-bd07-88a8e714e851
-    m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 77ed701b-0291-4b2e-94e7-3a933a9d7457
-    m_ActionName: 'Player/Look[/Mouse/delta]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: cdf373b3-af63-4ec4-b6e6-c60684113c6e
-    m_ActionName: 'Player/Fire[/Mouse/leftButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 82557ab4-ed33-4e6b-92c1-eaf642aa1790
-    m_ActionName: 'Player/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e18476c8-bdee-4bc7-9e4c-144a675ba619
-    m_ActionName: 'Player/Interact[/Keyboard/e]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 44271b60-3a04-4c50-bb65-761c887dfe1b
-    m_ActionName: 'UI/Submit[/Keyboard/enter]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 974902117}
-        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
-        m_MethodName: TogglePauseMenu
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: d4e0216c-d42a-431b-b5b6-c9dc92f0a478
-    m_ActionName: 'UI/Cancel[/Keyboard/escape]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4a5febfc-1d6d-465e-a461-2df6240529a7
-    m_ActionName: 'UI/Point[/Mouse/position]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ada31e34-fd07-4255-a45c-b44ee0a9733b
-    m_ActionName: 'UI/Click[/Mouse/leftButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 73f3ecc1-8d1a-4886-9d51-9ae5d6a67e7b
-    m_ActionName: 'UI/ScrollWheel[/Mouse/scroll]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f8bb7386-2f4e-47c8-b2df-5ced02bdae00
-    m_ActionName: 'UI/MiddleClick[/Mouse/middleButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1a486438-40bb-40e9-b3c1-686193195b13
-    m_ActionName: 'UI/RightClick[/Mouse/rightButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b67c729a-7ed4-42ce-895e-ba09ffb7efa4
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7393a0a1-b530-45b1-9f83-d0cf0dbe8300
-    m_ActionName: UI/TrackedDeviceOrientation
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &976108712
 GameObject:
   m_ObjectHideFlags: 0
@@ -8210,7 +8111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abdccb6d86b44a945b90513972efb321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueUI
-  dialoguePanel: {fileID: 1489805339}
+  dialoguePanel: {fileID: 0}
   dialogueName: {fileID: 692116143}
   dialogueBody: {fileID: 1139868756}
   dialoguePortrait: {fileID: 2147404120}
@@ -20077,6 +19978,7 @@ GameObject:
   - component: {fileID: 1487947189}
   - component: {fileID: 1487947188}
   - component: {fileID: 1487947187}
+  - component: {fileID: 1487947196}
   - component: {fileID: 1487947195}
   - component: {fileID: 1487947191}
   - component: {fileID: 1487947192}
@@ -20192,24 +20094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9acedf8e61bb6140a6f9272a5f8f3c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuController
-  menuCanvas: {fileID: 12255232}
-  menuKey:
-    m_Name: Menu Key
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 8cdcadd3-2193-42d5-b38c-a455f31a9fdd
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 6affd2f9-2eb8-4767-b937-8823467c244f
-      m_Path: <Keyboard>/tab
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Menu Key
-      m_Flags: 0
-    m_Flags: 0
+  menuPanel: {fileID: 0}
 --- !u!114 &1487947192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20267,8 +20152,120 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d028bd4ce91949d99bd41de7d8ec61ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  playerInput: {fileID: 0}
-  pauseMenuPanel: {fileID: 546063922}
+--- !u!114 &1487947196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487947186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 7957f4c247996044585230b86c38b20d, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 21191374-2f08-43b4-bd07-88a8e714e851
+    m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 77ed701b-0291-4b2e-94e7-3a933a9d7457
+    m_ActionName: 'Player/Look[/Mouse/delta]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cdf373b3-af63-4ec4-b6e6-c60684113c6e
+    m_ActionName: 'Player/Fire[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 82557ab4-ed33-4e6b-92c1-eaf642aa1790
+    m_ActionName: 'Player/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e18476c8-bdee-4bc7-9e4c-144a675ba619
+    m_ActionName: 'Player/Interact[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 44271b60-3a04-4c50-bb65-761c887dfe1b
+    m_ActionName: 'UI/Submit[/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1487947195}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: OnCloseMenuInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d4e0216c-d42a-431b-b5b6-c9dc92f0a478
+    m_ActionName: 'UI/Cancel[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4a5febfc-1d6d-465e-a461-2df6240529a7
+    m_ActionName: 'UI/Point[/Mouse/position]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ada31e34-fd07-4255-a45c-b44ee0a9733b
+    m_ActionName: 'UI/Click[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 73f3ecc1-8d1a-4886-9d51-9ae5d6a67e7b
+    m_ActionName: 'UI/ScrollWheel[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f8bb7386-2f4e-47c8-b2df-5ced02bdae00
+    m_ActionName: 'UI/MiddleClick[/Mouse/middleButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1a486438-40bb-40e9-b3c1-686193195b13
+    m_ActionName: 'UI/RightClick[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b67c729a-7ed4-42ce-895e-ba09ffb7efa4
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7393a0a1-b530-45b1-9f83-d0cf0dbe8300
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 974902117}
+        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+        m_MethodName: TogglePauseMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b345f99a-b5f4-40da-b77b-472e09b2a3ef
+    m_ActionName: 'Player/ESC[/Keyboard/escape]'
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1489805337
 GameObject:
   m_ObjectHideFlags: 0

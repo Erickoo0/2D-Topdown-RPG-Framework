@@ -25,6 +25,6 @@ public class Npc : MonoBehaviour, IInteractable
     public void Interact()
     {
         if (!CanInteract()) return;
-        DialogueManager.Instance.ControlDialogue(this);
+        DialogueManager.Instance.StartDialogue(this);
     }
 }

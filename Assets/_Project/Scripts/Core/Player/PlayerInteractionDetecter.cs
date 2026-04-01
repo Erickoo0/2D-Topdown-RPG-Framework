@@ -1,42 +1,67 @@
-using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Splines.ExtrusionShapes;
 
 public class PlayerInteractionDetecter : MonoBehaviour
 {
     [SerializeField] private GameObject interactIcon;
 
-    private IInteractable interactableInRange;
+    private List<IInteractable> _interactablesInRange = new List<IInteractable>();
+    private IInteractable _interactableTarget;
 
-    private void Start() => interactIcon.SetActive(false);
+    private void Update()
+    {
+        UpdateTarget();
+    }
+
+    private void UpdateTarget()
+    {
+        // 1. Clean the list of objects that are no longer interactable
+        _interactablesInRange.RemoveAll(i => i == null || !i.CanInteract());
+
+        if (_interactablesInRange.Count == 0)
+        {
+            _interactableTarget = null;
+            interactIcon.SetActive(false);
+            return;
+        }
+        
+        // 2. Set the target to the closest target
+        _interactableTarget = _interactablesInRange
+            .OrderBy(i => Vector2.Distance(transform.position, ((MonoBehaviour)i).transform.position))
+            .FirstOrDefault();    
+        
+        interactIcon.SetActive(true);
+    }
+    
+    //
     
     private void OnTriggerEnter2D(Collider2D other)
     {   
-        // Check all objects within circle collider for an IInteractable interface, then check if we can interact with it (not opened)
-        if (other.TryGetComponent(out IInteractable interactable) && interactable.CanInteract())
+        if (other.TryGetComponent(out IInteractable interactable))
         {
-            // Set the Interactable target
-            interactableInRange = interactable;
-            interactIcon.SetActive(true);
+            if (!_interactablesInRange.Contains(interactable))
+            {
+                _interactablesInRange.Add(interactable);
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        // Check all objects for an IInteractable interface that is the TARGET, then set it to null
-        if (other.TryGetComponent(out IInteractable interactable) && interactable == interactableInRange)
+        if (other.TryGetComponent(out IInteractable interactable))
         {
-            interactableInRange = null;
-            interactIcon.SetActive(false);
+            _interactablesInRange.Remove(interactable);
         }
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        // Only trigger if we have a valid target
+        if (context.performed && _interactableTarget != null && _interactableTarget.CanInteract())
         {
-            interactableInRange?.Interact();
+            _interactableTarget.Interact();
         }
     }
 }
