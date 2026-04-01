@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class PlayerEquipment : MonoBehaviour
 {
+    public static PlayerEquipment Instance { get; private set; }
+    
     [Header("Equipment Settings")]
     [Tooltip("The transform where the instantiated item will be parented")]
     [SerializeField] private Transform parentTransform;
     
     private GameObject _currentActiveItem;
-    private int _currentActiveSlotIndex = -1;
+    private int _currentActiveSlotIndex = 0;
     
     private void Start()
     {
@@ -15,10 +17,20 @@ public class PlayerEquipment : MonoBehaviour
         InventoryManager.Instance.OnActiveSlotIndexChanged += SetActiveSlotIndex;
         // Listens for when data inside any slot changes (Add, Drop, Swap)
         InventoryManager.Instance.OnSlotUpdated += SetSlotData;
-        // Listens for when Use Item Key is pressed
-        HotbarManager.Instance.OnUseItemInput += TryUseActiveItem;
     }
 
+    public void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            Debug.unityLogger.Log("Multiple PlayerEquipment detected. Disabling script.");
+            return;
+        }
+
+        Instance = this;
+    }
+    
     private void OnDestroy()
     {
         if (InventoryManager.Instance != null)
@@ -26,11 +38,7 @@ public class PlayerEquipment : MonoBehaviour
             InventoryManager.Instance.OnActiveSlotIndexChanged -= SetActiveSlotIndex;
             InventoryManager.Instance.OnSlotUpdated -= SetSlotData;
         }
-
-        if (HotbarManager.Instance != null)
-        {
-            HotbarManager.Instance.OnUseItemInput -= TryUseActiveItem;
-        }
+        
     }
     
     private void SetActiveSlotIndex(int index)
@@ -75,7 +83,7 @@ public class PlayerEquipment : MonoBehaviour
         }
     }
 
-    private void TryUseActiveItem()
+    public void TryUseActiveItem()
     {
         if (_currentActiveSlotIndex < 0) return;
 
@@ -85,10 +93,11 @@ public class PlayerEquipment : MonoBehaviour
 
         if (activeItem.Data.IsUsable == true)
         {
-            bool wasUsed = activeItem.Data.Use(gameObject, activeItem);
+            bool wasUsed = activeItem.Data.Use(activeItem);
             if (wasUsed)
             {
                 InventoryManager.Instance.RemoveItems(_currentActiveSlotIndex);
+                Debug.Log("Item Used");
             }
             return;
         }

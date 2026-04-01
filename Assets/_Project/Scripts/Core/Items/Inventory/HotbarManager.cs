@@ -5,12 +5,7 @@ using UnityEngine.InputSystem;
 public class HotbarManager : MonoBehaviour
 {
     public static HotbarManager Instance { get; private set; }
-
-    // Reference to Hotbar Actions
-    private PlayerInput _actionInput; 
     
-    public event Action OnUseItemInput;
-
     private void Awake()
     {       
         if (Instance != null && Instance != this)
@@ -20,8 +15,6 @@ public class HotbarManager : MonoBehaviour
             return;
         }
         Instance = this; // Assign This ID to variable
-        
-        _actionInput = GetComponent<PlayerInput>();
     }
     
     public void OnSelectSlot(InputAction.CallbackContext context)
@@ -53,17 +46,4 @@ public class HotbarManager : MonoBehaviour
         }
     }
     
-    public void OnUseItem(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            OnUseItemInput?.Invoke();
-        }
-    }
-    
-    public void SetHotbarActive(bool active)
-    {
-        if (active) _actionInput.ActivateInput();
-        else _actionInput.DeactivateInput();
-    }
 }

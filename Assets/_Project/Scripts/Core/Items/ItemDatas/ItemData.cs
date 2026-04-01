@@ -36,7 +36,7 @@ public class ItemData : ScriptableObject
     [SerializeField] private bool isUsable;
     public bool IsUsable => isUsable;
 
-    public virtual bool Use(GameObject user, ItemInstance itemInstance)
+    public virtual bool Use(ItemInstance itemInstance, GameObject target = null)
     {
         Debug.Log($"Using {itemName}");
         return false;

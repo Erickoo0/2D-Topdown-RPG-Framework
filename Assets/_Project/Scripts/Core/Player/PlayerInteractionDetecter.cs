@@ -58,10 +58,18 @@ public class PlayerInteractionDetecter : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        // Only trigger if we have a valid target
-        if (context.performed && _interactableTarget != null && _interactableTarget.CanInteract())
+        if (!context.performed) return;
+        
+        // 1. Check and Trigger Interaction
+        if (_interactableTarget != null && _interactableTarget.CanInteract())
         {
             _interactableTarget.Interact();
+        }
+        
+        // 2. Item Use
+        else if (PlayerEquipment.Instance != null)
+        {
+            PlayerEquipment.Instance.TryUseActiveItem();
         }
     }
 }

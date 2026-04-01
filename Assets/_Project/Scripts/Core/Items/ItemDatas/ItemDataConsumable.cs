@@ -11,18 +11,18 @@ public class ItemDataConsumable : ItemData
     public float mpHealAmount;
     public float mpHealDuration;
     
-    public override bool Use(GameObject user, ItemInstance itemInstance)
+    public override bool Use(ItemInstance itemInstance, GameObject target = null)
     {
-        if (user == null) return false;
-        bool hpRestored = HpHealCheck(user);
-        bool mpRestored = MpHealCheck(user);
+        if (target == null) target = PlayerStatsManager.Instance.gameObject;
+        bool hpRestored = HpHealCheck(target);
+        bool mpRestored = MpHealCheck(target);
             
         return hpRestored || mpRestored;
     }
     
-    private bool HpHealCheck(GameObject user)
+    private bool HpHealCheck(GameObject target)
     {
-        Health health = user.GetComponent<Health>();
+        Health health = target.GetComponent<Health>();
         if (health == null) return false;
         if (hpHealAmount == 0) return false;
         
@@ -52,9 +52,9 @@ public class ItemDataConsumable : ItemData
         return true; // Successfully healed hp
     }
     
-    private bool MpHealCheck(GameObject user)
+    private bool MpHealCheck(GameObject target)
     {
-        Mana mana = user.GetComponent<Mana>();
+        Mana mana = target.GetComponent<Mana>();
         if (mana == null) return false;
         if (mpHealAmount == 0) return false;
 
