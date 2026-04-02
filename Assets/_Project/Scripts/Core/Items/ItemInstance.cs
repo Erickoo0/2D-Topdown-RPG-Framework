@@ -4,14 +4,14 @@
 [System.Serializable]
 public class ItemInstance
 {
-    public ItemData Data { get; private set; }
+    public ItemDataSo DataSo { get; private set; }
     public int stackSize; // Tracks current amount in this instance
     
     //future properties will go here
 
-    public ItemInstance(ItemData itemData, int amount = 1)
+    public ItemInstance(ItemDataSo itemDataSo, int amount = 1)
     {
-        Data = itemData;
+        DataSo = itemDataSo;
         stackSize = amount;
     }
 }

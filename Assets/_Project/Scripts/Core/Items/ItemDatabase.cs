@@ -8,11 +8,11 @@ using System.Collections.Generic;
 public class ItemDatabase : ScriptableObject
 {
     [Tooltip("Add every ItemData in the game here")]
-    public List<ItemData> allItems;
+    public List<ItemDataSo> allItems;
     
     // Key: Items String ID
     // Value: Items ItemData
-    private Dictionary<string, ItemData> _itemDictionary;
+    private Dictionary<string, ItemDataSo> _itemDictionary;
 
     /// <summary>
     /// Converts ItemsLIst into an ItemsDictionary
@@ -21,10 +21,10 @@ public class ItemDatabase : ScriptableObject
     public void Initialize()
     {
         // Create a fresh dictionary
-        _itemDictionary = new Dictionary<string, ItemData>();
+        _itemDictionary = new Dictionary<string, ItemDataSo>();
 
         // Loop through every item in the database
-        foreach (ItemData itemData in allItems)
+        foreach (ItemDataSo itemData in allItems)
         {
             if (itemData == null)
             {
@@ -39,7 +39,7 @@ public class ItemDatabase : ScriptableObject
         }
     }
 
-    public ItemData GetItem(string itemID)
+    public ItemDataSo GetItem(string itemID)
     {
         // Safety Check: If the dictionary hasn't been built yet, build it now
         if (_itemDictionary == null) Initialize();

@@ -6,7 +6,7 @@ using DG.Tweening;
 public class ItemObject : MonoBehaviour
 {
     [Header("Settings")] 
-    [SerializeField] private ItemData startingItemData; // Used ONLY when placing items manually via the editor
+    [SerializeField] private ItemDataSo startingItemDataSo; // Used ONLY when placing items manually via the editor
 
     [Header("Spawn Animation")]
     [SerializeField] private float bounceDuration = 0.5f;
@@ -29,7 +29,7 @@ public class ItemObject : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         
         // If we assigned starting item in the inspector, then initialize it
-        if (startingItemData != null) SetItemObject(new ItemInstance(startingItemData));
+        if (startingItemDataSo != null) SetItemObject(new ItemInstance(startingItemDataSo));
         
     }
 
@@ -37,15 +37,15 @@ public class ItemObject : MonoBehaviour
 
     private void Update()
     {
-        if (_itemInstance?.Data == null || _itemInstance.Data.ItemIcon == null) return;
+        if (_itemInstance?.DataSo == null || _itemInstance.DataSo.ItemIcon == null) return;
         
-        _spriteRenderer.sprite = GlobalHelper.GetAnimatedSprite(_itemInstance.Data);
+        _spriteRenderer.sprite = GlobalHelper.GetAnimatedSprite(_itemInstance.DataSo);
     }
     
     public void SetItemObject(ItemInstance newItemInstance, Vector3? dropTarget = null, bool animate = true)
     {
         _itemInstance = newItemInstance;
-        gameObject.name = _itemInstance.Data.ItemName;
+        gameObject.name = _itemInstance.DataSo.ItemName;
         
         if (!animate) return; // Skip the animation
         PlaySpawnAnimation(dropTarget);

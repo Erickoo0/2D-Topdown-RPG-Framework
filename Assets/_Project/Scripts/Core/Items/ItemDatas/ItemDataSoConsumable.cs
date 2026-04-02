@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Consumable Item", menuName = "Item/Consumable")]
-public class ItemDataConsumable : ItemData
+public class ItemDataSoConsumable : ItemDataSo
 {
     [Header("Hp Restoration")]
     public float hpHealAmount;

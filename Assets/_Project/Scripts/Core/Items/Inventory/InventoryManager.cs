@@ -48,14 +48,14 @@ public class InventoryManager : MonoBehaviour, ISaveable
     public bool AddItems(ItemInstance item)
     {
         // Try to stack first if the item is stackable
-        if (item.Data.IsStackable == true)
+        if (item.DataSo.IsStackable == true)
         { 
             for (int i = 0; i < itemsList.Length; i++)
             {
                 // Skip empty slots and slots with different items
-                if (itemsList[i] == null || itemsList[i].Data != item.Data) continue;
+                if (itemsList[i] == null || itemsList[i].DataSo != item.DataSo) continue;
                 
-                int spaceLeft = itemsList[i].Data.MaxStackSize - itemsList[i].stackSize;
+                int spaceLeft = itemsList[i].DataSo.MaxStackSize - itemsList[i].stackSize;
                 
                 // Skip full slots
                 if (spaceLeft <= 0) continue;
@@ -71,7 +71,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
                 // If partial new stack fits in current slow
                 else
                 {
-                    itemsList[i].stackSize = itemsList[i].Data.MaxStackSize;
+                    itemsList[i].stackSize = itemsList[i].DataSo.MaxStackSize;
                     item.stackSize -= spaceLeft;
                     OnSlotUpdated?.Invoke(i);
                     // Do not return true yet, code continues to find open slot for remainder
@@ -124,7 +124,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
         if (itemsList[index] == null) return;
         
         // Spawn the item
-        GameObject droppedItem = Instantiate(itemsList[index].Data.ItemObject, spawnPosition,  Quaternion.identity );
+        GameObject droppedItem = Instantiate(itemsList[index].DataSo.ItemObject, spawnPosition,  Quaternion.identity );
         // If droppedItem has compoent ItemObject, then attach it to the variable itemObject, else pass
         if (droppedItem.TryGetComponent(out ItemObject itemObject))
         {
@@ -151,13 +151,13 @@ public class InventoryManager : MonoBehaviour, ISaveable
         // Loops through inventory and adds any non-empty slots into the savedSlots array
         for (int i = 0; i < itemsList.Length; i++)
         {
-            if (itemsList[i] != null && itemsList[i].Data != null)
+            if (itemsList[i] != null && itemsList[i].DataSo != null)
             {
                 // Create SavedSlots passing slot index #, itemID, and stackSize
                 savedSlots.Add(new SavedSlot
                 {
                     index = i,
-                    itemID = itemsList[i].Data.ItemID,
+                    itemID = itemsList[i].DataSo.ItemID,
                     itemStackSize = itemsList[i].stackSize
                 });
             }
@@ -179,16 +179,16 @@ public class InventoryManager : MonoBehaviour, ISaveable
             if (savedSlot.index < 0 || savedSlot.index >= itemsList.Length) continue;
         
             // Convert the itemIDs from savedSlot into ItemData
-            ItemData itemData = itemDatabase.GetItem(savedSlot.itemID);
+            ItemDataSo itemDataSo = itemDatabase.GetItem(savedSlot.itemID);
         
-            if (itemData == null)
+            if (itemDataSo == null)
             {
                 Debug.LogWarning($"[Inventory] Could not find item with ID: {savedSlot.itemID} in database.");
                 continue;
             }
             
             // Use the ItemData to add ItemInstances to the itemsList
-            itemsList[savedSlot.index] = new ItemInstance(itemData, savedSlot.itemStackSize);
+            itemsList[savedSlot.index] = new ItemInstance(itemDataSo, savedSlot.itemStackSize);
         }
 
         // 3. Notify the UI to refresh ALL slots

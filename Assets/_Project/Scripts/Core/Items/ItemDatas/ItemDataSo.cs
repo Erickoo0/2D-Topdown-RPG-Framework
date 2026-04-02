@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item/Item")]
-public class ItemData : ScriptableObject
+public class ItemDataSo : ScriptableObject
 {
     [Header("Item ID")] 
     [SerializeField] private string itemID;

@@ -61,7 +61,7 @@ public class DragManager : MonoBehaviour
         if (_sourceSlot != null && _sourceSlot.itemInstance != null)
         {
             // Set the text
-            ghostName.text = _sourceSlot.itemInstance.Data.ItemName;
+            ghostName.text = _sourceSlot.itemInstance.DataSo.ItemName;
             ghostStack.text = _sourceSlot.itemInstance.stackSize.ToString();
             _ghostIconRect.position = _currentMousePosition;
             
@@ -75,9 +75,9 @@ public class DragManager : MonoBehaviour
         if (!ghostIcon.enabled) return;
         
         _ghostIconRect.position = _currentMousePosition;
-        if (_sourceSlot.itemInstance.Data.ItemIcon == null) return; 
+        if (_sourceSlot.itemInstance.DataSo.ItemIcon == null) return; 
         
-        ghostIcon.sprite = GlobalHelper.GetAnimatedSprite(_sourceSlot.itemInstance.Data);
+        ghostIcon.sprite = GlobalHelper.GetAnimatedSprite(_sourceSlot.itemInstance.DataSo);
     }
 
     private void EndDrag()
