@@ -20,6 +20,10 @@ MonoBehaviour:
   dialogueOptions:
   - optionName: Yes! Now open shop!!!
     nextNode: {fileID: 0}
+    dialogueEvent: OpenShop
+    eventData: {fileID: 0}
   - optionName: No its horrible!
     nextNode: {fileID: 11400000, guid: 3fd5a02c6e450e1459d4c22630f751a5, type: 2}
-  dialogueEvent: ShopOpen
+    dialogueEvent: AcceptQuest
+    eventData: {fileID: 11400000, guid: 36fbb57dd37cd6241a5572ea2a24118c, type: 2}
+  nodeEvent: 

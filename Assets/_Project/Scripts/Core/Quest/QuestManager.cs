@@ -59,7 +59,7 @@ namespace Quest
         public void AcceptQuest(string dialogueEvent,object questData)
         {
             // Safety Check
-            if (dialogueEvent != "QuestAccept") return;
+            if (dialogueEvent != "AcceptQuest") return;
             if (questData == null) return;
             
             // Cast the object to QuestSo

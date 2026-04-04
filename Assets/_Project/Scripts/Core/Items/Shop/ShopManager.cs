@@ -19,7 +19,7 @@ public class ShopManager : MonoBehaviour
     
     private void SetupShop(string dialogueEvent, object data)
     {
-        if (dialogueEvent != "ShopOpen") return;
+        if (dialogueEvent != "OpenShop") return;
         
         // Cast the object back to an array type
         ItemDataSo[] shopList = data as ItemDataSo[];
