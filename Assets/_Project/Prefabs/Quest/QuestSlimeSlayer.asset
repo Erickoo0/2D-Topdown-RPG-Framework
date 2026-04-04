@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286c654a86bfddf49a552de14dc3c579, type: 3}
   m_Name: QuestSlimeSlayer
   m_EditorClassIdentifier: Assembly-CSharp::QuestSo
-  questID: 
-  questName: 
-  questDescription: 
-  questObjectives: []
+  questID: 0
+  questName: Slime Slayer
+  questDescription: The slayer of slimes
+  questObjectives:
+  - {fileID: 11400000, guid: 16fde836e9d81fe458ad4f6694a0ce05, type: 2}

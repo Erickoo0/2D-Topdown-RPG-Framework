@@ -17,6 +17,6 @@ public class QuestTester : MonoBehaviour
     {
         if (!context.performed) return;
         
-        EventBus.RequestUpdateQuestObjective("Slime", 1);
+        EventBus.RequestUpdateQuestObjective(testQuest.QuestObjectives[0].TargetID, 1);
     }
 }

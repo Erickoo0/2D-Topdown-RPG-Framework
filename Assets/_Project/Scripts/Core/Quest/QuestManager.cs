@@ -36,10 +36,12 @@ namespace Quest
                 // Look through every objective in the quest, and check if Event target ID matches the objective target ID
                 for (int i = 0; i < questActive.QuestData.QuestObjectives.Count; i++)
                 {
+                    
                     // If it does, add the amount to the objective progress
                     if (questActive.QuestData.QuestObjectives[i].TargetID == targetID)
                     {
                         questActive.AddObjectiveProgress(i, amount);
+                        Debug.Log($"Quest {questActive.QuestData.QuestName} Objective {i} updated by {amount}.");
                     }
                 }
             }

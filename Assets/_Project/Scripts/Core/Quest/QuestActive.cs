@@ -22,12 +22,13 @@ public class QuestActive
 
         int completedCount = 0; // Counts how many objectives are completed
 
-        // Loop through each objective and check if it's completed'
+        // Check for objective completion 
         for (int i = 0; i < QuestData.QuestObjectives.Count; i++)
         {
             if (ObjectiveProgress[i] >= QuestData.QuestObjectives[i].RequiredAmount)
             {
                 completedCount++;
+                Debug.Log($"Quest {QuestData.QuestName}: Objective {QuestData.QuestObjectives[i].ObjectiveTitle}: completed!");
             }
         }
 
@@ -35,7 +36,7 @@ public class QuestActive
         if (completedCount >= QuestData.QuestObjectives.Count)
         {
             IsCompleted = true;
-            Debug.Log($"Quest {QuestData.QuestName} Completed!");
+            Debug.Log($"Quest {QuestData.QuestName}: Completed!");
         }
     }
 
