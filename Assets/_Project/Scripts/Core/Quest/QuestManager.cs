@@ -23,9 +23,16 @@ namespace Quest
             Instance = this;
         }
 
-        private void OnEnable() => EventBus.OnUpdateQuestObjectiveRequested += HandleObjectiveUpdate;
+        private void OnEnable()
+        {
+            EventBus.OnUpdateQuestObjectiveRequested += HandleObjectiveUpdate;
+            EventBus.OnDialogueEventRequested += AcceptQuest;
+        }
 
-        private void OnDisable() => EventBus.OnUpdateQuestObjectiveRequested -= HandleObjectiveUpdate;
+        private void OnDisable()
+        {
+            EventBus.OnUpdateQuestObjectiveRequested -= HandleObjectiveUpdate;
+        }
 
         private void HandleObjectiveUpdate(string targetID, int amount)
         {
@@ -46,16 +53,25 @@ namespace Quest
                 }
             }
         }
+
+ 
         
-        public void AcceptQuest(QuestSo questData)
+        public void AcceptQuest(string dialogueEvent,object questData)
         {
             // Safety Check
+            if (dialogueEvent != "QuestAccept") return;
             if (questData == null) return;
-            // Check if we already have the quest to avoid duplicates
-            if (_questList.Exists(q => q.QuestData.QuestID == questData.QuestID)) return;
             
-            _questList.Add(new QuestActive(questData));
-            Debug.Log($"Quest {questData.QuestName} accepted.");
+            // Cast the object to QuestSo
+            QuestSo questDataSo = questData as QuestSo; // Cast the object to QuestSo
+            if (questDataSo == null) return;
+            
+            // Check if we already have the quest to avoid duplicates
+            if (_questList.Exists(q => q.QuestData.QuestID == questDataSo.QuestID)) return;
+            
+            // Create a new QuestActive object and add it to the list
+            _questList.Add(new QuestActive(questDataSo));
+            Debug.Log($"Quest {questDataSo.QuestName} accepted.");
         }
 
     }
