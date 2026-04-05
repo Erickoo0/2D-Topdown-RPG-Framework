@@ -256,7 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Npc
   dialogueName: Bobby
   dialoguePortrait: {fileID: -7527145504033472756, guid: 4ec53bce811d1f64a947aabac05f8f16, type: 3}
-  dialogueStartNode: {fileID: 11400000, guid: 0385a6ae34ba69241993577385aec4fb, type: 2}
+  dialogueStartNode: {fileID: 11400000, guid: 567c091ad9553f649a148e0856e15657, type: 2}
   shopList:
   - {fileID: 11400000, guid: 100db236c2a3c8d438e5b5f38f7577b9, type: 2}
   - {fileID: 11400000, guid: e0dc600b517fe9f4db1460e4581704a4, type: 2}
