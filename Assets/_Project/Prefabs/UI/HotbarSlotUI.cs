@@ -17,22 +17,22 @@ public class HotbarSlotUI : MonoBehaviour, IStorageSlot
 
     private void Update()
     {
-        if (itemInstance?.Data == null || _isBeingDragged)
+        if (itemInstance?.DataSo == null || _isBeingDragged)
             return;
         
-        itemIconDisplay.sprite = GlobalHelper.GetAnimatedSprite(itemInstance.Data);
+        itemIconDisplay.sprite = GlobalHelper.GetAnimatedSprite(itemInstance.DataSo);
     }
     
     public void RefreshSlotUI()
     {
         var item = itemInstance; // Gets data from Inventory Manager via Property
-        bool hasItem = item != null && item.Data != null; // Check if the slot has an item
+        bool hasItem = item != null && item.DataSo != null; // Check if the slot has an item
         bool shouldShow = hasItem && !_isBeingDragged; // Hides elements while being dragged
 
         // Set the text
-        itemNameText.text = hasItem ? item.Data.ItemName : null;
+        itemNameText.text = hasItem ? item.DataSo.ItemName : null;
         itemStackText.text = hasItem ? item.stackSize.ToString() : null;
-        itemIconDisplay.sprite = itemInstance.Data.ItemIcon[0];
+        itemIconDisplay.sprite = itemInstance.DataSo.ItemIcon[0];
         itemIconDisplay.enabled = shouldShow;
     }
 

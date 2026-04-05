@@ -24,16 +24,16 @@ public class InventoryTest : MonoBehaviour
         if (db == null || db.allItems.Count == 0) return;
 
         // 3. Pick a random item and create the data
-        ItemData randomItemData = db.allItems[Random.Range(0, db.allItems.Count)];
-        int randomAmount = randomItemData.IsStackable ? Random.Range(1, 6) : 1;
-        ItemInstance newItemInstance = new ItemInstance(randomItemData, randomAmount);
+        ItemDataSo randomItemDataSo = db.allItems[Random.Range(0, db.allItems.Count)];
+        int randomAmount = randomItemDataSo.IsStackable ? Random.Range(1, 6) : 1;
+        ItemInstance newItemInstance = new ItemInstance(randomItemDataSo, randomAmount);
         
         // 4. Spawn and Initialize the item
-        GameObject droppedItemObj = Instantiate(newItemInstance.Data.ItemObject, _player.transform.position, Quaternion.identity);
+        GameObject droppedItemObj = Instantiate(newItemInstance.DataSo.ItemObject, _player.transform.position, Quaternion.identity);
         if (droppedItemObj.TryGetComponent(out ItemObject itemObject))
         {
             itemObject.SetItemObject(newItemInstance);
-            Debug.unityLogger.Log($"Spawned {randomAmount}x {randomItemData.ItemName} in the world!");
+            Debug.unityLogger.Log($"Spawned {randomAmount}x {randomItemDataSo.ItemName} in the world!");
         }
 
     }

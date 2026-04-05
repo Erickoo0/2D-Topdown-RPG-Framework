@@ -17,6 +17,10 @@ PrefabInstance:
       value: Green Orc
       objectReference: {fileID: 0}
     - target: {fileID: 3324052278730299444, guid: c97aa17d95a1c2b41b1bf599355a5d61, type: 3}
+      propertyPath: dialogueStartNode
+      value: 
+      objectReference: {fileID: 11400000, guid: faf66a9cb53daf145841f2e696d49009, type: 2}
+    - target: {fileID: 3324052278730299444, guid: c97aa17d95a1c2b41b1bf599355a5d61, type: 3}
       propertyPath: 'dialogueLines.Array.data[0]'
       value: Hi, my name is Green Orc.
       objectReference: {fileID: 0}

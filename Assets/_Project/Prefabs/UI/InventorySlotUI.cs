@@ -18,24 +18,24 @@ public class InventorySlotUI : MonoBehaviour, IStorageSlot
     private void Update()
     { 
         // If the item is not animated or is being dragged, return
-        if (itemInstance?.Data == null || !itemInstance.Data.IsAnimated || _isBeingDragged)
+        if (itemInstance?.DataSo == null || !itemInstance.DataSo.IsAnimated || _isBeingDragged)
             return;
         
-        itemIconDisplay.sprite = GlobalHelper.GetAnimatedSprite(itemInstance.Data);
+        itemIconDisplay.sprite = GlobalHelper.GetAnimatedSprite(itemInstance.DataSo);
     }
     
     public void RefreshSlotUI()
     {
         var item = itemInstance; // Gets data from Inventory Manager via Property
-        bool hasItem = item != null && item.Data != null; // Check if the slot has an item
+        bool hasItem = item != null && item.DataSo != null; // Check if the slot has an item
         bool shouldShow = hasItem && !_isBeingDragged; // Hides elements while being dragged
         
         // Set the text
-        itemNameText.text = hasItem ? item.Data.ItemName : null;
+        itemNameText.text = hasItem ? item.DataSo.ItemName : null;
         itemStackText.text = hasItem ? item.stackSize.ToString() : null;
         
         // Set the sprite
-        itemIconDisplay.sprite = hasItem ? itemInstance.Data.ItemIcon[0] : null;
+        itemIconDisplay.sprite = hasItem ? itemInstance.DataSo.ItemIcon[0] : null;
         itemIconDisplay.enabled = shouldShow;
     }
 

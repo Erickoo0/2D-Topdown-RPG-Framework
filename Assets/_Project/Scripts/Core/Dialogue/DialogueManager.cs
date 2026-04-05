@@ -130,37 +130,43 @@ public class DialogueManager : MonoBehaviour
     }
 
     // Callback Function passed to the Buttons (activates on button click)
-    public void OnOptionSelected(DialogueNode nextNode)
+    public void OnOptionSelected(DialogueOption selectedOption)
     {
         // Tell the Option Controller to delete the options
         _isWaitingChoice = false;
         _dialogueOptionController.ClearOptions();
 
-        // Move to the next node if it exists
-        if (nextNode != null)
+        // 1. Execut the options event if it has one
+        if (!string.IsNullOrEmpty(selectedOption.dialogueEvent))
         {
-            _currentNode = nextNode;
+            HandleDialogueEvents(selectedOption.dialogueEvent, selectedOption.eventData);
+        }
+        // 2. Advance to the next node if it has one
+        if (selectedOption.nextNode != null) 
+        {
+            _currentNode = selectedOption.nextNode;
             _currentLineIndex = 0;
             UpdateDisplay();
         }
-        else // If no nextNode
+        else // 3. Close the dialogue if there is no next node
         {
-            HandleDialogueEvents(_currentNode.dialogueEvent);
             CloseDialogue();
         }
     }
 
-    private void HandleDialogueEvents(string eventName)
+    private void HandleDialogueEvents(string eventName, Object eventData = null)
     {
         if (string.IsNullOrEmpty(eventName)) return;
 
         switch (eventName)
         {
-            case "ShopOpen":
+            case "OpenShop":
                 EventBus.RequestDialogueEvent(eventName, _currentSpeaker.ShopList);
                 break;
             
-            // Future Events here
+            case "AcceptQuest":
+                EventBus.RequestDialogueEvent(eventName, eventData);
+                break;
         }
     }
     

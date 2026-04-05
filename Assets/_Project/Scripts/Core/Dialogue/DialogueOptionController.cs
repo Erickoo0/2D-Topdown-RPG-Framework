@@ -9,7 +9,7 @@ public class DialogueOptionController : MonoBehaviour
     [SerializeField] private GameObject buttonPrefab;
     private readonly List<GameObject> _buttons = new List<GameObject>();
 
-    public void CreateButtons(DialogueOption[] options, System.Action<DialogueNode> onSelected)
+    public void CreateButtons(DialogueOption[] options, System.Action<DialogueOption> onSelected)
     {
         ClearOptions();
 
@@ -20,7 +20,7 @@ public class DialogueOptionController : MonoBehaviour
             // Set the button text
             button.GetComponentInChildren<TextMeshProUGUI>().text = option.optionName;
             // Tell the button to call OnOptionSelected method in the Manager when clicked
-            button.GetComponent<Button>().onClick.AddListener(() => onSelected(option.nextNode));
+            button.GetComponent<Button>().onClick.AddListener(() => onSelected(option));
             _buttons.Add(button);
         }
     }

@@ -57,6 +57,10 @@ PrefabInstance:
       value: Princess Fiona
       objectReference: {fileID: 0}
     - target: {fileID: 6447022059156519220, guid: e0a23f9a59f64304a9cc415416d449d1, type: 3}
+      propertyPath: dialogueStartNode
+      value: 
+      objectReference: {fileID: 11400000, guid: b0e49f90a91e32a4a9fd525d79fdb469, type: 2}
+    - target: {fileID: 6447022059156519220, guid: e0a23f9a59f64304a9cc415416d449d1, type: 3}
       propertyPath: 'dialogueLines.Array.data[0]'
       value: My name is Princess Fiona.
       objectReference: {fileID: 0}

@@ -19,7 +19,7 @@ public class Chest : MonoBehaviour, IInteractable
     [System.Serializable]
     public struct ItemDrop
     {
-        public ItemData itemData;
+        public ItemDataSo itemDataSo;
         public int dropAmount;
     }
     
@@ -51,7 +51,7 @@ public class Chest : MonoBehaviour, IInteractable
         int itemsToDrop = 0;
         foreach (ItemDrop itemDrop in chestContents)
         {
-            if (itemDrop.itemData != null) itemsToDrop++;
+            if (itemDrop.itemDataSo != null) itemsToDrop++;
         }
         
         // 2. Calculate angle between each item
@@ -60,7 +60,7 @@ public class Chest : MonoBehaviour, IInteractable
         
         foreach (ItemDrop itemDrop in chestContents)
         {
-            if (itemDrop.itemData == null)
+            if (itemDrop.itemDataSo == null)
             {
                 Debug.LogWarning("Chest item is null!");
                 continue;
@@ -71,12 +71,12 @@ public class Chest : MonoBehaviour, IInteractable
             Vector3 targetPos = CalculateDropPosition(currentAngle);
             
             // 2. Spawn the object at the spawnPos
-            GameObject droppedItemObj = Instantiate(itemDrop.itemData.ItemObject, spawnPos, Quaternion.identity);
+            GameObject droppedItemObj = Instantiate(itemDrop.itemDataSo.ItemObject, spawnPos, Quaternion.identity);
             
             // 3. Check if the droppedItemObj has ItemObject component, if so, initialize it
             if (droppedItemObj.TryGetComponent(out ItemObject itemObject))
             {
-                ItemInstance itemInstance = new ItemInstance(itemDrop.itemData, itemDrop.dropAmount); // Create an item instance
+                ItemInstance itemInstance = new ItemInstance(itemDrop.itemDataSo, itemDrop.dropAmount); // Create an item instance
                 itemObject.SetItemObject(itemInstance, targetPos);
             }
             

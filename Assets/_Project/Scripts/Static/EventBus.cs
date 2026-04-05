@@ -17,6 +17,16 @@ public static class EventBus
 
     public static event Action<GameObject> OnMenuCloseRequested;
     public static void RequestCloseMenu(GameObject menu = null) => OnMenuCloseRequested?.Invoke(menu);
+    
+    //--------------------------Quest Events-------------------------
+    public static event Action<string, int> OnUpdateQuestObjectiveRequested;
+    public static void RequestUpdateQuestObjective(string targetID, int number) => OnUpdateQuestObjectiveRequested?.Invoke(targetID, number);
+    
+    public static event Action OnUpdateQuestRequested;
+    public static void RequestUpdateQuest()=> OnUpdateQuestRequested?.Invoke();
+    
+    
+    
     //--------------------------Combat Events-------------------------
     // Signals when a floating text gets requested
     public static event Action<int, Vector3> OnFloatingTextRequested;

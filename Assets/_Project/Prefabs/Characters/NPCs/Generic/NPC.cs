@@ -8,9 +8,9 @@ public class Npc : MonoBehaviour, IInteractable
     [SerializeField] private DialogueNode dialogueStartNode;
 
     [Header("Shop Data")] 
-    [SerializeField] private ItemData[] shopList;
+    [SerializeField] private ItemDataSo[] shopList;
     
-    public ItemData[] ShopList => shopList;
+    public ItemDataSo[] ShopList => shopList;
     
     // Properties so DialogueManager can read the private variables
     public string  DialogueName => dialogueName;

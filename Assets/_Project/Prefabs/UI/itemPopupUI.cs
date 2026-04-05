@@ -14,10 +14,10 @@ public class ItemPopup : MonoBehaviour
 
     private void Update()
     {
-        if (itemInstance?.Data == null || !itemInstance.Data.IsAnimated)
+        if (itemInstance?.DataSo == null || !itemInstance.DataSo.IsAnimated)
             return;
         
-        itemIconDisplay.sprite = GlobalHelper.GetAnimatedSprite(itemInstance.Data);
+        itemIconDisplay.sprite = GlobalHelper.GetAnimatedSprite(itemInstance.DataSo);
     }
     
     public void SetPopUp(ItemInstance newItem)
@@ -25,7 +25,7 @@ public class ItemPopup : MonoBehaviour
         itemInstance = newItem;
         
         // Set the text
-        itemName.text = itemInstance.Data.ItemName;
+        itemName.text = itemInstance.DataSo.ItemName;
         itemStackSize.text = itemInstance.stackSize.ToString();
  
         Destroy(gameObject, lifetime);

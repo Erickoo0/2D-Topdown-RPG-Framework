@@ -19,10 +19,10 @@ public class ShopManager : MonoBehaviour
     
     private void SetupShop(string dialogueEvent, object data)
     {
-        if (dialogueEvent != "ShopOpen") return;
+        if (dialogueEvent != "OpenShop") return;
         
         // Cast the object back to an array type
-        ItemData[] shopList = data as ItemData[];
+        ItemDataSo[] shopList = data as ItemDataSo[];
         
         // Safety Check
         if (shopList == null || shopList.Length == 0) return;
@@ -34,12 +34,12 @@ public class ShopManager : MonoBehaviour
         
     }
 
-    private void CreateShopItems(ItemData[] shopList)
+    private void CreateShopItems(ItemDataSo[] shopList)
     {
         // Destroy old items
         foreach (Transform child in shopItemPanel.transform) Destroy(child.gameObject);
         
-        foreach (ItemData shopItemData in shopList)
+        foreach (ItemDataSo shopItemData in shopList)
         {
             // Create the button and get the components
             GameObject shopItem = Instantiate(shopItemPrefab, shopItemPanel.transform);
