@@ -31,6 +31,7 @@ public class QuestManager : MonoBehaviour
     private void OnDisable()
     {
         EventBus.OnUpdateQuestObjectiveRequested -= HandleObjectiveUpdate;
+        EventBus.OnDialogueEventRequested -= AcceptQuest;
     }
 
     private void HandleObjectiveUpdate(string targetID, int amount)
