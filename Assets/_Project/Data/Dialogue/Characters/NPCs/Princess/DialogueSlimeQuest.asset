@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb1411f2ace4a1ab2532817c7aa94f8, type: 3}
   m_Name: DialogueSlimeQuest
   m_EditorClassIdentifier: Assembly-CSharp::DialogueNode
-  dialogueLines: []
-  dialogueOptions: []
+  dialogueLines:
+  - Im so scared!
+  - scary slimes everywhere!
+  - go kill them all!
+  dialogueOptions:
+  - optionName: Sure thing
+    nextNode: {fileID: 11400000, guid: ae7cc6a2ef6733f4ea618d263f0c5ca7, type: 2}
+    dialogueEvent: AcceptQuest
+    eventData: {fileID: 11400000, guid: 36fbb57dd37cd6241a5572ea2a24118c, type: 2}
+  - optionName: Im scared too!
+    nextNode: {fileID: 11400000, guid: 9e4fc34fd11aea94a87cc2250894c77d, type: 2}
+    dialogueEvent: 
+    eventData: {fileID: 0}
   nodeEvent: 
