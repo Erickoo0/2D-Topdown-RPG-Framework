@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 5766307546840848036}
   - component: {fileID: 7759030371112986302}
   - component: {fileID: 1089657946280949265}
+  - component: {fileID: -1747576445313389302}
   m_Layer: 0
   m_Name: Neutral
   m_TagString: Untagged
@@ -213,7 +214,7 @@ SpriteRenderer:
   m_SortingLayer: 6
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 8769549347541133393, guid: ce849ea991ffc5546a605759eb9ac09f, type: 3}
+  m_Sprite: {fileID: -4611245308921733550, guid: ce849ea991ffc5546a605759eb9ac09f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -231,7 +232,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7531220670705793847}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -306,7 +307,7 @@ Animator:
   m_GameObject: {fileID: 7531220670705793847}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d325ead14631c1d41ae884f952fb6094, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -343,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 0}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 9e94d7cbdbd270b49a23c3d54fd8d97e, type: 3}
 --- !u!114 &7759030371112986302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,10 +357,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
-  m_CategoryHash: 0
-  m_labelHash: 0
+  m_CategoryHash: 1.8625731e-11
+  m_labelHash: 1.1909236e-32
   m_SpriteKey: 0
-  m_SpriteHash: 0
+  m_SpriteHash: 500807929
 --- !u!114 &1089657946280949265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +377,20 @@ MonoBehaviour:
   waitTime: 2
   maxStartDelay: 4
   loopWaypoints: 1
+--- !u!114 &-1747576445313389302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531220670705793847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b738caa94a6360641b76c8902eb4eb18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  hpMax: 100
+  hpCurrent: 0
 --- !u!1 &8755887523427810583
 GameObject:
   m_ObjectHideFlags: 0
