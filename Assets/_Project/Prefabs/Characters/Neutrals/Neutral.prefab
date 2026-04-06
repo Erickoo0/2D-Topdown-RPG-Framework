@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 7759030371112986302}
   - component: {fileID: 1089657946280949265}
   - component: {fileID: -1747576445313389302}
+  - component: {fileID: 3685750868421853756}
   m_Layer: 0
   m_Name: Neutral
   m_TagString: Untagged
@@ -390,7 +391,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   hpMax: 100
-  hpCurrent: 0
+  hpCurrent: 65
+--- !u!114 &3685750868421853756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531220670705793847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3333051ddc97cda4e88901963c23d257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthUI
+  healthBarPrefab: {fileID: 1143244870389784472, guid: bbafd3c610ab3284ca44a329d7eae5df, type: 3}
+  offset: {x: 0, y: 1, z: 0}
+  healthTarget: {fileID: -1747576445313389302}
+  healthBarRef: {fileID: 0}
+  showText: 0
 --- !u!1 &8755887523427810583
 GameObject:
   m_ObjectHideFlags: 0
