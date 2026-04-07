@@ -12,27 +12,23 @@ public class WaypointMover : MonoBehaviour
     [SerializeField] private bool loopWaypoints = true;
 
     [Header("Waypoint Settings")]
-    private Transform waypointParent;
-    private Vector2[] waypoints;
-    private int currentWaypointIndex;
+    private Transform _waypointParent;
+    private Vector2[] _waypoints;
+    private int _currentWaypointIndex;
     [Header("Animation Settings")]
     private EntityAnimationController _entityAnimation;
-    private CircleCollider2D _entityCollider;
-    private bool isWaiting;
+    private bool _isWaiting;
     
 
     private void Start()
     {
-        // 1. Get the Collider
-        _entityCollider = GetComponent<CircleCollider2D>();
-        
-        // 2. Get the Animator 
+        // 1. Get the Animator 
         _entityAnimation = GetComponent<EntityAnimationController>();
         
-        // 3. Get the waypoint parent
-        if (waypointParent == null) waypointParent = transform.Find("Waypoint Parent");
+        // 2. Get the waypoint parent
+        if (_waypointParent == null) _waypointParent = transform.Find("Waypoint Parent");
 
-        if (waypointParent != null)
+        if (_waypointParent != null)
         {
             SetupWaypoints();
             StartCoroutine(RandomStartDelay());
@@ -42,16 +38,16 @@ public class WaypointMover : MonoBehaviour
     
     private void SetupWaypoints()
     {
-        waypoints = new Vector2[waypointParent.childCount];
-        for (int i = 0; i < waypointParent.childCount; i++) 
+        _waypoints = new Vector2[_waypointParent.childCount];
+        for (int i = 0; i < _waypointParent.childCount; i++) 
         {
-            waypoints[i] = waypointParent.GetChild(i).position;
+            _waypoints[i] = _waypointParent.GetChild(i).position;
         }
     }
     
     private void Update()
     {
-        if (PauseManager.IsGamePaused || isWaiting || waypoints == null)
+        if (PauseManager.IsGamePaused || _isWaiting || _waypoints == null)
         {
             _entityAnimation?.StopAnimation();            
             return;
@@ -61,7 +57,7 @@ public class WaypointMover : MonoBehaviour
     
     private void MoveToWaypoint()
     {
-        Vector2 target = waypoints[currentWaypointIndex]; // Get the current waypoint position
+        Vector2 target = _waypoints[_currentWaypointIndex]; // Get the current waypoint position
         Vector2 currentPosition = transform.position;
         float distance = Vector2.Distance(currentPosition, target);
         
@@ -86,30 +82,30 @@ public class WaypointMover : MonoBehaviour
     IEnumerator WaitAtWaypoint()
     {
         // Idle for duration
-        isWaiting = true;
+        _isWaiting = true;
         yield return new WaitForSeconds(waitTime);
         
         // Check if target was reached (if stopped because of collision)
-        float distance = Vector2.Distance(transform.position, waypoints[currentWaypointIndex]);
+        float distance = Vector2.Distance(transform.position, _waypoints[_currentWaypointIndex]);
         
         // If we reached the target, move target to next waypoint
-        if (distance <= 0.1f) currentWaypointIndex = loopWaypoints ? (currentWaypointIndex + 1) % waypoints.Length : currentWaypointIndex;
+        if (distance <= 0.1f) _currentWaypointIndex = loopWaypoints ? (_currentWaypointIndex + 1) % _waypoints.Length : _currentWaypointIndex;
         
-        isWaiting = false;
+        _isWaiting = false;
 
     }
 
     IEnumerator RandomStartDelay()
     {
-        isWaiting = true;
+        _isWaiting = true;
         float randomDelay = Random.Range(0.2f, maxStartDelay);
         yield return new WaitForSeconds(randomDelay);
-        isWaiting = false;
+        _isWaiting = false;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!isWaiting)
+        if (!_isWaiting)
         {
             StartCoroutine(WaitAtWaypoint());
         }

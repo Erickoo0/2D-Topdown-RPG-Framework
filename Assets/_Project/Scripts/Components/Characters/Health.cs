@@ -7,6 +7,8 @@ public class Health : MonoBehaviour
     public float hpMax = 100f;
     [SerializeField] private float hpCurrent;
     
+    private bool _isDead = false;
+    
     // Heal Overtime Variables
     private float _hpHealTimer;
     private float _hpHealTimerMax = 0.5f;
@@ -41,14 +43,20 @@ public class Health : MonoBehaviour
             }
 
             // If health hit zero, notify death listeners.
-            if (hpCurrent <= 0)
+            if (hpCurrent <= 0 && !_isDead)
             {
                 OnDeath?.Invoke();
+                _isDead = true;
             }
         }
     }
     
     public bool HpIsHealingOverTime => _hpHealed < _hpHealedMax;
+
+    private void Start()
+    {
+        if (hpCurrent <= 0) hpCurrent = hpMax;
+    }
     
     private void Update()
     {
