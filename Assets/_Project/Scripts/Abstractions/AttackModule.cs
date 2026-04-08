@@ -3,8 +3,9 @@ using UnityEngine;
 public abstract class AttackModule : MonoBehaviour
 { 
     [SerializeField] protected HitBox hitbox;
+    [SerializeField] protected GameObject attackFX;
     [SerializeField] protected DamageData baseDamageData;
-
+    
     public abstract void Execute(CombatContext combatContext);
 }
 

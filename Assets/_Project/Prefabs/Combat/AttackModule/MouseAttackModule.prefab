@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MouseAttackModule
   hitbox: {fileID: 2873761913983823598, guid: ebda2ed39dab96546955db76e4086f77, type: 3}
+  attackFX: {fileID: 4093972447167166647, guid: ea39ff1f2c82a424ca269ec3e3d9efaa, type: 3}
   baseDamageData:
     damageAmount: 10
     hitDirection: {x: 0, y: 0}

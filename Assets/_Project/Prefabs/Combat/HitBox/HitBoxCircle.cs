@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class HitBoxCircle : HitBox
 {
-    public float radius = 1f;
+    // Base 0.9 matches FlashExplosionFX sprite with a scale of 1
+    public float radius = 0.9f;
 
     public override void CheckForHits(DamageData data)
     {

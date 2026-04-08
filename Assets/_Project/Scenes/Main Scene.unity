@@ -7290,7 +7290,19 @@ MonoBehaviour:
     m_ActionId: 77ed701b-0291-4b2e-94e7-3a933a9d7457
     m_ActionName: 'Player/Look[/Mouse/delta]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1894244101}
+        m_TargetAssemblyTypeName: CombatController, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: cdf373b3-af63-4ec4-b6e6-c60684113c6e
     m_ActionName: 'Player/Fire[/Mouse/leftButton]'
   - m_PersistentCalls:
@@ -7537,6 +7549,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a9a744be-db8a-4462-8fed-1d46d0851112
     m_ActionName: 'Player/U[/Keyboard/u]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1894244101}
+        m_TargetAssemblyTypeName: CombatController, Assembly-CSharp
+        m_MethodName: OnPoint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 91f1508e-ae26-43fa-b4ec-f50cee8b8082
+    m_ActionName: 'Player/Point[/Mouse/position]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -23235,6 +23263,7 @@ GameObject:
   - component: {fileID: 1894244097}
   - component: {fileID: 1894244100}
   - component: {fileID: 1894244099}
+  - component: {fileID: 1894244101}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -23543,6 +23572,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
   m_Library: []
   m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: ab71209abc3e8d7449b83e08930c487d, type: 3}
+--- !u!114 &1894244101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894244084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02353042c2c8d9499c145018c27a296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatController
+  currentAttack: {fileID: 8990838242176672021, guid: bdbe4bd164f5fd54a9de29ea7a9b7bd8, type: 3}
 --- !u!1 &1900063776
 GameObject:
   m_ObjectHideFlags: 0
