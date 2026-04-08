@@ -23264,6 +23264,7 @@ GameObject:
   - component: {fileID: 1894244100}
   - component: {fileID: 1894244099}
   - component: {fileID: 1894244101}
+  - component: {fileID: 1894244102}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -23585,6 +23586,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatController
   currentAttack: {fileID: 8990838242176672021, guid: bdbe4bd164f5fd54a9de29ea7a9b7bd8, type: 3}
+--- !u!114 &1894244102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894244084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d0bacc308dc0443abfddf1b3c8e0b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HurtBox
+  health: {fileID: 2063131650}
 --- !u!1 &1900063776
 GameObject:
   m_ObjectHideFlags: 0
@@ -24597,6 +24611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   hpMax: 100
   hpCurrent: 50
+  entityRoot: {fileID: 1894244084}
+  destroyOnDeath: 1
 --- !u!1 &2094289277
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,20 +1,20 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D)), RequireComponent(typeof(Rigidbody2D)), RequireComponent(typeof(Health))]
+[RequireComponent(typeof(Collider2D)), RequireComponent(typeof(Rigidbody2D))]
 public class HurtBox : MonoBehaviour, IDamagable
 {
-    private Health _health;
+    [SerializeField] private Health health;
     //private Animator _animator;
 
     private void Awake()
     {
-        _health = GetComponent<Health>();
+        if (health == null) health = GetComponent<Health>();
         //_animator = GetComponent<Animator>();
     }
 
     public void TakeDamage(DamageData data)
     {
-        _health.HpCurrent -= data.damageAmount;
+        health.HpCurrent -= data.damageAmount;
         
         //_animator.SetTrigger("Hurt");
         
