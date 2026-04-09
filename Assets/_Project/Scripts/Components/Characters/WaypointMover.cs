@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 public class WaypointMover : MonoBehaviour
 {
     [Header("Movement Settings")] 
-    [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float waitTime = 2f;
     [SerializeField] private float maxStartDelay = 4f;
     [SerializeField] private bool loopWaypoints = true;
@@ -15,17 +14,21 @@ public class WaypointMover : MonoBehaviour
     private Transform _waypointParent;
     private Vector2[] _waypoints;
     private int _currentWaypointIndex;
-    [Header("Animation Settings")]
-    private EntityAnimationController _entityAnimation;
-    private bool _isWaiting;
     
+    private EntityMover _entityMover;
+    private EntityAnimator _entityAnimator;
+    private bool _isWaiting;
 
+
+    private void Awake()
+    {
+        _entityMover = GetComponent<EntityMover>();
+        _entityAnimator = GetComponent<EntityAnimator>();
+    }
+    
     private void Start()
     {
-        // 1. Get the Animator 
-        _entityAnimation = GetComponent<EntityAnimationController>();
-        
-        // 2. Get the waypoint parent
+        // Setup waypoint parent if not assigned in inspector
         if (_waypointParent == null) _waypointParent = transform.Find("Waypoint Parent");
 
         if (_waypointParent != null)
@@ -33,7 +36,6 @@ public class WaypointMover : MonoBehaviour
             SetupWaypoints();
             StartCoroutine(RandomStartDelay());
         }
-
     }
     
     private void SetupWaypoints()
@@ -49,9 +51,10 @@ public class WaypointMover : MonoBehaviour
     {
         if (PauseManager.IsGamePaused || _isWaiting || _waypoints == null)
         {
-            _entityAnimation?.StopAnimation();            
+            _entityMover.SetMOveDirection(Vector2.zero);          
             return;
         }
+        
         MoveToWaypoint();
     }
     
@@ -64,38 +67,33 @@ public class WaypointMover : MonoBehaviour
         // Move to waypoint 
         if (distance > 0.1f)
         {
-            // 1. Calculate direction
+            // Calculate direction and pass it to the Entity Mover
             Vector2 moveDirection = (target - currentPosition).normalized;
-            
-            // 2. Tell the animation controller to update
-            _entityAnimation?.UpdateAnimation(moveDirection);
-            
-            // 3. Move
-            transform.position = Vector2.MoveTowards(currentPosition, target, moveSpeed * Time.deltaTime);
+            _entityMover.SetMOveDirection(moveDirection);
         }
         else
-        {
-            StartCoroutine(WaitAtWaypoint());
+        {   
+            // Stop the movement and wait once we reach the destination
+            _entityMover.SetMOveDirection(Vector2.zero);
+            StartCoroutine(WaitAtWaypoint(true));
         }
     }
 
-    IEnumerator WaitAtWaypoint()
+    private IEnumerator WaitAtWaypoint(bool reachedDestination)
     {
         // Idle for duration
         _isWaiting = true;
+        _entityMover.SetMOveDirection(Vector2.zero);
+        
         yield return new WaitForSeconds(waitTime);
         
-        // Check if target was reached (if stopped because of collision)
-        float distance = Vector2.Distance(transform.position, _waypoints[_currentWaypointIndex]);
-        
-        // If we reached the target, move target to next waypoint
-        if (distance <= 0.1f) _currentWaypointIndex = loopWaypoints ? (_currentWaypointIndex + 1) % _waypoints.Length : _currentWaypointIndex;
+        // Advance the waypoint index
+        if (reachedDestination) _currentWaypointIndex = loopWaypoints ? (_currentWaypointIndex + 1) % _waypoints.Length : _currentWaypointIndex;
         
         _isWaiting = false;
-
     }
 
-    IEnumerator RandomStartDelay()
+    private IEnumerator RandomStartDelay()
     {
         _isWaiting = true;
         float randomDelay = Random.Range(0.2f, maxStartDelay);
@@ -105,11 +103,16 @@ public class WaypointMover : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (!collision.CompareTag("Player")) return;
+        
         if (!_isWaiting)
         {
-            StartCoroutine(WaitAtWaypoint());
+            // Stop movement
+            _entityMover.SetMOveDirection(Vector2.zero);
+            StartCoroutine(WaitAtWaypoint(false));
         }
+        // Look at player / object
         Vector2 lookDirection = (collision.transform.position - transform.position).normalized;
-        _entityAnimation?.FaceDirection(lookDirection);
+        _entityAnimator?.FaceDirection(lookDirection);
     }
 }

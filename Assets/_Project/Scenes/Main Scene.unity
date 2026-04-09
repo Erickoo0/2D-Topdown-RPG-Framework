@@ -3416,7 +3416,7 @@ Camera:
   far clip plane: 20
   field of view: 34
   orthographic: 1
-  orthographic size: 7.5
+  orthographic size: 6.75
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3464,8 +3464,8 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 0
-  BlendUpdateMethod: 0
+  UpdateMethod: 1
+  BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 0
     DefaultMode: 2
@@ -3496,7 +3496,7 @@ MonoBehaviour:
   m_RefResolutionX: 320
   m_RefResolutionY: 180
   m_CropFrame: 0
-  m_GridSnapping: 0
+  m_GridSnapping: 1
   m_FilterMode: 0
   m_UpscaleRT: 0
   m_PixelSnapping: 0
@@ -23265,6 +23265,7 @@ GameObject:
   - component: {fileID: 1894244099}
   - component: {fileID: 1894244101}
   - component: {fileID: 1894244102}
+  - component: {fileID: 1894244103}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -23295,9 +23296,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &1894244086
 SpriteRenderer:
@@ -23387,8 +23388,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b7199f0c4011b645bb3129c525fc8c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  moveSpeed: 200
-  moveInput: {x: 0, y: 0}
 --- !u!114 &1894244090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23401,6 +23400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f7f655e61f1e57488fc13e5e41e56dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
+  snapToCardinalDirections: 0
 --- !u!95 &1894244091
 Animator:
   serializedVersion: 7
@@ -23599,6 +23599,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HurtBox
   health: {fileID: 2063131650}
+--- !u!114 &1894244103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894244084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8a700780a5b4148b87370b797bbfc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityMover
+  moveSpeed: 175
 --- !u!1 &1900063776
 GameObject:
   m_ObjectHideFlags: 0

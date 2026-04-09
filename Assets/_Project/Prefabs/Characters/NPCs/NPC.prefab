@@ -46,11 +46,12 @@ GameObject:
   - component: {fileID: 6489739227427479816}
   - component: {fileID: 3324052278730299444}
   - component: {fileID: 3597365950157330232}
-  - component: {fileID: 544234680660555763}
+  - component: {fileID: 1154732131269866783}
   - component: {fileID: 3264141129822851798}
   - component: {fileID: 5775654112022256840}
   - component: {fileID: 2729579692476846028}
   - component: {fileID: 7485716094007412697}
+  - component: {fileID: 7406667262316240941}
   m_Layer: 3
   m_Name: NPC
   m_TagString: Untagged
@@ -141,12 +142,12 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1295489641667029861}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
+  m_Mass: 100
+  m_LinearDamping: 5
   m_AngularDamping: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -156,10 +157,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!61 &3662397687984171361
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -291,7 +292,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &544234680660555763
+--- !u!114 &1154732131269866783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -300,9 +301,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1295489641667029861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d71d18bf430f5234f8ae902fa1081a7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f7f655e61f1e57488fc13e5e41e56dd, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityAnimationController
+  m_EditorClassIdentifier: Assembly-CSharp::EntityAnimator
+  snapToCardinalDirections: 1
 --- !u!114 &3264141129822851798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,7 +347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012bfd76677043b4aad64da3b8d42c29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaypointMover
-  moveSpeed: 2
   waitTime: 2
   maxStartDelay: 4
   loopWaypoints: 1
@@ -370,6 +371,19 @@ MonoBehaviour:
   speechBubbleMinWaitTime: 3
   speechBubbleMaxWaitTime: 9
   speechBubbleDuration: 3
+--- !u!114 &7406667262316240941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295489641667029861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8a700780a5b4148b87370b797bbfc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityMover
+  moveSpeed: 100
 --- !u!1 &4838460603127964859
 GameObject:
   m_ObjectHideFlags: 0

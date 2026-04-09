@@ -21,7 +21,9 @@ public class PlayerStatsManager : MonoBehaviour
 
     private void Update()
     {
-        transform.position = GameObject.Find("Player").transform.position;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player is not null)  
+            transform.position = player.transform.position;
     }
     
     public void ToggleMenu(InputAction.CallbackContext context)
