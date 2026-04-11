@@ -11,7 +11,28 @@ public class HitBoxCircle : HitBox
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, victimLayer);
         
         // For every collision in the array, damage them
-        foreach (Collider2D hit in hits) SendDamage(data, hit);
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.gameObject == data.source) continue;
+        
+            // 1. Calculate direction for knockback
+            Vector2 targetPosition = hit.transform.position;
+            Vector2 attackPosition = transform.position;
+            Vector2 knockbackDirection = (targetPosition - attackPosition).normalized;
+            // If the explosion is exactly on top of the enemy, knock them "up" or "away" by default
+            if (knockbackDirection == Vector2.zero)
+            {
+                knockbackDirection = Vector2.up;
+            }
+
+            // 2. Create a copy of passed in damage data, and modify direction
+            DamageData finalData = data;
+            finalData.hitDirection = knockbackDirection;
+
+            // 3. send the damage data
+            SendDamage(finalData, hit);
+            
+        }
     }
 
     public override void ScaleVisual(GameObject attackFX)

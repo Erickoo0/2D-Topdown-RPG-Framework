@@ -18,7 +18,10 @@ public class HurtBox : MonoBehaviour, IDamagable
         
         //_animator.SetTrigger("Hurt");
         
-        ApplyKnockback(data.hitDirection, data.knockbackForce);
+        if (TryGetComponent<EntityMover>(out EntityMover entityMover))
+        {
+            entityMover.ApplyKnockback(data.hitDirection, data.knockbackForce, data.knockbackDuration);
+        }
     }
 
     public void ApplyKnockback(Vector2 direction, float knockbackForce)

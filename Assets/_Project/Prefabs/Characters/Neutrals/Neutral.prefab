@@ -137,13 +137,14 @@ GameObject:
   - component: {fileID: 2401922767416282471}
   - component: {fileID: 5742111724304672418}
   - component: {fileID: 4059931002005490084}
-  - component: {fileID: 3205578205364375423}
+  - component: {fileID: 1464378444622734768}
   - component: {fileID: 5766307546840848036}
   - component: {fileID: 7759030371112986302}
   - component: {fileID: 1089657946280949265}
   - component: {fileID: -1747576445313389302}
   - component: {fileID: 3685750868421853756}
   - component: {fileID: 6447096566392552272}
+  - component: {fileID: -6041577575005612142}
   m_Layer: 3
   m_Name: Neutral
   m_TagString: Untagged
@@ -225,7 +226,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &2401922767416282471
 Rigidbody2D:
   serializedVersion: 5
@@ -234,14 +235,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7531220670705793847}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 5
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -249,10 +250,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!61 &5742111724304672418
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -321,7 +322,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3205578205364375423
+--- !u!114 &1464378444622734768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -330,9 +331,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7531220670705793847}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d71d18bf430f5234f8ae902fa1081a7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f7f655e61f1e57488fc13e5e41e56dd, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityAnimationController
+  m_EditorClassIdentifier: Assembly-CSharp::EntityAnimator
+  snapToCardinalDirections: 1
 --- !u!114 &5766307546840848036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,7 +377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012bfd76677043b4aad64da3b8d42c29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaypointMover
-  moveSpeed: 2
   waitTime: 2
   maxStartDelay: 4
   loopWaypoints: 1
@@ -393,6 +394,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   hpMax: 100
   hpCurrent: 65
+  entityRoot: {fileID: 0}
+  destroyOnDeath: 1
 --- !u!114 &3685750868421853756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,6 +425,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d0bacc308dc0443abfddf1b3c8e0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HurtBox
+  health: {fileID: 0}
+--- !u!114 &-6041577575005612142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531220670705793847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8a700780a5b4148b87370b797bbfc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityMover
+  moveSpeed: 5
+  knockbackDecay: 5
 --- !u!1 &8755887523427810583
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,33 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+[RequireComponent(typeof(EntityMover))]
+public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    private Rigidbody2D _rb;
+    private EntityMover _entityMover;
     
-    public Vector2 moveInput;
-
-    void Start()
-    {
-        _rb = GetComponent<Rigidbody2D>();
-    }
-
-    void FixedUpdate()
-    {
-        if (!PauseManager.IsGamePaused)
-        {
-            _rb.linearVelocity = moveInput * (moveSpeed * Time.fixedDeltaTime);
-        }
-        else
-        {
-            _rb.linearVelocity = Vector2.zero;
-        }
-    }
-
+    private void Awake() => _entityMover = GetComponent<EntityMover>();
+    
     public void Move(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
+        _entityMover.SetMoveDirection(context.ReadValue<Vector2>());
     }
 }
 

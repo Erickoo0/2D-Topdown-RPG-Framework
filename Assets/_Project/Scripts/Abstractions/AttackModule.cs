@@ -8,12 +8,5 @@ public abstract class AttackModule : MonoBehaviour
     [SerializeField] protected DamageData baseDamageData;
     
     public abstract void Execute(CombatContext combatContext);
-}
-
-public struct CombatContext
-{
-    public GameObject source;
-    public Vector2 mousePosition;
-    public Vector2 userPosition;
-    public Vector2 facingDirection;
+    
 }
