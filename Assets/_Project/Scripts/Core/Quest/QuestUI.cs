@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class QuestUI : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("References")]
-    [SerializeField] private Image questMenuPanel;
+    [SerializeField] private GameObject questMenuPanel;
     [SerializeField] private GameObject questSoMenuPanel;
     [SerializeField] private GameObject questMenuPrefab;
     [SerializeField] private Image questPanel;
@@ -20,7 +21,7 @@ public class QuestUI : MonoBehaviour
         // Spawn the quest Prefab
         GameObject newQuest = Instantiate(questPrefab, questSoPanel.transform);
         
-        // Tell the quest prefab to setup itself
+        // Tell the quest prefab to set up itself
         newQuest.GetComponent<Quest>().Setup(quest);
         
         // Add the quest prefab to the Quest UI List
@@ -38,6 +39,13 @@ public class QuestUI : MonoBehaviour
                 quest.UpdateProgressText(updatedQuest);
             }
         }
+    }
+    
+    public void ToggleMenu(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        if (!questMenuPanel.activeSelf)EventBus.RequestOpenMenu(questMenuPanel);
+        else if (questMenuPanel.activeSelf) EventBus.RequestCloseMenu(questMenuPanel);
     }
 
 }

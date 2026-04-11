@@ -10,7 +10,20 @@ public class WorldTimeCalendar : MonoBehaviour
     public int CurrentMonth { get; private set; }
     public int CurrentYear { get; private set; }
     public string CurrentTime { get; private set; }
-    private string CurrentMonthName => monthNames[(CurrentMonth - 1) % monthNames.Length];
+
+    private string CurrentMonthName
+    {
+        get
+        {
+            // 1. Safety Check
+            if (monthNames == null || monthNames.Length == 0) return "Unknown Month";
+            
+            // 2. Index logic
+            int index = (CurrentMonth - 1) % monthNames.Length;
+            index = Mathf.Abs(index);
+            return monthNames[index];
+        }
+    }
     private int _previousDay = -1;
 
     private void Awake() => EventBus.OnWorldTimeChanged += UpdateCalendar;

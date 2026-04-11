@@ -88,6 +88,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Quest Menu",
+                    "type": "Button",
+                    "id": "ec59618e-c377-4b77-83aa-1fb23df0d84c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Hotbar",
                     "type": "PassThrough",
                     "id": "568776de-6778-4398-817d-ddfba50005a0",
@@ -795,6 +804,17 @@
                     "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76fe71b2-af0c-4300-99af-556b25589690",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Quest Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -914,6 +934,15 @@
                     "name": "Map Menu",
                     "type": "Button",
                     "id": "337edfa9-61d3-44c2-a5fe-df1b91ad45b1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Quest Menu",
+                    "type": "Button",
+                    "id": "de3ef5c8-9eba-4e57-92ea-c26cd7ef1de1",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1116,6 +1145,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Map Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a0614472-ecc2-4c0b-93bb-e6e5c6dbbe39",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Quest Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
