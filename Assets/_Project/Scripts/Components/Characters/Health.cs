@@ -99,7 +99,8 @@ public class Health : MonoBehaviour
     private void SetDead()
     {
         _isDead = true;
-        OnDeath?.Invoke();
+        OnDeath?.Invoke(); // Event for LOCAL systems like ItemContainers
+        EventBus.RequestEntityDeathUpdate(entityRoot);
         if (destroyOnDeath) Destroy(entityRoot);
     }
 }

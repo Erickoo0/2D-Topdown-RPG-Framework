@@ -37,4 +37,11 @@ public static class EventBus
     {
         OnFloatingTextRequested?.Invoke(amount, position);
     }
+
+    public static event Action<GameObject> OnEntityDeathRequested;
+
+    public static void RequestEntityDeathUpdate(GameObject entity)
+    {
+        OnEntityDeathRequested?.Invoke(entity);
+    }
 }

@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using DG.Tweening;
 
-public class Chest : MonoBehaviour, IInteractable
+public class ItemContainer : MonoBehaviour, IInteractable
 {
+    private Health _health;
+    
     public bool IsOpened { get; private set; }
     public string ChestID { get; private set; }
-    public Sprite chestOpenedSprite;
+    public Sprite containerOpenedSprite;
     
     [Header("Chest Contents")]
     // The list of items to drop
-    public List<ItemDrop> chestContents = new List<ItemDrop>(); 
+    public List<ItemDrop> containerContents = new List<ItemDrop>(); 
     
     [Header("Drop Settings")]
     [SerializeField] private float spreadRadius = 1.5f;
@@ -23,9 +23,26 @@ public class Chest : MonoBehaviour, IInteractable
         public int dropAmount;
     }
     
-    public void Start()
+    public void Awake()
     {
         if (string.IsNullOrEmpty(ChestID)) GlobalHelper.GenerateUniqueID(gameObject);
+        _health = GetComponent<Health>();
+    }
+
+    private void OnEnable()
+    {
+        if (_health != null)
+        {
+            _health.OnDeath += OpenContainer;
+        }
+    }
+    
+    private void OnDisable()
+    {
+        if (_health != null)
+        {
+            _health.OnDeath -= OpenContainer;
+        }
     }
 
     public bool CanInteract()
@@ -36,20 +53,20 @@ public class Chest : MonoBehaviour, IInteractable
     public void Interact()
     {
         if (!CanInteract()) return;
-        OpenChest();
+        OpenContainer();
     }
 
-    public void OpenChest()
+    public void OpenContainer()
     {
         // If the chest is already opened, do nothing
         if (IsOpened) return;
         SetOpened(true);
         
-        if (chestContents == null || chestContents.Count == 0) return;
+        if (containerContents == null || containerContents.Count == 0) return;
 
         // 1. Count how many physical objects to spawn
         int itemsToDrop = 0;
-        foreach (ItemDrop itemDrop in chestContents)
+        foreach (ItemDrop itemDrop in containerContents)
         {
             if (itemDrop.itemDataSo != null) itemsToDrop++;
         }
@@ -58,7 +75,7 @@ public class Chest : MonoBehaviour, IInteractable
         float angleStep = 360f / itemsToDrop;
         float currentAngle = UnityEngine.Random.Range(0f, 360f);
         
-        foreach (ItemDrop itemDrop in chestContents)
+        foreach (ItemDrop itemDrop in containerContents)
         {
             if (itemDrop.itemDataSo == null)
             {
@@ -92,7 +109,7 @@ public class Chest : MonoBehaviour, IInteractable
         {
             if (TryGetComponent(out SpriteRenderer sr))
             {
-                sr.sprite = chestOpenedSprite;
+                sr.sprite = containerOpenedSprite;
             }
         }
     }
