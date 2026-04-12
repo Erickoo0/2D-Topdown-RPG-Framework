@@ -7,9 +7,17 @@ using System.Collections.Generic;
 [System.Serializable]
 public class SaveData
 {
+    //----Player Variables----
     public Vector3 playerPosition;
+    public int currentHealth;
+    public int maxHealth;
+    public int currentMana;
+    public int maxMana;
+    
+    //----Area Variables----
     public string mapBoundaryName; //Stores Boundary Name
     
+    //----Inventory Vairables----
     public List<SavedSlot> savedSlotList = new List<SavedSlot>();
 }
 

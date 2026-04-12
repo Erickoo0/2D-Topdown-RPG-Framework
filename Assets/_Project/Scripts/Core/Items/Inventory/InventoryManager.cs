@@ -44,7 +44,6 @@ public class InventoryManager : MonoBehaviour, ISaveable
         itemsList = new ItemInstance[inventorySize];
     }
     
-    // ReSharper disable Unity.PerformanceAnalysis
     public bool AddItems(ItemInstance item)
     {
         // Try to stack first if the item is stackable
@@ -142,7 +141,12 @@ public class InventoryManager : MonoBehaviour, ISaveable
         
         OnActiveSlotIndexChanged?.Invoke(index);
     }
-
+    
+    //---- Load & Save Data Logic
+    private void OnEnable() => SaveManager.Instance.RegisterSaveable(this);
+    
+    private void OnDisable() => SaveManager.Instance.UnregisterSaveable(this);
+    
     public void PopulateSaveData(SaveData saveData)
     {
         // Create a list of SavedSlots

@@ -1,6 +1,6 @@
-/// <summary>
-/// Any script that needs to save or load data
-/// </summary>
+
+using UnityEngine;
+
 public interface ISaveable
 {
     // Passes the SaveData box to the script so it can put its data inside

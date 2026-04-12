@@ -6,7 +6,6 @@ public class PauseManager : MonoBehaviour
     public static PauseManager Instance { get; private set; }
     
     [SerializeField] private GameObject pauseMenuPanel;
-    [SerializeField] private SaveManager saveManager;
     
     public GameObject PauseMenuPanel => pauseMenuPanel;
     public static bool IsGamePaused { get; private set; } = false;
@@ -32,9 +31,18 @@ public class PauseManager : MonoBehaviour
         else if (pauseMenuPanel.activeSelf) EventBus.RequestCloseMenu(pauseMenuPanel);
     }
 
-    public void OnSaveButtonClicked() => saveManager.SaveGame();
+    public void OnSaveButtonClicked() => SaveManager.Instance.SaveGame();
     
-    public void OnLoadButtonClicked() => saveManager.LoadGame();
+    public void OnLoadButtonClicked() => SaveManager.Instance.LoadGame();
     
-    public void OnExitButtonClicked() => Application.Quit();
+    public void OnExitButtonClicked()
+    {
+        // This part only runs inside the Unity Editor
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+
+        // This part runs in the actual built game
+        Application.Quit();
+    }
 }

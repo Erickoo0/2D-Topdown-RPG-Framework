@@ -4,20 +4,22 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class MapManager : MonoBehaviour, ISaveable
+public class MapManager : MonoBehaviour
 {
     public static MapManager Instance { get; private set; }
 
     [SerializeField] private GameObject mapMenuPanel;
     
-    public GameObject map;
-    public Color highlightColor = Color.yellow;
-    public Color defaultColor = new Color(1f, 1f, 1f, 0.5f);
-    public RectTransform playerIconTransform;
+    [SerializeField] private GameObject mapTilePanel;
+    [SerializeField] private Color highlightColor = Color.yellow;
+    [SerializeField] private Color defaultColor = new Color(1f, 1f, 1f, 0.5f);
+    [SerializeField] private RectTransform playerIconTransform;
     
     private List<Image> _mapTiles;
-    private string _currentTileName;
+    
+    public string CurrentTileName { get; private set; }
 
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,8 +32,8 @@ public class MapManager : MonoBehaviour, ISaveable
             Instance = this;
         }
         
-        // Get all the map tiles
-        _mapTiles = map.GetComponentsInChildren<Image>().ToList();
+        // Get all the map tiles 
+        _mapTiles = mapTilePanel.GetComponentsInChildren<Image>().ToList();
     }
 
     public void ToggleMenu(InputAction.CallbackContext context)
@@ -40,19 +42,17 @@ public class MapManager : MonoBehaviour, ISaveable
         if (!mapMenuPanel.activeSelf)EventBus.RequestOpenMenu(mapMenuPanel);
         else if (mapMenuPanel.activeSelf) EventBus.RequestCloseMenu(mapMenuPanel);
     }
-
     
-    public void HighlightTile(string currentTileName)
+    public void HighlightTile(string tileName)
     {
-        _currentTileName = currentTileName;
+        CurrentTileName = tileName;
         
-        foreach (Image tile in _mapTiles)
-        {
-            tile.color = defaultColor;
-        }
+        foreach (Image tile in _mapTiles) tile.color = defaultColor;
 
-        Image currentTile = _mapTiles.Find(x => x.name == _currentTileName);
+        // Find current tile
+        Image currentTile = _mapTiles.Find(x => x.name == CurrentTileName);
 
+        // Change color of current tile and move the player icon
         if (currentTile != null)
         {
             currentTile.color = highlightColor;
@@ -61,20 +61,6 @@ public class MapManager : MonoBehaviour, ISaveable
         else
         {
             Debug.unityLogger.Log("Map tile not found");
-        }
-    }
-
-    public void PopulateSaveData(SaveData saveData)
-    {
-        // Save the current tile name to the saveData
-        saveData.mapBoundaryName = _currentTileName;
-    }
-
-    public void LoadFromSaveData(SaveData saveData)
-    {
-        if (!string.IsNullOrEmpty(saveData.mapBoundaryName))
-        {
-            HighlightTile(saveData.mapBoundaryName);
         }
     }
 }

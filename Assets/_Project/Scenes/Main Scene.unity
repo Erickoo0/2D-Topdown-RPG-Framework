@@ -1359,7 +1359,7 @@ GameObject:
   m_Component:
   - component: {fileID: 165211421}
   m_Layer: 5
-  m_Name: Map Tiles
+  m_Name: Map Tiles Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1847,6 +1847,7 @@ GameObject:
   m_Component:
   - component: {fileID: 225873924}
   - component: {fileID: 225873925}
+  - component: {fileID: 225873926}
   m_Layer: 0
   m_Name: Map Manager
   m_TagString: Untagged
@@ -1882,10 +1883,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapManager
   mapMenuPanel: {fileID: 575724265}
-  map: {fileID: 165211420}
+  mapTilePanel: {fileID: 165211420}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 0.5}
   playerIconTransform: {fileID: 815236486}
+--- !u!114 &225873926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225873923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 464d3420350fc3c4690b09f40a5a1cd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapPersistance
+  mapManager: {fileID: 225873925}
+  cameraBoundaryController: {fileID: 1033843168}
+  defaultArea: L1
 --- !u!1 &255741884
 GameObject:
   m_ObjectHideFlags: 0
@@ -3629,7 +3645,7 @@ Camera:
   far clip plane: 20
   field of view: 34
   orthographic: 1
-  orthographic size: 6.75
+  orthographic size: 7.2890625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4834,21 +4850,21 @@ MonoBehaviour:
   worldTime: {fileID: 728491378}
   gradient:
     serializedVersion: 2
-    key0: {r: 0.14978638, g: 0.16007118, b: 0.3207547, a: 1}
-    key1: {r: 0.8509804, g: 0.5723577, b: 0.34901968, a: 1}
+    key0: {r: 0.076211564, g: 0.043609817, b: 0.26415092, a: 1}
+    key1: {r: 0.8509804, g: 0.4963668, b: 0.34901968, a: 1}
     key2: {r: 1, g: 1, b: 1, a: 0}
     key3: {r: 1, g: 1, b: 1, a: 0}
-    key4: {r: 0.8396226, g: 0.5933335, b: 0.37624598, a: 0}
-    key5: {r: 0.764151, g: 0.45201907, b: 0.3280082, a: 0}
-    key6: {r: 0.14901961, g: 0.16078432, b: 0.32156864, a: 0}
+    key4: {r: 0.8392157, g: 0.5993994, b: 0.3764706, a: 0}
+    key5: {r: 0.8509804, g: 0.49803922, b: 0.3529412, a: 0}
+    key6: {r: 0.078431375, g: 0.047058824, b: 0.26666668, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 12336
-    ctime1: 18119
+    ctime1: 18890
     ctime2: 24672
     ctime3: 42791
-    ctime4: 47609
-    ctime5: 54548
-    ctime6: 64379
+    ctime4: 49151
+    ctime5: 55705
+    ctime6: 65535
     ctime7: 0
     atime0: 0
     atime1: 65535
@@ -5350,50 +5366,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704695361}
   m_CullTransparentMesh: 1
---- !u!1 &715869077
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 715869079}
-  - component: {fileID: 715869078}
-  m_Layer: 0
-  m_Name: SaveManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &715869078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 715869077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7f8064df67f4674b9bbb21170664b97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SaveController
---- !u!4 &715869079
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 715869077}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -819.2249, y: -133.00919, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1598360438}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &716193837 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3714078045789244306, guid: 81ac932f642f3f740b5338da1a8e503d, type: 3}
@@ -5556,7 +5528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldTime
   dayLength: 10
-  startHour: 8
+  startHour: 0
   startDay: 1
   startMonth: 1
   startYear: 2026
@@ -6985,7 +6957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseManager
   pauseMenuPanel: {fileID: 546063922}
-  saveManager: {fileID: 715869078}
+  saveManager: {fileID: 0}
 --- !u!1 &976108712
 GameObject:
   m_ObjectHideFlags: 0
@@ -7903,6 +7875,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 91f1508e-ae26-43fa-b4ec-f50cee8b8082
     m_ActionName: 'Player/Point[/Mouse/position]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2015281687}
+        m_TargetAssemblyTypeName: QuestUI, Assembly-CSharp
+        m_MethodName: ToggleMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ec59618e-c377-4b77-83aa-1fb23df0d84c
+    m_ActionName: 'Player/Quest Menu[/Keyboard/j]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2015281687}
+        m_TargetAssemblyTypeName: QuestUI, Assembly-CSharp
+        m_MethodName: ToggleMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: de3ef5c8-9eba-4e57-92ea-c26cd7ef1de1
+    m_ActionName: 'UI/Quest Menu[/Keyboard/j]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -21340,7 +21344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1430858748
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22698,7 +22702,6 @@ Transform:
   m_Children:
   - {fileID: 1487947190}
   - {fileID: 1092899842}
-  - {fileID: 715869079}
   - {fileID: 697541530}
   - {fileID: 1951512957}
   - {fileID: 1946756652}
@@ -24598,9 +24601,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a260d78faddd5ca49a04e97b6332713c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestUI
-  questMenuPanel: {fileID: 0}
-  questSoMenuPanel: {fileID: 0}
-  questMenuPrefab: {fileID: 0}
+  questMenuPanel: {fileID: 67165791}
+  questSoMenuPanel: {fileID: 373743162}
+  questMenuPrefab: {fileID: 3639856206100680363, guid: 81ac932f642f3f740b5338da1a8e503d, type: 3}
   questPanel: {fileID: 2101744724}
   questSoPanel: {fileID: 951786586}
   questPrefab: {fileID: 1858813078580094221, guid: 54e440a974a0e024d86cb54dd0dc2e10, type: 3}
@@ -26669,7 +26672,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -200, y: -455}
+  m_AnchoredPosition: {x: -202, y: -513}
   m_SizeDelta: {x: 385, y: 670}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2101744723
