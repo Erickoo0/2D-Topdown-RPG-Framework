@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D)), RequireComponent(typeof(Rigidbody2D))]
 public class HurtBox : MonoBehaviour, IDamagable
 {
+    [Tooltip("Leave empty if parent object")]
     [SerializeField] private Health health;
     //private Animator _animator;
 
@@ -22,10 +23,5 @@ public class HurtBox : MonoBehaviour, IDamagable
         {
             entityMover.ApplyKnockback(data.hitDirection, data.knockbackForce, data.knockbackDuration);
         }
-    }
-
-    public void ApplyKnockback(Vector2 direction, float knockbackForce)
-    {
-        // Knockback logic later
     }
 }
