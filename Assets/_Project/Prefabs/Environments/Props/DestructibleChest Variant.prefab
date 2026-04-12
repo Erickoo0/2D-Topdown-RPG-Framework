@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6741683355297708388
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3655383930519561911, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_Name
+      value: DestructibleChest Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4442497744171436724, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8213334933265063372, guid: e74a92725c934554f86a6492ea7a86ef, type: 3}
+    - target: {fileID: 7556918828428342183, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7556918828428342183, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.875
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684546264099720975, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.53931
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684546264099720975, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.4396
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684546264099720975, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684546264099720975, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684546264099720975, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684546264099720975, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684546264099720975, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684546264099720975, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684546264099720975, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684546264099720975, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3655383930519561911, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1413492465652718894}
+  m_SourcePrefab: {fileID: 100100000, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+--- !u!1 &8013536630858375123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3655383930519561911, guid: f69d5abeb3fd1ae47bf700ca6f42e28f, type: 3}
+  m_PrefabInstance: {fileID: 6741683355297708388}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1413492465652718894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8013536630858375123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73248bb41aed5034386e27eb7f437214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chest
+  containerOpenedSprite: {fileID: -562807627, guid: e74a92725c934554f86a6492ea7a86ef, type: 3}
+  containerContents:
+  - itemDataSo: {fileID: 11400000, guid: 100db236c2a3c8d438e5b5f38f7577b9, type: 2}
+    dropAmount: 3
+  - itemDataSo: {fileID: 11400000, guid: 7e7d063152bbaa24b8d12b99b7a78a5d, type: 2}
+    dropAmount: 4
+  - itemDataSo: {fileID: 11400000, guid: e0dc600b517fe9f4db1460e4581704a4, type: 2}
+    dropAmount: 4
+  - itemDataSo: {fileID: 11400000, guid: 8499a701070f6ef40aa142455e36e4a7, type: 2}
+    dropAmount: 1
+  spreadRadius: 1
