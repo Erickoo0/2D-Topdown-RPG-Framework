@@ -5,7 +5,8 @@ public class PlayerController : BaseEntityController
 {
     [Header("Player Data")]
     public Vector2 MovementInput { get; private set; }
-    public bool DashInput { get; private set; }
+    public bool dashInput;
+    public float defaultDashTime = 10f;
     
     [Header("State References")]
     public PlayerIdleState IdleState { get; private set; }
@@ -35,6 +36,6 @@ public class PlayerController : BaseEntityController
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.performed) DashInput = true;
+        if (context.performed) dashInput = true;
     }
 }

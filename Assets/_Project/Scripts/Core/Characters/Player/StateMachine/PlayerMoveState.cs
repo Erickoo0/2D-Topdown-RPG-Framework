@@ -15,10 +15,17 @@ public class PlayerMoveState : State<PlayerController>
         }
         
         context.EntityMover.SetMoveDirection(input);
+        
+        // Check for dash input
+        if (context.dashInput == true)
+        {
+            stateMachine.ChangeState(context.DashState);
+        }
     }
     
     // Empty Methods
     public override void Enter() { }
     public override void PhysicsUpdate() { }
+    public override void HandleInput() { }
     public override void Exit() { }
 }

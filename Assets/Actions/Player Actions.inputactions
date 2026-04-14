@@ -16,6 +16,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "c7b76a76-53fe-44e5-9b54-ed5d1a1f5abb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Look",
                     "type": "Value",
                     "id": "77ed701b-0291-4b2e-94e7-3a933a9d7457",
@@ -813,6 +822,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Quest Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "73706223-7eed-4dbe-8315-2a78e16a044f",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

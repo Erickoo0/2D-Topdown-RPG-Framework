@@ -17,5 +17,6 @@ public class PlayerIdleState : State<PlayerController>
     }
     
     public override void PhysicsUpdate() { }
+    public override void HandleInput() { }
     public override void Exit() { }
 }

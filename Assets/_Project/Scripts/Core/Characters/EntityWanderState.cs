@@ -20,15 +20,14 @@ public class EntityWanderState : State<EntityController>
         }
         else // If we have reached the destination, return to idle state
         {
-            context.EntityMover.SetMoveDirection(Vector2.zero);
+            context.AdvanceToNextWaypoint();
             stateMachine.ChangeState(context.IdleState);
         }
     }
+    
     public override void PhysicsUpdate() { }
 
-    public override void Exit()
-    {
-        // If we are interupted from wander state, stop moving
-        context.EntityMover.SetMoveDirection(Vector2.zero);
-    }
+    public override void HandleInput() { }
+
+    public override void Exit() { }
 }

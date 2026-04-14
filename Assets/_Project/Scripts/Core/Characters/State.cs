@@ -8,16 +8,10 @@ public abstract class State
         this.stateMachine = stateMachine;
     }
 
-    // Called upon entering state
     public virtual void Enter(){}
-    public virtual void HandleInput(){}
-
     public virtual void Update(){}
-
     public virtual void PhysicsUpdate(){}
-
-    
-    // Called upon exiting state
+    public virtual void HandleInput() { }
     public virtual void Exit(){}
 }
 

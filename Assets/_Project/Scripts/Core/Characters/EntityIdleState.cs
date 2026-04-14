@@ -4,12 +4,13 @@ public class EntityIdleState : State<EntityController>
 {
     public EntityIdleState(EntityController context, StateMachine stateMachine) : base(context, stateMachine) { }
 
-    private float idleTime;
+    private float _idleTime;
+    
     
     public override void Enter()
     {
         context.EntityMover.SetMoveDirection(Vector2.zero); 
-        idleTime = Random.Range(1f, 3f);
+        _idleTime = Random.Range(100f, 300f);
     }
 
     public override void Update()
@@ -22,8 +23,11 @@ public class EntityIdleState : State<EntityController>
     
     public override void PhysicsUpdate() 
     {
-        if (idleTime > 0) idleTime--;
+        if (_idleTime > 0) _idleTime--;
         else stateMachine.ChangeState(context.WanderState);
     }
+    
+    public override void HandleInput() { }
+    
     public override void Exit() { }
 }

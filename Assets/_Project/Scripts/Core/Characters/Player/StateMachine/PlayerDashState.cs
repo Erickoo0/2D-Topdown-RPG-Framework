@@ -3,13 +3,13 @@ public class PlayerDashState : State<PlayerController>
 {
     public PlayerDashState(PlayerController context, StateMachine stateMachine) : base(context, stateMachine) { }
 
-    private float dashTime;
-    private float defaultMoveSpeed;
+    public float dashTime;
+    private float _defaultMoveSpeed;
     public override void Enter()
     {
-        dashTime = 1f;
-        defaultMoveSpeed = context.EntityMover.moveSpeed;
-        context.EntityMover.moveSpeed = context.EntityMover.moveSpeed * 2f;
+        dashTime = context.defaultDashTime;
+        _defaultMoveSpeed = context.EntityMover.moveSpeed;
+        context.EntityMover.moveSpeed *= 5f;
     }
     public override void Update()
     {
@@ -23,9 +23,12 @@ public class PlayerDashState : State<PlayerController>
         if (dashTime > 0) dashTime--;
         else stateMachine.ChangeState(context.IdleState);
     }
+    
+    public override void HandleInput() { }
 
     public override void Exit()
     {
-        context.EntityMover.moveSpeed = defaultMoveSpeed; 
+        context.EntityMover.moveSpeed = _defaultMoveSpeed;
+        context.dashInput = false; // Reset the bool
     }
 }

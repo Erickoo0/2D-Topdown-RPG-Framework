@@ -140,11 +140,12 @@ GameObject:
   - component: {fileID: 1464378444622734768}
   - component: {fileID: 5766307546840848036}
   - component: {fileID: 7759030371112986302}
-  - component: {fileID: 1089657946280949265}
+  - component: {fileID: 5819134255891694365}
+  - component: {fileID: -6041577575005612142}
+  - component: {fileID: -3679579161091551708}
   - component: {fileID: -1747576445313389302}
   - component: {fileID: 3685750868421853756}
   - component: {fileID: 6447096566392552272}
-  - component: {fileID: -6041577575005612142}
   m_Layer: 3
   m_Name: Neutral
   m_TagString: Untagged
@@ -365,7 +366,7 @@ MonoBehaviour:
   m_labelHash: 1.1909236e-32
   m_SpriteKey: 0
   m_SpriteHash: 500807929
---- !u!114 &1089657946280949265
+--- !u!114 &5819134255891694365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -374,11 +375,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 7531220670705793847}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 012bfd76677043b4aad64da3b8d42c29, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b52ac14ec3a44d39e9c9f2574261b51, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WaypointMover
-  waitTime: 2
-  maxStartDelay: 4
+  m_EditorClassIdentifier: Assembly-CSharp::StateMachine
+--- !u!114 &-6041577575005612142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531220670705793847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8a700780a5b4148b87370b797bbfc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityMover
+  moveSpeed: 5
+  knockbackDecay: 5
+--- !u!114 &-3679579161091551708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531220670705793847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3891c3e5f98f4d639b32e782089d8fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityController
+  aggroRange: 5
+  target: {fileID: 0}
+  waypointsList: []
+  currentWaypointIndex: 0
+  waypointWaitTime: 2
   loopWaypoints: 1
 --- !u!114 &-1747576445313389302
 MonoBehaviour:
@@ -426,20 +456,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HurtBox
   health: {fileID: 0}
---- !u!114 &-6041577575005612142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7531220670705793847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8a700780a5b4148b87370b797bbfc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityMover
-  moveSpeed: 5
-  knockbackDecay: 5
 --- !u!1 &8755887523427810583
 GameObject:
   m_ObjectHideFlags: 0
