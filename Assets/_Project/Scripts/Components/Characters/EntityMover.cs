@@ -5,7 +5,7 @@ using UnityEngine;
 public class EntityMover : MonoBehaviour
 {
     [Header("Movement Settings")] 
-    [SerializeField] private float moveSpeed = 5f;
+    public float moveSpeed = 5f;
     [SerializeField] private float knockbackDecay = 5f;
     private bool _isKnockedBack = false;
     private float _knockbackTimer;

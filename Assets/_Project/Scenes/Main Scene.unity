@@ -7575,9 +7575,9 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1894244088}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: Move
+      - m_Target: {fileID: 1894244104}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7901,6 +7901,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: de3ef5c8-9eba-4e57-92ea-c26cd7ef1de1
     m_ActionName: 'UI/Quest Menu[/Keyboard/j]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1894244104}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c7b76a76-53fe-44e5-9b54-ed5d1a1f5abb
+    m_ActionName: 'Player/Dash[/Keyboard/shift]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -23571,8 +23587,9 @@ GameObject:
   - component: {fileID: 1894244092}
   - component: {fileID: 1894244098}
   - component: {fileID: 1894244091}
+  - component: {fileID: 1894244106}
+  - component: {fileID: 1894244104}
   - component: {fileID: 1894244090}
-  - component: {fileID: 1894244088}
   - component: {fileID: 1894244103}
   - component: {fileID: 1894244093}
   - component: {fileID: 1894244094}
@@ -23691,18 +23708,6 @@ Transform:
   - {fileID: 478019865}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1894244088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894244084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b7199f0c4011b645bb3129c525fc8c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!114 &1894244090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23928,6 +23933,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityMover
   moveSpeed: 5
   knockbackDecay: 5
+--- !u!114 &1894244104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894244084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa9210734d44da48c05b78f06ef819f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  dashInput: 0
+  defaultDashTime: 10
+--- !u!114 &1894244106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894244084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b52ac14ec3a44d39e9c9f2574261b51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StateMachine
 --- !u!1 &1900063776
 GameObject:
   m_ObjectHideFlags: 0
