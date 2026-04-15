@@ -11,6 +11,7 @@ public class EntityActionState : State<EntityController>
     private float _windUpDuration = 0.75f; // Pause for 0.75 seconds
     private float _chargeDuration = 0.4f;  // Dash for 0.4 seconds
     private float _chargeSpeedMultiplier = 4f;
+    private float _overshootDistance = 2.5f;
     private float _originalSpeed;
     
     public override void Enter()
@@ -25,7 +26,18 @@ public class EntityActionState : State<EntityController>
         // 2. Lock in the direction at the moment of the wind-up
         if (context.currentTarget != null)
         {
-            _chargeDirection = (context.currentTarget.position - context.transform.position).normalized;
+            // 1 Calculate base distance
+            Vector2 offset = context.currentTarget.position - context.transform.position;
+            float distanceToTarget = offset.magnitude;
+            _chargeDirection = offset.normalized;
+            
+            // 2. Add overshoot
+            float totalChargeDistance = distanceToTarget + _overshootDistance;
+            
+            // 3. Calculate time to treavel total distance
+            float travelSpeed = _originalSpeed * _chargeSpeedMultiplier;
+            _chargeTimer = totalChargeDistance / travelSpeed;
+            
             context.EntityAnimator.FaceDirection(_chargeDirection);
         }
     }
