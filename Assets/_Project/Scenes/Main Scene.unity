@@ -3260,7 +3260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 478019865}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Player Active Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6905,7 +6905,7 @@ GameObject:
   m_Component:
   - component: {fileID: 976108714}
   - component: {fileID: 976108713}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Player Interact Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23598,7 +23598,7 @@ GameObject:
   - component: {fileID: 1894244099}
   - component: {fileID: 1894244101}
   - component: {fileID: 1894244102}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}

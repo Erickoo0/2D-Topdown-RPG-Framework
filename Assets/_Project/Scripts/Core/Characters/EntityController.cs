@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public enum MobType { Passive, Neutral, Aggressive }
 
-
 public class EntityController : BaseEntityController
 {
     [Header("Mob Type & Targeting")] 
@@ -25,8 +24,8 @@ public class EntityController : BaseEntityController
     public float defaultWaypointWaitTime = 2f;
     public bool loopWaypoints = true;
     
-    [Header("Components")]
-    //public EntityAction entityAction;
+    [Header("Action Module")]
+    [SerializeField] private EntityActionModule entityAction;
     
     [Header("State References")]
     public EntityIdleState  IdleState { get; private set; }
@@ -44,7 +43,7 @@ public class EntityController : BaseEntityController
         IdleState = new EntityIdleState(this, StateMachine);
         WanderState = new EntityWanderState(this, StateMachine);
         ChaseState = new EntityChaseState(this, StateMachine);
-        ActionState = new EntityActionState(this, StateMachine);
+        ActionState = new EntityActionState(this, StateMachine, entityAction);
         
         SetupWaypointsList();
     }

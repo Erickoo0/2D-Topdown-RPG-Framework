@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: -1747576445313389302}
   - component: {fileID: 3685750868421853756}
   - component: {fileID: 6447096566392552272}
+  - component: {fileID: 8471995014034325631}
   m_Layer: 3
   m_Name: Neutral
   m_TagString: Untagged
@@ -271,7 +272,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -417,6 +418,7 @@ MonoBehaviour:
   currentWaypointIndex: 0
   defaultWaypointWaitTime: 2
   loopWaypoints: 1
+  entityAction: {fileID: 8471995014034325631}
 --- !u!114 &-1747576445313389302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,6 +465,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HurtBox
   health: {fileID: 0}
+--- !u!114 &8471995014034325631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531220670705793847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48837949b17e4347b56195cf621c9c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChargeEntityActionModule
+  windUpDuration: 0.75
+  chargeSpeedMultiplier: 4
+  overshootDistance: 10
+  chargeAttackModule: {fileID: 0}
 --- !u!1 &8755887523427810583
 GameObject:
   m_ObjectHideFlags: 0
