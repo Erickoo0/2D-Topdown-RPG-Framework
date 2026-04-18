@@ -9,15 +9,15 @@ public abstract class BaseEntityController : MonoBehaviour, ITargetable
     [SerializeField] private string entityID;
     public string GetTargetID() => entityID;
     
-    
-    [Header("References")]
-    public StateMachine StateMachine { get; private set; }
+    [Header("References")] 
+    protected StateMachine StateMachine { get; private set; }
     public EntityMover EntityMover { get; private set; }
     public EntityAnimator EntityAnimator { get; private set; }
     
 
     protected virtual void Awake()
     {
+        // Get all the components
         StateMachine = GetComponent<StateMachine>();
         EntityMover = GetComponent<EntityMover>();
         EntityAnimator = GetComponent<EntityAnimator>();
@@ -27,14 +27,14 @@ public abstract class BaseEntityController : MonoBehaviour, ITargetable
     {
         if (PauseManager.IsGamePaused) return;
         
-        StateMachine.Update();
+        StateMachine.UpdateState(); // Link the State Machine Update method to Unity Update
     }
 
     protected virtual void FixedUpdate()
     {
         if (PauseManager.IsGamePaused) return;
 
-        StateMachine.FixedUpdate();
+        StateMachine.FixedUpdateState(); // Link the State Machine Fixed Update method to Unity FixedUpdate
     }
 }
 

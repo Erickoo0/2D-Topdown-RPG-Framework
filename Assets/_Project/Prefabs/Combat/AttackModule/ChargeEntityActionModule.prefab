@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2349244106585100786
+--- !u!1 &3581207877845380738
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4825743190066099634}
-  - component: {fileID: 8990838242176672021}
+  - component: {fileID: 2092231649999665568}
+  - component: {fileID: 1700434657181334976}
   m_Layer: 0
-  m_Name: MouseAttackModule
+  m_Name: ChargeEntityActionModule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4825743190066099634
+--- !u!4 &2092231649999665568
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2349244106585100786}
+  m_GameObject: {fileID: 3581207877845380738}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.48905, y: -0.08663, z: 0}
+  m_LocalPosition: {x: 9.73978, y: 0.06882, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8990838242176672021
+--- !u!114 &1700434657181334976
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2349244106585100786}
+  m_GameObject: {fileID: 3581207877845380738}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a91c800d3becdf4ea07afa185cff204, type: 3}
+  m_Script: {fileID: 11500000, guid: 48837949b17e4347b56195cf621c9c73, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MouseAttackModule
-  hitbox: {fileID: 2873761913983823598, guid: ebda2ed39dab96546955db76e4086f77, type: 3}
-  attackFX: {fileID: 4093972447167166647, guid: ea39ff1f2c82a424ca269ec3e3d9efaa, type: 3}
-  baseDamageData:
-    damageAmount: 10
-    hitDirection: {x: 0, y: 0}
-    knockbackForce: 20
-    knockbackDuration: 2
-    type: 0
-    source: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::ChargeEntityActionModule
+  windUpDuration: 0.75
+  chargeSpeedMultiplier: 4
+  overshootDistance: 15
+  chargeAttackModule: {fileID: 3707968628133779284, guid: 67a7e1399fe822c4da2e7329e3f37de1, type: 3}

@@ -406,19 +406,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityController
   entityID: 
-  mobType: 2
-  detectionRange: 8
-  detectionLostRange: 10
-  actionRange: 5
-  currentTarget: {fileID: 0}
-  targetableList:
+  <mobType>k__BackingField: 2
+  <DetectionRange>k__BackingField: 6
+  <DetectionLostRange>k__BackingField: 8
+  <ActionRange>k__BackingField: 5
+  <TargetableList>k__BackingField:
   - Player
-  actionCooldown: 2
+  currentTarget: {fileID: 0}
+  <EntityAction>k__BackingField: {fileID: 1700434657181334976, guid: 49dba67e09a246e4eab8170f8e66b60f, type: 3}
+  <ActionCooldown>k__BackingField: 2
+  <DefaultWaypointWaitTime>k__BackingField: 2
+  <LoopWaypoints>k__BackingField: 1
   waypointsList: []
   currentWaypointIndex: 0
-  defaultWaypointWaitTime: 2
-  loopWaypoints: 1
-  entityAction: {fileID: 8471995014034325631}
 --- !u!114 &-1747576445313389302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,7 +480,7 @@ MonoBehaviour:
   windUpDuration: 0.75
   chargeSpeedMultiplier: 4
   overshootDistance: 10
-  chargeAttackModule: {fileID: 0}
+  chargeAttackModule: {fileID: 3707968628133779284, guid: 67a7e1399fe822c4da2e7329e3f37de1, type: 3}
 --- !u!1 &8755887523427810583
 GameObject:
   m_ObjectHideFlags: 0

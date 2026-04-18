@@ -2,48 +2,56 @@
 
 public class ChargeAttackModule : AttackModule
 {
+    [Header("Charge Attack Settings")]
     [SerializeField] private Vector2 hitboxOffset = Vector2.zero;
-    [SerializeField] private float chargeHitDuration = 0.2f;
     [SerializeField] private bool hitOncePerExecute = true;
+    private ChargeEntityActionModule _entityActionModule;
+    
 
-    private bool _isExecuting;
-    private bool _hasHitThisExecute;
-    private float _endTime;
+    
+    private bool _hasHitThisExecute = false;
 
-    public void BeginCharge(CombatContext combatContext)
+    public override void EnterAttack(CombatContext combatContext)
     {
-        if (combatContext.source == null) return;
+        _entityActionModule = combatContext.entityActionModule as ChargeEntityActionModule;
+        if (baseDamageData.source == null) baseDamageData.source = combatContext.source;
 
-        _isExecuting = true;
+        // Scale the hitbox
+        if (hitbox is HitBoxCircle hitboxCircle) hitboxCircle.radius = AttackSize;
+        
         _hasHitThisExecute = false;
-        _endTime = Time.time + chargeHitDuration;
-
-        if (baseDamageData.source == null)
-            baseDamageData.source = combatContext.source;
-
-        hitbox.transform.position = (Vector2)combatContext.source.transform.position + hitboxOffset;
-        if (hitbox is HitBoxCircle hitboxCircle) hitboxCircle.radius = attackSize;
+        hitbox.enabled = false;
+    }    
+    public override void UpdateAttack(CombatContext combatContext)
+    {
+        if (_entityActionModule == null || hitbox == null) return;
+        
+        if (_entityActionModule.IsCharging)
+        {
+            hitbox.enabled = true;
+            hitbox.transform.position = (Vector2)combatContext.userPosition + hitboxOffset;
+            
+            if (!hitOncePerExecute || !_hasHitThisExecute)
+            {
+                if (hitbox.CheckForHits(baseDamageData))
+                { 
+                    _hasHitThisExecute = true;
+                }
+            }
+        }
+        else
+        {
+            hitbox.enabled = false;
+        }
     }
 
-    private void Update()
+    public override void ExitAttack(CombatContext combatContext)
     {
-        if (!_isExecuting) return;
+        _hasHitThisExecute = false;
 
         if (hitbox != null)
-            hitbox.transform.position = transform.position + (Vector3)hitboxOffset;
-
-        if (!_hasHitThisExecute || !hitOncePerExecute)
         {
-            hitbox.CheckForHits(baseDamageData);
-            _hasHitThisExecute = true;
+            hitbox.enabled = false;
         }
-
-        if (Time.time >= _endTime)
-            _isExecuting = false;
-    }
-
-    public override void Execute(CombatContext combatContext)
-    {
-        BeginCharge(combatContext);
     }
 }

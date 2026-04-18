@@ -1,8 +1,8 @@
 ﻿
 public interface IEntityAction
 {
-    void Enter(EntityController context);
-    void Update(EntityController context);
-    bool IsFinished(EntityController context);
-    void Exit(EntityController context);
+    void EnterAction(EntityController controller);
+    void UpdateAction(EntityController controller);
+    bool IsFinishedAction(EntityController context);
+    void ExitAction(EntityController context);
 }

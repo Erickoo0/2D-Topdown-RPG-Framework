@@ -2,20 +2,21 @@ using UnityEngine;
 
 public class HitBoxCircle : HitBox
 {
-    // Base 0.9 matches FlashExplosionFX sprite with a scale of 1
     [HideInInspector] public float radius;
 
-    public override void CheckForHits(DamageData data)
+    public override bool CheckForHits(DamageData data)
     {
         // Check collisions in a circle and asign to an array
+        bool hitSucess = false;
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, victimLayer);
-        
+        Debug.Log("Hit Check Started");
+
         // For every collision in the array, damage them
         foreach (Collider2D hit in hits)
         {
             if (hit.gameObject == data.source) continue;
         
-            // 1. Calculate direction for knockback
+            // 1. Calculate a direction for knockback
             Vector2 targetPosition = hit.transform.position;
             Vector2 attackPosition = transform.position;
             Vector2 knockbackDirection = (targetPosition - attackPosition).normalized;
@@ -25,14 +26,19 @@ public class HitBoxCircle : HitBox
                 knockbackDirection = Vector2.up;
             }
 
-            // 2. Create a copy of passed in damage data, and modify direction
+            // 2. Create a copy of passed in damage data and modify the direction
             DamageData finalData = data;
             finalData.hitDirection = knockbackDirection;
 
             // 3. send the damage data
-            SendDamage(finalData, hit);
+            if (SendDamage(finalData, hit))
+            {
+                hitSucess = true;
+            }
             
         }
+        
+        return hitSucess; // Retrurn the result for the module 
     }
 
     public override void ScaleVisual(GameObject attackFX)

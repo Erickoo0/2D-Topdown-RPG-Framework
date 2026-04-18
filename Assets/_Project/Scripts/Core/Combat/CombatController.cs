@@ -18,8 +18,7 @@ public class CombatController : MonoBehaviour
     }
 
     public void OnAttack(InputAction.CallbackContext context)
-    {
-        if (!context.performed) return;
+    { 
         
         // Gather the context 
         CombatContext contextData = new CombatContext
@@ -31,7 +30,8 @@ public class CombatController : MonoBehaviour
         };
         
         // Execute attack module
-        currentAttack.Execute(contextData);
+        currentAttack.EnterAttack(contextData);
+        currentAttack.UpdateAttack(contextData);
         Debug.Log($"{contextData.userPosition} : {contextData.source} : {contextData.mousePosition}");
     }
 }

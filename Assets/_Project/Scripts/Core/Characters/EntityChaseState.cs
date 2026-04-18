@@ -2,32 +2,26 @@
 
 public class EntityChaseState : State<EntityController>
 {
-    public EntityChaseState(EntityController context, StateMachine stateMachine) : base(context, stateMachine) { }
+    public EntityChaseState(EntityController controller, StateMachine stateMachine) : base(controller, stateMachine) { }
     
     public override void Enter() { }
 
     public override void Update()
     {
-        if (context.currentTarget == null)
-        {
-            stateMachine.ChangeState(context.IdleState);
-            return;
-        }
-        
-        Vector2 currentPosition = context.transform.position;
-        Vector2 targetPosition = context.currentTarget.position;
+        Vector2 currentPosition = controller.transform.position;
+        Vector2 targetPosition = controller.currentTarget.position;
         
         float distance = Vector2.Distance(currentPosition, targetPosition);
         
-        // If in attack range and action cooldown is over, perform action
-        if (distance <= context.actionRange && context.CanPerformAction())
+        // If in action range and action cooldown is over, switch to the action state
+        if (distance <= controller.ActionRange && controller.CheckActionCooldown())
         {
-            stateMachine.ChangeState(context.ActionState);
+            stateMachine.ChangeState(controller.ActionState);
         }
         else // Keep Chasing
         {
             Vector2 moveDirection = (targetPosition - currentPosition).normalized;
-            context.EntityMover.SetMoveDirection(moveDirection);
+            controller.EntityMover.SetMoveDirection(moveDirection);
         }
     }
     
@@ -37,6 +31,6 @@ public class EntityChaseState : State<EntityController>
     public override void Exit()
     {
         // Stop moving when leaving chase state so entity does not slide when transitioning
-        context.EntityMover.SetMoveDirection(Vector2.zero);
+        controller.EntityMover.SetMoveDirection(Vector2.zero);
     }
 }

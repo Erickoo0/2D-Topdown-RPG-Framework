@@ -2,18 +2,18 @@
 
 public class PlayerIdleState : State<PlayerController>
 {
-    public PlayerIdleState(PlayerController context, StateMachine stateMachine) : base(context, stateMachine) { }
+    public PlayerIdleState(PlayerController controller, StateMachine stateMachine) : base(controller, stateMachine) { }
     
-    public override void Enter() { context.EntityMover.SetMoveDirection(Vector2.zero); }
+    public override void Enter() { controller.EntityMover.SetMoveDirection(Vector2.zero); }
 
     public override void Update()
     {
-        Vector2 input = context.MovementInput;
+        Vector2 input = controller.MovementInput;
 
         if (input != Vector2.zero)
-            stateMachine.ChangeState(context.MoveState);
+            stateMachine.ChangeState(controller.MoveState);
         else
-            context.EntityMover.SetMoveDirection(Vector2.zero);
+            controller.EntityMover.SetMoveDirection(Vector2.zero);
     }
     
     public override void PhysicsUpdate() { }

@@ -6,26 +6,25 @@ public enum MobType { Passive, Neutral, Aggressive }
 public class EntityController : BaseEntityController
 {
     [Header("Mob Type & Targeting")] 
-    public MobType mobType = MobType.Aggressive;
-    public float detectionRange = 6f;
-    public float detectionLostRange = 8f;
-    public float actionRange = 5f;
-    public Transform currentTarget;
-    public List<string> targetableList;
-
+    [field: SerializeField] public MobType mobType { get; private set; }  = MobType.Aggressive;
+    [field: SerializeField] public float DetectionRange { get; private set; } = 6f;
+    [field: SerializeField] public float DetectionLostRange { get; private set; } = 8f;
+    [field: SerializeField] public float ActionRange { get; private set; } = 5f;
+    [field: SerializeField] public List<string> TargetableList { get; private set; }
+    public Transform currentTarget ;
+    
     [Header("Action Settings")] 
-    public float actionCooldown = 2f;
+    [field: SerializeField] public EntityActionModule EntityAction { get; private set; }
+    [field: SerializeField] public float ActionCooldown  { get; private set; } = 2f;
     private float _lastActionTime;
+
     
     [Header("Movement Data")]
+    [field: SerializeField] public float DefaultWaypointWaitTime { get; private set; } = 2f;
+    [field: SerializeField] public bool LoopWaypoints { get; private set; } = true;
     private Transform _waypointParent;
     public Vector2[] waypointsList;
     public int currentWaypointIndex = 0;
-    public float defaultWaypointWaitTime = 2f;
-    public bool loopWaypoints = true;
-    
-    [Header("Action Module")]
-    [SerializeField] private EntityActionModule entityAction;
     
     [Header("State References")]
     public EntityIdleState  IdleState { get; private set; }
@@ -36,14 +35,11 @@ public class EntityController : BaseEntityController
     protected override void Awake()
     {
         base.Awake();
-
-        // Grab the action component if we forgot to assign it
-        //if (entityAction == null) entityAction = GetComponent<EntityAction>();
         
         IdleState = new EntityIdleState(this, StateMachine);
         WanderState = new EntityWanderState(this, StateMachine);
         ChaseState = new EntityChaseState(this, StateMachine);
-        ActionState = new EntityActionState(this, StateMachine, entityAction);
+        ActionState = new EntityActionState(this, StateMachine, EntityAction);
         
         SetupWaypointsList();
     }
@@ -58,61 +54,78 @@ public class EntityController : BaseEntityController
     {
         base.Update();
 
-        if (currentTarget == null) FindTarget();
-        else if (currentTarget != null) CheckLoseTarget();
+        UpdateTargeting();
+    }
+
+    //---- Targeting Methods ----
+    private void UpdateTargeting()
+    {
+        if (currentTarget == null)
+        {
+            FindTarget();
+            return;
+        }
+
+        if (!IsTargetInRange(DetectionLostRange))
+        {
+            ClearTarget();
+        }
     }
 
     private void FindTarget()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRange);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, DetectionRange);
 
         // Check all collided instances if they are targetable
         foreach (Collider2D hit in hits)
         {
             ITargetable targetInterface = hit.GetComponentInParent<ITargetable>();
 
-            // Check if the targetable instance matches targetableList
-            if (targetInterface != null && targetableList.Contains(targetInterface.GetTargetID()))
-            {
-                // Assign the target
-                currentTarget = hit.transform; 
-                StateMachine.ChangeState(ChaseState);
-                return;
-            }
+            if (targetInterface == null) continue;
+            if (TargetableList == null || !TargetableList.Contains((targetInterface.GetTargetID()))) continue;
+            
+            // Set the target
+            currentTarget = hit.transform;
+            StateMachine.ChangeState(ChaseState);
+            return;
         }
     }
     
-    private void CheckLoseTarget()
+    private void ClearTarget()
     {
-        if (Vector2.Distance(transform.position, currentTarget.position) > detectionLostRange)
-        {
-            currentTarget = null;
-            StateMachine.ChangeState(WanderState);
-        }
+        currentTarget = null;
+        StateMachine.ChangeState(IdleState);
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-        
-        Vector2 lookDirection = (other.transform.position - transform.position).normalized;    
-        EntityAnimator.FaceDirection(lookDirection);
-        
-        // If wandering, force idle state
-        if (StateMachine.CurrentState == WanderState) StateMachine.ChangeState(IdleState);
-    }
 
-    //---- Helper Methods ----
-    public bool IsTargetInRange()
+        if (StateMachine.CurrentState != ChaseState && StateMachine.CurrentState != ActionState)
+        {
+            Vector2 lookDirection = (other.transform.position - transform.position).normalized;    
+            EntityAnimator.FaceDirection(lookDirection);
+            
+            // If wandering, force idle state
+            if (StateMachine.CurrentState == WanderState) StateMachine.ChangeState(IdleState);
+        }
+    }
+    
+    private bool IsTargetInRange(float range)
     {
         if (currentTarget == null) return false;
-        else return Vector2.Distance(transform.position, currentTarget.transform.position) <= detectionRange;
+        else return Vector2.Distance(transform.position, currentTarget.transform.position) <= range;
     }
-
+    
+    
+    //---- Waypoint Methods ----
     private void SetupWaypointsList()
     {
         // Find the childed "Waypoint Parent" object
         if (_waypointParent == null) _waypointParent = transform.Find("Waypoint Parent");
+        
+        // If there is no childed Waypoint Parent, return
+        if (_waypointParent == null) return;
         
         // Get the childed objects of "Waypoint Parent" and save their positions in a list
         waypointsList = new Vector2[_waypointParent.childCount];
@@ -137,18 +150,19 @@ public class EntityController : BaseEntityController
         if (waypointsList == null || waypointsList.Length <= 0) return;
         
         // Advance the waypoint
-        if (loopWaypoints) currentWaypointIndex = (currentWaypointIndex + 1) % waypointsList.Length;
+        if (LoopWaypoints) currentWaypointIndex = (currentWaypointIndex + 1) % waypointsList.Length;
         else if (currentWaypointIndex < waypointsList.Length - 1) currentWaypointIndex++;
-    }
+    } 
     
-    // A helper method to check if we can act
-    public bool CanPerformAction() 
+    
+    //---- Action Methods -----
+    public bool CheckActionCooldown() 
     {
-        return Time.time >= _lastActionTime + actionCooldown;
+        return Time.time >= _lastActionTime + ActionCooldown;
     }
     
     // A method to reset the timer (called when the action finishes)
-    public void ResetActionCooldown()
+    public void SetActionCooldown()
     {
         _lastActionTime = Time.time;
     }

@@ -1,13 +1,15 @@
 ﻿
 public abstract class State
 {
-    protected StateMachine stateMachine;
+    protected StateMachine stateMachine; // Reference to the state machine
     
-    public State(StateMachine stateMachine)
+    // Constructor
+    protected State(StateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
     }
 
+    // Contracts that each state must fulfill
     public virtual void Enter(){}
     public virtual void Update(){}
     public virtual void PhysicsUpdate(){}
@@ -20,11 +22,11 @@ public abstract class State
 public abstract class State<T> : State where T : BaseEntityController
 {
     // Specialized Reference holds the controller (PlayerController / EntityController)
-    protected T context;
+    protected readonly T controller;
 
-    // Constructor: Pass the specific controller (context) and the stateMachine it belongs to
-    public State(T context, StateMachine stateMachine) : base(stateMachine)
+    // Constructor: Pass the specific controller and the stateMachine it belongs to
+    protected State(T controller, StateMachine stateMachine) : base(stateMachine)
     {
-        this.context = context; // Save the reference to use inside Update/Enter methods.
+        this.controller = controller;
     }
 }

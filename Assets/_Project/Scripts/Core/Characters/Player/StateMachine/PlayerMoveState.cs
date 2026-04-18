@@ -2,24 +2,24 @@
 
 public class PlayerMoveState : State<PlayerController>
 {
-    public PlayerMoveState(PlayerController context, StateMachine stateMachine) : base(context, stateMachine) {}
+    public PlayerMoveState(PlayerController controller, StateMachine stateMachine) : base(controller, stateMachine) {}
 
     public override void Update()
     {
-        Vector2 input = context.MovementInput;
+        Vector2 input = controller.MovementInput;
 
         if (input == Vector2.zero)
         {
-            stateMachine.ChangeState(context.IdleState);
+            stateMachine.ChangeState(controller.IdleState);
             return;
         }
         
-        context.EntityMover.SetMoveDirection(input);
+        controller.EntityMover.SetMoveDirection(input);
         
         // Check for dash input
-        if (context.dashInput == true)
+        if (controller.dashInput == true)
         {
-            stateMachine.ChangeState(context.DashState);
+            stateMachine.ChangeState(controller.DashState);
         }
     }
     

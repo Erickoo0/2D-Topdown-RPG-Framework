@@ -2,27 +2,22 @@ using UnityEngine;
 
 public class MouseAttackModule : AttackModule
 {
-
-    public override void Execute(CombatContext combatContext)
-    {
-        PrepareHitbox(combatContext.mousePosition);
-        ApplyCombatLogic(combatContext);
-        TriggerVisuals(combatContext.mousePosition);
-    }
-
-    private void PrepareHitbox(Vector2 position)
-    {
-        hitbox.transform.position = position;
-
-        if (hitbox is HitBoxCircle hitboxCircle) hitboxCircle.radius = attackSize;
-        // add more shape logic here if needed
-    }
-
-    private void ApplyCombatLogic(CombatContext combatContext)
+    protected override float AttackSize => 0.9f;
+    
+    public override void EnterAttack(CombatContext combatContext)
     {
         // Pass the source 
         if (baseDamageData.source == null) baseDamageData.source = combatContext.source;
         
+        if (hitbox is HitBoxCircle hitboxCircle) hitboxCircle.radius = AttackSize;
+        
+        TriggerVisuals(combatContext.mousePosition);
+        
+    }
+
+    public override void UpdateAttack(CombatContext combatContext)
+    {
+        hitbox.transform.position = combatContext.mousePosition;
         hitbox.CheckForHits(baseDamageData);
     }
 

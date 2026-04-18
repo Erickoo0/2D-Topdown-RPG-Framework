@@ -2,14 +2,14 @@
 
 public class EntityWanderState : State<EntityController>
 {
-    public EntityWanderState(EntityController context, StateMachine stateMachine) : base(context, stateMachine) { }
+    public EntityWanderState(EntityController controller, StateMachine stateMachine) : base(controller, stateMachine) { }
     
     public override void Enter() { }
 
     public override void Update()
     {
-        Vector2 currentPosition = context.transform.position;
-        Vector2 targetPosition = context.GetCurrentWaypointPosition();
+        Vector2 currentPosition = controller.transform.position;
+        Vector2 targetPosition = controller.GetCurrentWaypointPosition();
         
         float distance = Vector2.Distance(currentPosition, targetPosition);
         
@@ -17,12 +17,12 @@ public class EntityWanderState : State<EntityController>
         if (distance > 0.1f)
         {
             Vector2 moveDirection = (targetPosition - currentPosition).normalized;
-            context.EntityMover.SetMoveDirection(moveDirection);
+            controller.EntityMover.SetMoveDirection(moveDirection);
         }
         else // If we have reached the destination, return to idle state
         {
-            context.AdvanceToNextWaypoint();
-            stateMachine.ChangeState(context.IdleState);
+            controller.AdvanceToNextWaypoint();
+            stateMachine.ChangeState(controller.IdleState);
         }
     }
     
@@ -30,5 +30,8 @@ public class EntityWanderState : State<EntityController>
 
     public override void HandleInput() { }
 
-    public override void Exit() { }
+    public override void Exit()
+    {
+        controller.EntityMover.SetMoveDirection(Vector2.zero);
+    }
 }

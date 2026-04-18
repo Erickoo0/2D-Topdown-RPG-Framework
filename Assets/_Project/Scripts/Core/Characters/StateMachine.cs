@@ -4,6 +4,7 @@ public class StateMachine : MonoBehaviour
 {
     public State CurrentState { get; private set; }
     
+    // Starts the initial state and calls it
     public void SetupState(State startingState)
     {
         CurrentState = startingState;
@@ -12,18 +13,18 @@ public class StateMachine : MonoBehaviour
 
     public void ChangeState(State newState)
     {
-        CurrentState.Exit();
+        CurrentState.Exit(); 
         CurrentState = newState;
         CurrentState.Enter();
     }
 
-    public void Update()
+    public void UpdateState()
     {
         CurrentState.HandleInput();
         CurrentState.Update();
     }
 
-    public void FixedUpdate()
+    public void FixedUpdateState()
     {
         CurrentState.PhysicsUpdate();
     }
