@@ -38,7 +38,6 @@ public struct DamageData
 public struct CombatContext
 {
     public GameObject source;
-    public EntityActionModule entityActionModule;
     public Vector2 mousePosition;
     public Vector2 userPosition;
     public Vector2 facingDirection;

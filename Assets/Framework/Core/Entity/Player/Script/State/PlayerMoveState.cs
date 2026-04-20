@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class PlayerMoveState : State<PlayerController>
 {
-    public PlayerMoveState(PlayerController controller, StateMachine stateMachine) : base(controller, stateMachine) {}
-
     public override void Update()
     {
         Vector2 input = controller.MovementInput;

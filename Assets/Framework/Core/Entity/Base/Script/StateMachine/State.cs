@@ -1,13 +1,9 @@
-﻿
+﻿using UnityEngine;
+
+[System.Serializable]
 public abstract class State
 {
     protected StateMachine stateMachine; // Reference to the state machine
-    
-    // Constructor
-    protected State(StateMachine stateMachine)
-    {
-        this.stateMachine = stateMachine;
-    }
 
     // Contracts that each state must fulfill
     public virtual void Enter(){}
@@ -17,16 +13,15 @@ public abstract class State
     public virtual void Exit(){}
 }
 
-// Generic State
-// Other classes which inherit from State<T> must define T, where T must inherit from a BaseEntityController
+[System.Serializable]
 public abstract class State<T> : State where T : BaseEntityController
 {
     // Specialized Reference holds the controller (PlayerController / EntityController)
-    protected readonly T controller;
+    protected T controller;
 
-    // Constructor: Pass the specific controller and the stateMachine it belongs to
-    protected State(T controller, StateMachine stateMachine) : base(stateMachine)
+    public virtual void Setup(T controller, StateMachine stateMachine)
     {
         this.controller = controller;
+        this.stateMachine = stateMachine;
     }
 }

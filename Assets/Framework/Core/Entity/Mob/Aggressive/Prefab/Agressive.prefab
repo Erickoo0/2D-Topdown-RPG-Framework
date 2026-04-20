@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 3685750868421853756}
   - component: {fileID: 6447096566392552272}
   m_Layer: 3
-  m_Name: Neutral
+  m_Name: Agressive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -419,6 +419,29 @@ MonoBehaviour:
   <LoopWaypoints>k__BackingField: 1
   waypointsList: []
   currentWaypointIndex: 0
+  IdleState:
+    rid: 7572515169101152256
+  WanderState:
+    rid: 7572515169101152257
+  ChaseState:
+    rid: 7572515169101152258
+  ChargeState:
+    rid: 7572515169101152259
+  references:
+    version: 2
+    RefIds:
+    - rid: 7572515169101152256
+      type: {class: EntityIdleState, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7572515169101152257
+      type: {class: EntityWanderState, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7572515169101152258
+      type: {class: EntityChaseState, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7572515169101152259
+      type: {class: EntityChargeState, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!114 &-1747576445313389302
 MonoBehaviour:
   m_ObjectHideFlags: 0

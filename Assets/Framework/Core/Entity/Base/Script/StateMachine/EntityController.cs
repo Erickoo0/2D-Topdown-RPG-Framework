@@ -29,19 +29,19 @@ public class EntityController : BaseEntityController
     public int currentWaypointIndex = 0;
     
     [Header("State References")]
-    public EntityIdleState  IdleState { get; private set; }
-    public EntityWanderState WanderState { get; private set; }
-    public EntityChaseState ChaseState { get; private set; }
-    public EntityChargeState ChargeState { get; private set; }
+    [SerializeReference, SubclassSelector] public State<EntityController> IdleState;
+    [SerializeReference, SubclassSelector] public State<EntityController> WanderState;
+    [SerializeReference, SubclassSelector] public State<EntityController> ChaseState;
+    [SerializeReference, SubclassSelector] public State<EntityController> ChargeState;
     
     protected override void Awake()
     {
         base.Awake();
         
-        IdleState = new EntityIdleState(this, StateMachine);
-        WanderState = new EntityWanderState(this, StateMachine);
-        ChaseState = new EntityChaseState(this, StateMachine);
-        ChargeState = new EntityChargeState(this, StateMachine);
+        IdleState?.Setup(this, StateMachine);
+        WanderState?.Setup(this, StateMachine);
+        ChaseState?.Setup(this, StateMachine);
+        ChargeState?.Setup(this, StateMachine);
         SetupWaypointsList();
     }
 

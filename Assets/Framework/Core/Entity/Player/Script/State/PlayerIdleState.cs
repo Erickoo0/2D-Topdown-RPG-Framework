@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class PlayerIdleState : State<PlayerController>
 {
-    public PlayerIdleState(PlayerController controller, StateMachine stateMachine) : base(controller, stateMachine) { }
-    
     public override void Enter() { controller.EntityMover.SetMoveDirection(Vector2.zero); }
 
     public override void Update()

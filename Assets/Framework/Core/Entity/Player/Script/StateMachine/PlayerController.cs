@@ -9,19 +9,19 @@ public class PlayerController : BaseEntityController
     public float defaultDashTime = 10f;
     
     [Header("State References")]
-    public PlayerIdleState IdleState { get; private set; }
-    public PlayerMoveState MoveState { get; private set; }
-    public PlayerDashState DashState { get; private set; }
-    public PlayerMouseAttackState MouseAttackState { get; private set; }
+    [SerializeReference, SubclassSelector] public State<PlayerController> IdleState;
+    [SerializeReference, SubclassSelector] public State<PlayerController> MoveState;
+    [SerializeReference, SubclassSelector] public State<PlayerController> DashState;
+    [SerializeReference, SubclassSelector] public State<PlayerController> MouseAttackState;
 
     protected override void Awake()
     {
         base.Awake();
 
-        IdleState = new PlayerIdleState(this, StateMachine);
-        MoveState = new PlayerMoveState(this, StateMachine);
-        DashState = new PlayerDashState(this, StateMachine);
-        MouseAttackState = new PlayerMouseAttackState(this, StateMachine);
+        IdleState?.Setup(this, StateMachine);
+        MoveState?.Setup(this, StateMachine);
+        DashState?.Setup(this, StateMachine);
+        MouseAttackState?.Setup(this, StateMachine);
     }
 
     protected virtual void Start()

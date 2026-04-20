@@ -11,6 +11,7 @@ public class PlayerCombatController : MonoBehaviour
     private PlayerController _playerController;
     private Camera _mainCam;
     private Vector2 _rawMousePosition;
+    public CombatContext CombatContext { get; private set; } = new CombatContext();
 
     private void Awake()
     {
@@ -42,16 +43,16 @@ public class PlayerCombatController : MonoBehaviour
         if (GetAttackData<MouseAttackData>() == null) return;
         
         // Gather the context 
-        CombatContext contextData = new CombatContext
-        {
-            source = gameObject,
-            mousePosition = _mainCam.ScreenToWorldPoint(_rawMousePosition),
-            userPosition = transform.position,
-            facingDirection = transform.right // Add logic later
-        };
+        CombatContext combatContext = CombatContext;
+        combatContext.source = gameObject;
+        combatContext.mousePosition = _mainCam.ScreenToWorldPoint(_rawMousePosition);
+        combatContext.userPosition = transform.position;
+        combatContext.facingDirection = transform.right;
+        CombatContext = combatContext;
+      
+
         
         // Execute attack module
-        _playerController.MouseAttackState.SetupContext(contextData);
         _playerController.StateMachine.ChangeState(_playerController.MouseAttackState);
     }
 }

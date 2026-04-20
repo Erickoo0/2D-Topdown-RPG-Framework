@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class EntityChaseState : State<EntityController>
 {
-    public EntityChaseState(EntityController controller, StateMachine stateMachine) : base(controller, stateMachine) { }
-    
     public override void Enter() { }
 
     public override void Update()

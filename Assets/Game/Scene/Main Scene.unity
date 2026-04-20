@@ -7591,7 +7591,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1894244101}
-        m_TargetAssemblyTypeName: CombatController, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayerCombatController, Assembly-CSharp
         m_MethodName: OnMouseClick
         m_Mode: 0
         m_Arguments:
@@ -23899,7 +23899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02353042c2c8d9499c145018c27a296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatController
-  currentAttack: {fileID: 8990838242176672021, guid: bdbe4bd164f5fd54a9de29ea7a9b7bd8, type: 3}
+  attackLibrary:
+  - {fileID: 11400000, guid: c59de694b0e914f47bfdf0949268ad62, type: 2}
 --- !u!114 &1894244102
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class EntityChargeState : State<EntityController>
 {
-    private readonly ChargeAttackData _attackData;
+    private ChargeAttackData _attackData;
     private HitBox _spawnedHitbox;
     
     private float _windUpTimer;
@@ -12,9 +13,10 @@ public class EntityChargeState : State<EntityController>
     private bool _isFinished;
     private bool _hasHitThisExecute;
 
-    public EntityChargeState(EntityController controller, StateMachine stateMachine)
-        : base(controller, stateMachine)
+    public override void Setup(EntityController controller, StateMachine stateMachine)
     {
+        base.Setup(controller, stateMachine);
+        
         _attackData = controller.GetAttackData<ChargeAttackData>();
         
         if (_attackData == null) 

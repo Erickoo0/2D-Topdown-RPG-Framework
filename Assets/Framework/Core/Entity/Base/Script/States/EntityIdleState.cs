@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class EntityIdleState : State<EntityController>
 {
-    public EntityIdleState(EntityController controller, StateMachine stateMachine) : base(controller, stateMachine) { }
-
     private float _idleTime;
     
     

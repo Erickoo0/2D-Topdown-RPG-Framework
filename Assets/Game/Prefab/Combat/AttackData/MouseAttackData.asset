@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010f6d3bf1e93404f9caab83a9657df6, type: 3}
   m_Name: MouseAttackData
   m_EditorClassIdentifier: Assembly-CSharp::MouseAttackData
-  hitboxPrefab: {fileID: 0}
+  hitboxPrefab: {fileID: 2873761913983823598, guid: ebda2ed39dab96546955db76e4086f77, type: 3}
   damageData:
-    damageAmount: 0
+    damageAmount: 11
     hitDirection: {x: 0, y: 0}
-    knockbackForce: 0
-    knockbackDuration: 0
-    knockbackHeight: 0
+    knockbackForce: 10
+    knockbackDuration: 1
+    knockbackHeight: 2
     type: 0
     source: {fileID: 0}
-  hitboxRadius: 1
+  hitboxRadius: 0.9
   hitboxOffset: {x: 0, y: 0}
   hitOncePerExecute: 1
-  attackFX: {fileID: 0}
+  attackFX: {fileID: 4093972447167166647, guid: ea39ff1f2c82a424ca269ec3e3d9efaa, type: 3}

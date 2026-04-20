@@ -1,27 +1,33 @@
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerMouseAttackState : State<PlayerController>
 {
     private MouseAttackData _attackData;
-    private CombatContext _context;
+    private PlayerCombatController _combatController;
     private bool _isFinished;
-
-    public PlayerMouseAttackState(PlayerController controller, StateMachine stateMachine) : base(controller,
-        stateMachine)
+    
+    public override void Setup(PlayerController controller, StateMachine stateMachine)
     {
-        // Search the Combat Controller for the specific data asset
-        var combatController = controller.GetComponent<PlayerCombatController>();
+        base.Setup(controller, stateMachine);
         
-        if (combatController != null)
+        // Search the Combat Controller for the specific data asset
+        _combatController = controller.GetComponent<PlayerCombatController>();
+        
+        if (_combatController != null)
         {
-            _attackData = combatController.GetAttackData<MouseAttackData>();
+            _attackData = _combatController.GetAttackData<MouseAttackData>();
         }
 
         if (_attackData == null) 
             Debug.LogWarning($"{controller.gameObject.name} has MouseAttackState but no MouseAttackData in library.");
+
     }
 
-    public void SetupContext(CombatContext combatContext) => _context = combatContext;
+    public void SetupContext(CombatContext combatContext)
+    {
+        //_context = combatContext;
+    } 
 
     
     public override void Enter()
@@ -36,7 +42,7 @@ public class PlayerMouseAttackState : State<PlayerController>
         }
         
         // 1. Spawn Hitbox exactly at the mouse position
-        HitBox spawnedHitbox = Object.Instantiate(_attackData.hitboxPrefab, _context.mousePosition, Quaternion.identity);
+        HitBox spawnedHitbox = Object.Instantiate(_attackData.hitboxPrefab, _combatController.CombatContext.mousePosition, Quaternion.identity);
         spawnedHitbox.enableHitbox = true;
         
         // 2. Configure Hitbox Radius
@@ -48,13 +54,13 @@ public class PlayerMouseAttackState : State<PlayerController>
         // 3. Trigger Visuals
         if (_attackData.attackFX != null)
         {
-            GameObject fxInstance = Object.Instantiate(_attackData.attackFX, _context.mousePosition, Quaternion.identity);
+            GameObject fxInstance = Object.Instantiate(_attackData.attackFX, _combatController.CombatContext.mousePosition, Quaternion.identity);
             spawnedHitbox.ScaleVisual(fxInstance);
         }
         
         // 4. Process Damage using the injected context
         DamageData executionDamage = _attackData.damageData;
-        executionDamage.source = _context.source;
+        executionDamage.source = _combatController.CombatContext.source;
         spawnedHitbox.CheckForHits(executionDamage);
         
         // 5. Clean up hierarchy immediately for an instant attack
