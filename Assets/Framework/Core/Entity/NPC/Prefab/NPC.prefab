@@ -44,6 +44,8 @@ GameObject:
   - component: {fileID: 3585913823327191534}
   - component: {fileID: 3662397687984171361}
   - component: {fileID: 6489739227427479816}
+  - component: {fileID: -955231815517902689}
+  - component: {fileID: 4859369203713870365}
   - component: {fileID: 3324052278730299444}
   - component: {fileID: 3597365950157330232}
   - component: {fileID: 1154732131269866783}
@@ -243,6 +245,62 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.5}
   m_Radius: 0.9
+--- !u!114 &-955231815517902689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295489641667029861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b52ac14ec3a44d39e9c9f2574261b51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StateMachine
+--- !u!114 &4859369203713870365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295489641667029861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3891c3e5f98f4d639b32e782089d8fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityController
+  entityID: 
+  attackLibrary: []
+  <mobType>k__BackingField: 2
+  <DetectionRange>k__BackingField: 6
+  <DetectionLostRange>k__BackingField: 10
+  <ActionRange>k__BackingField: 5
+  <TargetableList>k__BackingField: []
+  currentTarget: {fileID: 0}
+  <ActionCooldown>k__BackingField: 1
+  <DefaultWaypointWaitTime>k__BackingField: 2
+  <LoopWaypoints>k__BackingField: 1
+  waypointsList: []
+  currentWaypointIndex: 0
+  IdleState:
+    rid: 7572515187600130146
+  WanderState:
+    rid: 7572515187600130147
+  ChaseState:
+    rid: -2
+  AttackState:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 7572515187600130146
+      type: {class: EntityIdleState, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7572515187600130147
+      type: {class: EntityWanderState, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!114 &3324052278730299444
 MonoBehaviour:
   m_ObjectHideFlags: 0

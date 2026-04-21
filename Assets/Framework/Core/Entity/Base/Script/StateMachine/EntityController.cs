@@ -77,6 +77,8 @@ public class EntityController : BaseEntityController
 
     private void FindTarget()
     {
+        if (ChaseState == null || TargetableList == null) return;
+        
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, DetectionRange);
 
         // Check all collided instances if they are targetable
@@ -85,7 +87,7 @@ public class EntityController : BaseEntityController
             ITargetable targetInterface = hit.GetComponentInParent<ITargetable>();
 
             if (targetInterface == null) continue;
-            if (TargetableList == null || !TargetableList.Contains((targetInterface.GetTargetID()))) continue;
+            if (!TargetableList.Contains((targetInterface.GetTargetID()))) continue;
             
             // Set the target
             currentTarget = hit.transform;

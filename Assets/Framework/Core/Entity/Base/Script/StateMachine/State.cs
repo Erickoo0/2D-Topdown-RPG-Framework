@@ -21,6 +21,7 @@ public abstract class State<T> : State where T : BaseEntityController
     // Specialized Reference holds the controller (PlayerController / EntityController)
     protected T controller;
 
+
     public virtual void Setup(T controller, StateMachine stateMachine)
     {
         this.controller = controller;

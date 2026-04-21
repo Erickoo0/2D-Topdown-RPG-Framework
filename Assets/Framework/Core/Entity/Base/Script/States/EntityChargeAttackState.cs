@@ -17,10 +17,11 @@ public class EntityChargeAttackState : BaseActionState
     {
         base.Setup(controller, stateMachine);
         
+        // Grab the attack data from the controllers attack library
         _attackData = controller.GetAttackData<ChargeAttackData>();
         
         if (_attackData == null) 
-            Debug.LogError("ChargeAttackData not found in attack library for EntityChargeState");
+            Debug.LogError($"ChargeAttackData not found in attack library for {controller.gameObject.name}");
     }
 
     public override void Enter()
@@ -37,30 +38,32 @@ public class EntityChargeAttackState : BaseActionState
         // 3. Target Validation & Direction Logic
         if (controller.currentTarget != null)
         {
-            Vector2 direction = controller.currentTarget.position - controller.transform.position;
+            Vector2 direction = (Vector2)controller.currentTarget.position - (Vector2)controller.transform.position;
             _chargeDirection = direction.normalized;
 
-            // Calculate charge duration based on distance to target + overshoot constant
             float totalDistance = direction.magnitude + _attackData.overshootDistance;
             float totalChargeSpeed = _originalSpeed * _attackData.chargeSpeedMultiplier;
             _chargeTimer = totalDistance / totalChargeSpeed;
             
             controller.EntityAnimator.FaceDirection(_chargeDirection);
         }
-        else // If there is no target anymore
+        else 
         {
-            _isFinished = true; // Bail if target is lost before starting
+            _isFinished = true; 
             return;
         }
 
-        // 4. Dynamic Hitbox Spawning
+        // 4. Dynamic Hitbox Spawning & Initialization
         if (_attackData.hitboxPrefab != null)
         {
-            // Spawn the hitbox prefab as a child of the entity
+            // Spawn as child so it moves with the entity automatically
             _spawnedHitbox = Object.Instantiate(_attackData.hitboxPrefab, controller.transform);
-            _spawnedHitbox.enableHitbox = false; // Keep it "cold" during the windup phase
+            _spawnedHitbox.enableHitbox = false; 
 
-            // If it's a circle hitbox, apply the radius from the ScriptableObject
+            // --- APPLY OFFSET AND RADIUS HERE ---
+            // LocalPosition ensures it stays at the offset relative to the parent
+            _spawnedHitbox.transform.localPosition = _attackData.hitboxOffset;
+
             if (_spawnedHitbox is HitBoxCircle circleHitbox) 
             { 
                 circleHitbox.radius = _attackData.hitboxRadius; 
@@ -70,30 +73,28 @@ public class EntityChargeAttackState : BaseActionState
 
     public override void Update()
     {
-        // If attack is finished, return to idle
         if (_isFinished)
         {
             stateMachine.ChangeState(controller.IdleState);
             return;
         }
 
-        // --- Phase A: Windup ---
+        // Phase A: Windup
         if (_windUpTimer > 0)
         {
             _windUpTimer -= Time.deltaTime;
         }
-        // --- Phase B: Active Charge ---
+        // Phase B: Active Charge
         else if (_chargeTimer > 0)
         {
             _chargeTimer -= Time.deltaTime;
             
-            // Apply movement
             controller.EntityMover.moveSpeed = _originalSpeed * _attackData.chargeSpeedMultiplier;
             controller.EntityMover.SetMoveDirection(_chargeDirection);
 
             ProcessCombatLogic();
         }
-        // --- Phase C: Completion ---
+        // Phase C: Completion
         else
         {
             _isFinished = true;
@@ -104,43 +105,35 @@ public class EntityChargeAttackState : BaseActionState
     {
         if (_spawnedHitbox == null) return;
 
-        // Ensure the hitbox follows any specific offset defined in the data
-        _spawnedHitbox.transform.localPosition = _attackData.hitboxOffset;
+        // Hitbox is already at the correct offset via Enter(), just turn it on
         _spawnedHitbox.enableHitbox = true;
 
-        // Check if we can still hit (Handles 'Hit Once' logic)
         if (!_attackData.hitOncePerExecute || !_hasHitThisExecute)
         {
-            // Use the Data Asset's damage info, but assign this specific entity as the source
             DamageData frameDamage = _attackData.damageData;
             frameDamage.source = controller.gameObject;
 
             if (_spawnedHitbox.CheckForHits(frameDamage))
             {
                 _hasHitThisExecute = true;
-                // Add impact freeze or camera shake triggers here in the future
             }
         }
     }
 
     public override void Exit()
     {
-        // 1. Restore original movement speed and reset target
         controller.EntityMover.moveSpeed = _originalSpeed;
         controller.currentTarget = null;
         controller.EntityMover.SetMoveDirection(Vector2.zero);
         
-        // 2. Start the cooldown timer on the controller
         controller.SetActionCooldown();
         
-        // 3. Clean up the dynamic hitbox
         if (_spawnedHitbox != null)
         {
             Object.Destroy(_spawnedHitbox.gameObject);
         }
     }
 
-    // Unused in the context of a programmed Charge, but required by State interface
     public override void PhysicsUpdate() { }
     public override void HandleInput() { }
 }

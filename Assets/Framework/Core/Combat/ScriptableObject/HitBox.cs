@@ -5,7 +5,6 @@ public abstract class HitBox : MonoBehaviour
     [Header("Base Settings")] 
     public LayerMask victimLayer; // Layer to check for collisions
     public bool enableHitbox = true;
-    [SerializeField] protected float knockbackOffsetStrength = 0.5f;
     
     // Every hitbox must implement this and define their own logic to check for hits
     public abstract bool CheckForHits(DamageData data);

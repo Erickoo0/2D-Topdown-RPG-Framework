@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HitBoxCircle : HitBox
 {
-    [HideInInspector] public float radius;
+    public float radius;
 
     public override bool CheckForHits(DamageData data)
     {
@@ -30,7 +30,7 @@ public class HitBoxCircle : HitBox
             float sideSign = (primaryKnockbackDirection.x * perpendicularDirection.y - primaryKnockbackDirection.y * perpendicularDirection.x) > 0 ? 1f : -1f;   
 
             // 4. Pass the direction
-            Vector2 finalDirection = (primaryKnockbackDirection + (perpendicularDirection * (sideSign * knockbackOffsetStrength))).normalized;
+            Vector2 finalDirection = (primaryKnockbackDirection + (perpendicularDirection * (sideSign * data.knockbackForce))).normalized;
             
             // 5. Create a copy of passed in damage data and direction
             DamageData finalData = data;
