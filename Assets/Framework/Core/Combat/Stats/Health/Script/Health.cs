@@ -100,7 +100,7 @@ public class Health : MonoBehaviour
     {
         _isDead = true;
         OnDeath?.Invoke(); // Event for LOCAL systems like ItemContainers
-        EventBus.RequestEntityDeathUpdate(entityRoot);
+        EventBus.RequestEntityDeathUpdate(entityRoot); // Alert the EventBus of entity death
         if (destroyOnDeath) Destroy(entityRoot);
     }
 }

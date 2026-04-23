@@ -21,8 +21,8 @@ MonoBehaviour:
     knockbackHeight: 5
     type: 0
     source: {fileID: 0}
-  hitboxRadius: 1.5
-  hitboxOffset: {x: 0, y: 0}
+  hitboxRadius: 0.5
+  hitboxOffset: {x: 0, y: 0.5}
   hitOncePerExecute: 1
   windUpDuration: 0.75
   chargeSpeedMultiplier: 4

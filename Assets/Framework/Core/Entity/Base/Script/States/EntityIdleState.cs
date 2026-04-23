@@ -14,7 +14,6 @@ public class EntityIdleState : BaseIdleState
 
     public override void Update()
     {
-        Debug.unityLogger.Log("idle time: " + _idleTime);
         if (_idleTime > 0) _idleTime -= Time.deltaTime;
         else stateMachine.ChangeState(controller.WanderState);
     }

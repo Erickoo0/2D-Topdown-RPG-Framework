@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 [RequireComponent(typeof(Collider2D)), RequireComponent(typeof(Rigidbody2D))]
 public class HurtBox : MonoBehaviour, IDamagable
@@ -22,6 +23,13 @@ public class HurtBox : MonoBehaviour, IDamagable
         if (TryGetComponent<EntityMover>(out EntityMover entityMover))
         {
             entityMover.ApplyKnockback(data.hitDirection, data.knockbackForce, data.knockbackDuration, data.source);
+            GetComponent<CinemachineImpulseSource>().GenerateImpulse();  
+        }
+        
+        // Apply flash shader
+        if (TryGetComponent<FlashShader>(out FlashShader flashShader))
+        {
+            flashShader.ApplyFlash();
         }
     }
 }
