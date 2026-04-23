@@ -58,6 +58,9 @@ public class LevelUI : MonoBehaviour
             
             if (expText != null && showExpText)
                 progressBarRef.BarText.text = $"Exp: {lvlTarget.ExpCurrent}/{lvlTarget.ExpToNextLvl}";
+
+            string label = showExpText ? $"Exp: {lvlTarget.ExpCurrent}/{lvlTarget.ExpToNextLvl}" : "";
+            progressBarRef.SetValues(lvlTarget.ExpCurrent, lvlTarget.ExpToNextLvl, label);
         }
     }
 }
