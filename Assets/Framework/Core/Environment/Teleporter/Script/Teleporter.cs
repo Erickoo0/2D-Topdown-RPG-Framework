@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum TeleportFacing { Up, Down, Left, Right }
@@ -8,7 +9,7 @@ public class Teleporter : MonoBehaviour
     [SerializeField] private Teleporter targetDestinationTeleporter;
     private string _targetDestinationTag;
     [SerializeField] private string targetDestinationTag;
-    [SerializeField] private float teleportCooldown = 2f;
+    [SerializeField] private float teleportCooldown = 0f;
     [SerializeField] private TeleportFacing faceDirection;
     private float _teleportCooldownTimer;
 
@@ -34,9 +35,22 @@ public class Teleporter : MonoBehaviour
         }
         
         // 2. Teleport
+        StartCoroutine(TeleportSequence(other));
+    }
+
+    private IEnumerator TeleportSequence(Collider2D other)
+    {
+        // 1. Start fade out animation
+        var controller = other.GetComponent<PlayerController>();
+        if (FadeController.Instance != null)
+        {
+            controller.SetCanMove(false);
+            yield return FadeController.Instance.FadeOut();
+        }
+        // 2. Teleport the player
         other.transform.position = targetDestinationTeleporter.transform.position;
         
-        // 3. Set the face direction
+        // 3. Set the face direction 
         var playerAnimator = other.GetComponent<EntityAnimator>(); // Replace with your actual class name
         if (playerAnimator != null)
         {
@@ -49,10 +63,20 @@ public class Teleporter : MonoBehaviour
         targetDestinationTeleporter.SetTeleporterCooldown();
         
         // 5. Set the location tag
-        if (MapManager.Instance == null) return;
-        MapManager.Instance.SetLocationTag(targetDestinationTag);
+        if (MapManager.Instance != null) 
+            MapManager.Instance.SetLocationTag(targetDestinationTag);
+        
+        // 6. Give the camera some time to catch up to the new position
+        yield return new WaitForSeconds(0.1f);
+        
+        // 7. Start fade in animation
+        if (FadeController.Instance != null)
+        {
+            yield return FadeController.Instance.FadeIn();
+            controller.SetCanMove(true);
+        }
     }
-
+    
     private void SetTeleporterCooldown()
     {
         _teleportCooldownTimer = teleportCooldown;

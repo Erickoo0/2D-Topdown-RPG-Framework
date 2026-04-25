@@ -5,7 +5,6 @@ public class PlayerController : BaseEntityController
 {
     [Header("Player Data")]
     public Vector2 MovementInput { get; private set; }
-    public bool dashInput;
     public float defaultDashTime = 10f;
     
     [Header("State References")]
@@ -13,6 +12,10 @@ public class PlayerController : BaseEntityController
     [SerializeReference, SubclassSelector] public State<PlayerController> MoveState;
     [SerializeReference, SubclassSelector] public State<PlayerController> DashState;
     [SerializeReference, SubclassSelector] public State<PlayerController> MouseAttackState;
+
+    [HideInInspector] public bool dashInput;
+    private bool _canMove = true;
+    private Vector2 _rawInput;
 
     protected override void Awake()
     {
@@ -33,11 +36,33 @@ public class PlayerController : BaseEntityController
     // Input System Methods
     public void OnMove(InputAction.CallbackContext context)
     {
-        MovementInput = context.ReadValue<Vector2>();
+        // Always track input even if player is not moving
+        _rawInput = context.ReadValue<Vector2>();
+        
+        // Only update movement input if player can move
+        if (_canMove) 
+            MovementInput = _rawInput;
     }
 
     public void OnDash(InputAction.CallbackContext context)
     {
         if (context.performed) dashInput = true;
+    }
+    
+    public void SetCanMove(bool canMove)
+    {
+        _canMove = canMove;
+        
+        // Clear input for animator and state machine
+        if (!_canMove)
+        {
+            MovementInput = Vector2.zero;
+            EntityMover.SetMoveDirection(Vector2.zero);
+            dashInput = false;
+        }
+        else
+        {
+            MovementInput = _rawInput;
+        }
     }
 }
