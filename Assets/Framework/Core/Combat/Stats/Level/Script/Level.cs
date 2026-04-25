@@ -25,9 +25,19 @@ public class Level : MonoBehaviour
     public event Action OnMaxLevelReached;
     
     // Properties
-    public int LvlCurrent => lvlCurrent;
+    public int LvlCurrent
+    {
+        get => lvlCurrent;
+        set => lvlCurrent = value;
+    }
+
     public int LvlMax => lvlMax;
-    public int ExpCurrent => expCurrent;
+    public int ExpCurrent
+    {
+        get => expCurrent;
+        set => expCurrent = value;
+    }
+
     public int ExpToNextLvl => CalculateRequiredExp(lvlCurrent);
     public int ExpYield => baseExpOnDeath * LvlCurrent;
     

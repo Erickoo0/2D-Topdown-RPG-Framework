@@ -25639,6 +25639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2063131647}
   - component: {fileID: 2063131648}
+  - component: {fileID: 2063131652}
   - component: {fileID: 2063131650}
   - component: {fileID: 2063131649}
   - component: {fileID: 2063131651}
@@ -25738,6 +25739,18 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2063131652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063131646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c53c88c4158e04ca6ea350a0069f95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStatsPersistance
 --- !u!1 &2094289277
 GameObject:
   m_ObjectHideFlags: 0
