@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class WorldTime : MonoBehaviour
 {
-    [SerializeField] private float dayLength = 120f; // Seconds for a full day
+    [SerializeField] private float dayLengthInMinutes = 10f;
+    [SerializeField, HideInInspector] private float dayLength; // Seconds for a full day
     
     [Header("Starting Date & Time")] 
     [SerializeField, Range(0, 23)] private int startHour = 8;
@@ -15,6 +16,24 @@ public class WorldTime : MonoBehaviour
     
     // This tracks "fractional" minutes so we don't lose time between frames
     private float _minuteAccumulator;
+
+    
+    // Helper for Editor previews
+    public float GetPreviewPercent()
+    {
+        return (float)startHour / 24f;
+    }
+    // OnValidate() is called when the inspector is changed
+    private void OnValidate()
+    {
+        dayLength = dayLengthInMinutes * 60f;
+        // Tell the light system to refresh if it exists in the scene
+        var lightSystem = FindFirstObjectByType<WorldLight>();
+        if (lightSystem != null)
+        {
+            lightSystem.RefreshLights();
+        }
+    }
 
     private void Start()
     {

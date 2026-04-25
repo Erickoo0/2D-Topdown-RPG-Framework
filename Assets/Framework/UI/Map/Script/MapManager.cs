@@ -9,11 +9,11 @@ public class MapManager : MonoBehaviour
     public static MapManager Instance { get; private set; }
 
     [SerializeField] private GameObject mapMenuPanel;
-    
     [SerializeField] private GameObject mapTilePanel;
     [SerializeField] private Color highlightColor = Color.yellow;
     [SerializeField] private Color defaultColor = new Color(1f, 1f, 1f, 0.5f);
     [SerializeField] private RectTransform playerIconTransform;
+    private string _currentLocationTag;
     
     private List<Image> _mapTiles;
     
@@ -62,5 +62,10 @@ public class MapManager : MonoBehaviour
         {
             Debug.unityLogger.Log("Map tile not found");
         }
+    }
+
+    public void SetLocationTag(string locationTag)
+    {
+        _currentLocationTag = locationTag;
     }
 }
