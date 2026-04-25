@@ -1899,6 +1899,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 296422143}
     m_Modifications:
     - target: {fileID: 1815957425832613897, guid: 2f010840ab4157f4eabcd0f9ab2cc7db, type: 3}
+      propertyPath: teleportCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1815957425832613897, guid: 2f010840ab4157f4eabcd0f9ab2cc7db, type: 3}
       propertyPath: targetDestinationTeleporter
       value: 
       objectReference: {fileID: 980609283}
@@ -3715,7 +3719,7 @@ Camera:
   far clip plane: 20
   field of view: 34
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 6.75
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3898,7 +3902,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &530189236
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3930,7 +3934,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63548b3c8afbbf4499d0c35d6fc664b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FadeController
-  fadeTime: 1
+  fadeTime: 0.5
+  snapThreshold: 0.05
 --- !u!225 &530189238
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -23372,12 +23377,12 @@ Transform:
   - {fileID: 225873924}
   - {fileID: 1366386224}
   - {fileID: 974902116}
-  - {fileID: 554053179}
   - {fileID: 16697649}
   - {fileID: 2063131647}
   - {fileID: 2015281684}
   - {fileID: 728491376}
   - {fileID: 105998975}
+  - {fileID: 554053179}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1610394176
@@ -24576,7 +24581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   entityID: Player
-  dashInput: 0
   defaultDashTime: 10
   IdleState:
     rid: 7572515169101152336
@@ -24586,6 +24590,7 @@ MonoBehaviour:
     rid: 7572515169101152338
   MouseAttackState:
     rid: 7572515169101152339
+  dashInput: 0
   references:
     version: 2
     RefIds:
@@ -25712,7 +25717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948d6c2951164433aa200f249d766eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level
-  lvlCurrent: 8
+  lvlCurrent: 1
   lvlMax: 99
   expCurrent: 0
   baseExpOnDeath: 10
@@ -27732,6 +27737,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 296422143}
     m_Modifications:
+    - target: {fileID: 1815957425832613897, guid: 2f010840ab4157f4eabcd0f9ab2cc7db, type: 3}
+      propertyPath: teleportCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1815957425832613897, guid: 2f010840ab4157f4eabcd0f9ab2cc7db, type: 3}
       propertyPath: targetDestinationTeleporter
       value: 

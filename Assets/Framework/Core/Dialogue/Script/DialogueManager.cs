@@ -1,7 +1,6 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -32,6 +31,16 @@ public class DialogueManager : MonoBehaviour
         _dialogueUI = GetComponent<DialogueUI>();
         _dialogueOptionController = GetComponent<DialogueOptionController>();
    }
+    
+    private void Update()
+    {
+        // FOCUS GUARD: If options are shown, ensure the keyboard never "loses" the selection
+        if (_isWaitingChoice && EventSystem.current.currentSelectedGameObject == null)
+        {
+            GameObject first = _dialogueOptionController.GetFirstButton();
+            if (first != null) EventSystem.current.SetSelectedGameObject(first);
+        }
+    }
     
     private void HandleInput()
     {
@@ -131,7 +140,16 @@ public class DialogueManager : MonoBehaviour
         if (isLastLine && hasOptions)
         {
             _isWaitingChoice = true;
-            _dialogueOptionController.CreateButtons(_currentNode.dialogueOptions, OnOptionSelected);        }
+            _dialogueOptionController.CreateButtons(_currentNode.dialogueOptions, OnOptionSelected); 
+            
+            // Find the first button
+            GameObject firstButton = _dialogueOptionController.GetFirstButton();
+            if (firstButton != null)
+            {
+                // Set it as selected / focus using Unity EventSystem
+                EventSystem.current.SetSelectedGameObject(firstButton);
+            }
+        }
     }
 
     // Callback Function passed to the Buttons (activates on button click)
