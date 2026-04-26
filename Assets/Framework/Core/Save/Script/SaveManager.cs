@@ -56,11 +56,11 @@ public class SaveManager : MonoBehaviour
         if (File.Exists(_savePath)) File.Delete(_savePath);
         
         // 2. Create a new save data
-        SaveData newSaveData = new SaveData();
-        
-        // 3. Import new save data into all ISaveables
-        var allSaveables = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ISaveable>();
-        foreach (ISaveable saveable in allSaveables) saveable.LoadFromSaveData(newSaveData);
+        // SaveData newSaveData = new SaveData();
+        //
+        // // 3. Import new save data into all ISaveables
+        // var allSaveables = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ISaveable>();
+        // foreach (ISaveable saveable in allSaveables) saveable.LoadFromSaveData(newSaveData);
         
         // 4. Save the new game file
         SaveGame();
