@@ -17,5 +17,5 @@ public class DialogueOption
     
     [Header("Event Data")]
     public string dialogueEvent;
-    public Object eventData; // For quests, I would put the QuestSo here.
+    public string eventParameter; // For quests, put the QuestID here.
 }

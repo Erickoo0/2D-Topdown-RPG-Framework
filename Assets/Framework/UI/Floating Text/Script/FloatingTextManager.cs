@@ -13,7 +13,7 @@ public class FloatingManager : MonoBehaviour
 
 
     // Custom Object Pool using a Queue
-    private readonly Queue<FloatingText> textPool = new Queue<FloatingText>();
+    private readonly Queue<FloatingText> _textPool = new Queue<FloatingText>();
 
 
     private void Awake()
@@ -22,7 +22,7 @@ public class FloatingManager : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             FloatingText newText = CreateTextObject();
-            textPool.Enqueue(newText); // Put them in the Queue
+            _textPool.Enqueue(newText); // Put them in the Queue
         }
     }
     
@@ -37,9 +37,9 @@ public class FloatingManager : MonoBehaviour
 
 
         // Check if Queue has available objects
-        if (textPool.Count > 0)
+        if (_textPool.Count > 0)
         {
-            textObject = textPool.Dequeue(); // Pull from the front of the line
+            textObject = _textPool.Dequeue(); // Pull from the front of the line
         }
         else // If the Queue is empty (too many numbers on screen), make a new object
         {
@@ -60,7 +60,7 @@ public class FloatingManager : MonoBehaviour
     private void ReturnToPool(FloatingText textObject)
     {
         textObject.gameObject.SetActive(false);
-        textPool.Enqueue(textObject); // Put an object at the end of the line
+        _textPool.Enqueue(textObject); // Put an object at the end of the line
     }
 
 

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7684546264099720975}
+  - component: {fileID: 2676470048834733436}
   - component: {fileID: 4442497744171436724}
   - component: {fileID: 8775622505346039405}
   - component: {fileID: 7556918828428342183}
@@ -37,6 +38,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2676470048834733436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3655383930519561911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf83ac40b649302438b58a83cb9cb65c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UniqueIdentifier
+  id: 7db873ea-a88e-40fe-bf75-09eb8b7a2d18
 --- !u!212 &4442497744171436724
 SpriteRenderer:
   serializedVersion: 2
@@ -199,8 +213,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthUI
   healthBarPrefab: {fileID: 1143244870389784472, guid: bbafd3c610ab3284ca44a329d7eae5df, type: 3}
   offset: {x: 0, y: 1, z: 0}
-  healthTarget: {fileID: 0}
-  healthBarRef: {fileID: 0}
+  hpTarget: {fileID: 0}
+  progressBarRef: {fileID: 0}
   showText: 0
 --- !u!114 &7168960516742704063
 MonoBehaviour:

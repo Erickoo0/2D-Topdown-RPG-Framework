@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class ItemContainer : MonoBehaviour, IInteractable
+[RequireComponent(typeof(UniqueIdentifier))]
+public class ItemContainer : MonoBehaviour, IInteractable, ISaveable
 {
     [Header("References")] 
     [SerializeField] private Sprite containerOpenedSprite;
@@ -13,8 +14,10 @@ public class ItemContainer : MonoBehaviour, IInteractable
     [SerializeField] private List<ItemDrop> containerContents = new List<ItemDrop>();
     [SerializeField] private float spreadRadius = 1.5f;
     
-    public bool IsOpened { get; private set; }
-    public string ChestID { get; private set; }
+    [Header("Save Data")] 
+    private bool IsOpened { get; set; }
+    private UniqueIdentifier _uniqueID;
+    private string GetID() => _uniqueID.ID;
     
     [System.Serializable]
     public struct ItemDrop
@@ -25,15 +28,14 @@ public class ItemContainer : MonoBehaviour, IInteractable
     
     public void Awake()
     {
+        _uniqueID = GetComponent<UniqueIdentifier>();
         _health = GetComponent<Health>();
         _spriteRenderer =  GetComponent<SpriteRenderer>();
-        
-        if (string.IsNullOrEmpty(ChestID)) 
-            GlobalHelper.GenerateUniqueID(gameObject);
     }
 
     private void OnEnable()
     {
+
         if (_health != null)
             _health.OnDeath += OpenContainer;
     }
@@ -44,14 +46,16 @@ public class ItemContainer : MonoBehaviour, IInteractable
             _health.OnDeath -= OpenContainer;
     }
 
+    //----IInteractable Methods-----
     public bool CanInteract() => !IsOpened;
-    
-    public void Interact()
+
+    public void Interact(PlayerController playerController = null)
     {
         if (CanInteract())
             OpenContainer();
     }
-
+    
+    //----Container Methods-----
     public void OpenContainer()
     {
         if (IsOpened) return;
@@ -107,4 +111,30 @@ public class ItemContainer : MonoBehaviour, IInteractable
         // 4. Return the final position
         // Offset Y slightly to look better in 2D top-down perspective
         return transform.position + new Vector3(direction.x * distance, (direction.y * distance) - 0.5f, 0);    }
+    
+    //----Save Methods-----
+    public void PopulateSaveData(SaveData saveData)
+    {
+        if (IsOpened)
+        {
+            // Check if the openedChests save data already contains this chest id
+            if (!saveData.openedChests.Contains(GetID()))
+            {
+                saveData.openedChests.Add(GetID());
+            }
+        }
+    }
+
+    public void LoadFromSaveData(SaveData saveData)
+    {
+        if (saveData.openedChests.Contains(GetID()))
+        {
+            IsOpened = true;
+            UpdateVisuals();
+        }
+        else
+        {
+            IsOpened = false;
+        }
+    }
 }

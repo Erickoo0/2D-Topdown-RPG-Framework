@@ -32,16 +32,16 @@ public class LevelUI : MonoBehaviour
             return;
         }
         
-        lvlTarget.OnLevelUpdated += (lvl) => UpdateLvlUI();
-        lvlTarget.OnExperienceGained += (curr , total) => UpdateLvlUI();
+        lvlTarget.OnLevelUpdated += UpdateLvlUI;
+        lvlTarget.OnExperienceGained += UpdateLvlUI;
         UpdateLvlUI();
     }
 
     private void OnDestroy()
     {
         if (lvlTarget == null) return;
-        lvlTarget.OnLevelUpdated -= (lvl) => UpdateLvlUI();
-        lvlTarget.OnExperienceGained -= (curr, total) => UpdateLvlUI();
+        lvlTarget.OnLevelUpdated -= UpdateLvlUI;
+        lvlTarget.OnExperienceGained -= UpdateLvlUI;
     }
     
     

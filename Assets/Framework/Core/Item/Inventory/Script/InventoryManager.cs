@@ -142,11 +142,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
         OnActiveSlotIndexChanged?.Invoke(index);
     }
     
-    //---- Load & Save Data Logic
-    private void OnEnable() => SaveManager.Instance.RegisterSaveable(this);
-    
-    private void OnDisable() => SaveManager.Instance.UnregisterSaveable(this);
-    
+    //---- Load & Save Data Logic----
     public void PopulateSaveData(SaveData saveData)
     {
         // Create a list of SavedSlots

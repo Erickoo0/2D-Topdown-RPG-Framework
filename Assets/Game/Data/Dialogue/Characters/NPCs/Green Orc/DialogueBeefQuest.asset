@@ -19,9 +19,9 @@ MonoBehaviour:
   - optionName: Yea sure
     nextNode: {fileID: 0}
     dialogueEvent: AcceptQuest
-    eventData: {fileID: 11400000, guid: 2f14e6d385abc374f9d7234f9bff7811, type: 2}
+    eventParameter: Item_Green_Orc_001_Beef
   - optionName: nah im okay
     nextNode: {fileID: 11400000, guid: c69aaf5fc6dce764e96d983415b0021b, type: 2}
     dialogueEvent: nah im okay
-    eventData: {fileID: 0}
+    eventParameter: 
   nodeEvent: 

@@ -4,27 +4,39 @@ using UnityEngine.UI;
 
 public class ManaUI : MonoBehaviour
 {
-    [Header("References")] 
-    [SerializeField] private Mana manaUI;
-    [SerializeField] private Image mpBarFill;
-    [SerializeField] TextMeshProUGUI mpText;
+    [Header("UI")]
+    [Tooltip("If blank, default to parent object")]
+    [SerializeField] private Mana mpComponent;
+    [SerializeField] private ProgressBar progressBarRef;
+    [SerializeField] private bool showText;
 
 
-    private void Start()
+    private void Awake()
     {
-        manaUI.OnMpUpdated += UpdateManaUI;
-        UpdateManaUI(manaUI.MpCurrent);
+        if (mpComponent == null) mpComponent = GetComponentInParent<Mana>();
     }
-
-    private void OnDestroy()
+    
+    private void OnEnable()
     {
-        manaUI.OnMpUpdated -= UpdateManaUI;
+        if (mpComponent == null)
+        {
+            Debug.LogWarning("Health target is null");
+            return;
+        }
+        
+        mpComponent.OnMpUpdated += UpdateMpUI;
+        UpdateMpUI();
     }
+    
+    private void OnDisable() => mpComponent.OnMpUpdated -= UpdateMpUI;
+    
 
-    private void UpdateManaUI(float mpCurrent)
+    private void UpdateMpUI()
     {
-        float mpPercent = mpCurrent / manaUI.mpMax;
-        mpBarFill.fillAmount = mpPercent;
-        mpText.text = ($"Mp: {mpCurrent}/{manaUI.mpMax}");
+        // Safety Check 
+        if (mpComponent is null || progressBarRef is null) return;
+
+        string label = showText ? $"MP: {mpComponent.MpCurrent}/{mpComponent.mpMax}" : "";
+        progressBarRef.SetValues(mpComponent.MpCurrent, mpComponent.mpMax, label);
     }
 }

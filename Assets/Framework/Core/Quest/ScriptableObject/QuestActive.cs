@@ -16,6 +16,25 @@ public class QuestActive
         IsCompleted = false;
     }
     
+    // Constructor that loads a quest
+    public QuestActive(QuestSo questData, int[] objectiveProgress, bool isCompleted)
+    {
+        QuestData = questData;
+        ObjectiveProgress = new int[QuestData.QuestObjectives.Count];
+
+        if (objectiveProgress != null)
+        {
+            // Set the objective progress to the loaded progress, but not more than the required amount
+            int count = Mathf.Min(objectiveProgress.Length, ObjectiveProgress.Length);
+            for (int i = 0; i < count; i++)
+            {
+                ObjectiveProgress[i] = objectiveProgress[i];
+            }
+        }
+        
+        IsCompleted = isCompleted;
+    }
+    
     public void CheckQuestCompletion()
     {
         if (IsCompleted) return; // Skip if the quest is already completed

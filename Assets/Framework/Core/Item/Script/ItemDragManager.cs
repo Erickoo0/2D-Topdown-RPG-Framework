@@ -68,6 +68,8 @@ public class ItemDragManager : MonoBehaviour
             // Hide item from source slot to "pick it up"
             ToggleGhost(true);
         }
+        
+        ghostIcon.transform.SetAsLastSibling();
     }
 
     private void WhileDragging()

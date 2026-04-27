@@ -63,7 +63,8 @@ public class PlayerInteractionDetecter : MonoBehaviour
         // 1. Check and Trigger Interaction
         if (_interactableTarget != null && _interactableTarget.CanInteract())
         {
-            _interactableTarget.Interact();
+            PlayerController playerController = GetComponent<PlayerController>();
+            _interactableTarget.Interact(playerController);
         }
         
         // 2. Item Use

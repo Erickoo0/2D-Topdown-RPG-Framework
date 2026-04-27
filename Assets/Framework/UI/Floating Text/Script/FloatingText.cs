@@ -7,13 +7,13 @@ public class FloatingText : MonoBehaviour
 {
     [SerializeField] private TMP_Text textMesh; // Reference to the Text game object
     [SerializeField] private float lifetime = 3f;
-    private Action<FloatingText> returnToPool; // Stores the "ReturnToPool" method from the FloatingManager
+    private Action<FloatingText> _returnToPool; // Stores the "ReturnToPool" method from the FloatingManager
     private string text; // The text to display
     
     // The Manager calls this when grabbing the text from the queue
     public void Initialize(int amount, Vector3 spawnPosition, Action<FloatingText> returnAction)
     {
-        returnToPool = returnAction; // Save the return method from FloatingManager for use later
+        _returnToPool = returnAction; // Save the return method from FloatingManager for use later
         
         //Check if amount is positive or negative
         if (amount >= 0)
@@ -46,7 +46,7 @@ public class FloatingText : MonoBehaviour
         textMesh.DOFade(0f, lifetime).OnComplete(() =>
         {
             // Send a signal for FloatingManager to return this object back to the pool
-            returnToPool?.Invoke(this);
+            _returnToPool?.Invoke(this);
         });
     }
 }

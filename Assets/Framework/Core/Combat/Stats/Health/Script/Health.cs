@@ -4,11 +4,15 @@ using System;
 public class Health : MonoBehaviour
 {
     [Header("HP Settings")]
-    public float hpMax = 100f;
-    [SerializeField] private float hpCurrent;
+    [SerializeField] private float hpBase = 100f;
+    public float hpMax;
+    private float _hpCurrent;
+    [SerializeField] private float hpPerLvl = 10f;
 
-    [Header("Entity References")] [Tooltip("The actual object the health component belongs to")] 
+    [Header("References")] 
+    [Tooltip("The actual object the health component belongs to")] 
     [SerializeField] private GameObject entityRoot;
+    private Level _lvlComponent;
 
     [Header("Behavior Settings")] 
     [SerializeField] private bool destroyOnDeath = true;
@@ -22,32 +26,32 @@ public class Health : MonoBehaviour
     private float _hpHealedMax;
     private float _hpHealedPerTick;
     
-    public event Action<float> OnHpUpdated;
+    public event Action OnHpUpdated;
     public event Action OnDeath;
     
     // Health Property
     public float HpCurrent
     {
-        get => hpCurrent;
+        get => _hpCurrent;
         set
         {
-            float hpPrevious = hpCurrent;
+            float hpPrevious = _hpCurrent;
 
             // Clamp health so it never goes below 0 or above max.
-            hpCurrent = Mathf.Clamp(value, 0, hpMax);
+            _hpCurrent = Mathf.Clamp(value, 0, hpMax);
 
             // Only notify listeners if health actually changed.
-            if (!Mathf.Approximately(hpCurrent, hpPrevious))
+            if (!Mathf.Approximately(_hpCurrent, hpPrevious))
             {
-                float difference = hpCurrent - hpPrevious;
+                float difference = _hpCurrent - hpPrevious;
                 int differenceRounded = Mathf.RoundToInt(difference);
                 EventBus.RequestFloatingText(differenceRounded, transform.position);
                 
-                OnHpUpdated?.Invoke(hpCurrent);
+                OnHpUpdated?.Invoke();
             }
 
             // If health hit zero
-            if (hpCurrent <= 0 && !_isDead) SetDead();
+            if (_hpCurrent <= 0 && !_isDead) SetDead();
         }
     }
     
@@ -56,8 +60,17 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         if (entityRoot == null) entityRoot = gameObject;
-        if (hpCurrent <= 0) hpCurrent = hpMax;
+        
+        _lvlComponent = GetComponentInParent<Level>();
+        if (_lvlComponent != null)
+        {
+            UpdateHpOnLevelUp();
+        }
     }
+
+    private void OnEnable() => _lvlComponent.OnLevelUpdated += UpdateHpOnLevelUp;
+    
+    private void OnDisable() => _lvlComponent.OnLevelUpdated -= UpdateHpOnLevelUp;
     
     private void Update()
     {
@@ -102,5 +115,12 @@ public class Health : MonoBehaviour
         OnDeath?.Invoke(); // Event for LOCAL systems like ItemContainers
         EventBus.RequestEntityDeathUpdate(entityRoot); // Alert the EventBus of entity death
         if (destroyOnDeath) Destroy(entityRoot);
+    }
+    
+    private void UpdateHpOnLevelUp()
+    {
+        hpMax = hpBase + (_lvlComponent.LvlCurrent - 1) * hpPerLvl;
+        _hpCurrent = hpMax;
+        OnHpUpdated?.Invoke();
     }
 }

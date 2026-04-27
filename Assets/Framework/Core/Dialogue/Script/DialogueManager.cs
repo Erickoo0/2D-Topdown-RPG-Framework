@@ -1,7 +1,6 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class DialogueManager : MonoBehaviour
     // References
     private DialogueUI _dialogueUI;
     private DialogueOptionController _dialogueOptionController;
+    private PlayerController _playerController;
     
     private Npc _currentSpeaker;
     private DialogueNode _currentNode;
@@ -32,6 +32,16 @@ public class DialogueManager : MonoBehaviour
         _dialogueOptionController = GetComponent<DialogueOptionController>();
    }
     
+    private void Update()
+    {
+        // FOCUS GUARD: If options are shown, ensure the keyboard never "loses" the selection
+        if (_isWaitingChoice && EventSystem.current.currentSelectedGameObject == null)
+        {
+            GameObject first = _dialogueOptionController.GetFirstButton();
+            if (first != null) EventSystem.current.SetSelectedGameObject(first);
+        }
+    }
+    
     private void HandleInput()
     {
         // 1. If still typing, finish instantly
@@ -51,8 +61,12 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void StartDialogue(Npc speaker)
+    public void StartDialogue(Npc speaker, PlayerController playerController)
     {
+        // Stop player from moving
+        _playerController = playerController;
+        _playerController.SetCanMove(false);
+        
         // Guard Clause
         if (_dialogueUI.IsVisible) return;
         
@@ -126,11 +140,20 @@ public class DialogueManager : MonoBehaviour
         if (isLastLine && hasOptions)
         {
             _isWaitingChoice = true;
-            _dialogueOptionController.CreateButtons(_currentNode.dialogueOptions, OnOptionSelected);        }
+            _dialogueOptionController.CreateButtons(_currentNode.dialogueOptions, OnOptionSelected); 
+            
+            // Find the first button
+            GameObject firstButton = _dialogueOptionController.GetFirstButton();
+            if (firstButton != null)
+            {
+                // Set it as selected / focus using Unity EventSystem
+                EventSystem.current.SetSelectedGameObject(firstButton);
+            }
+        }
     }
 
     // Callback Function passed to the Buttons (activates on button click)
-    public void OnOptionSelected(DialogueOption selectedOption)
+    private void OnOptionSelected(DialogueOption selectedOption)
     {
         // Tell the Option Controller to delete the options
         _isWaitingChoice = false;
@@ -139,7 +162,7 @@ public class DialogueManager : MonoBehaviour
         // 1. Execut the options event if it has one
         if (!string.IsNullOrEmpty(selectedOption.dialogueEvent))
         {
-            HandleDialogueEvents(selectedOption.dialogueEvent, selectedOption.eventData);
+            HandleDialogueEvents(selectedOption.dialogueEvent, selectedOption.eventParameter);
         }
         // 2. Advance to the next node if it has one
         if (selectedOption.nextNode != null) 
@@ -154,7 +177,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void HandleDialogueEvents(string eventName, Object eventData = null)
+    private void HandleDialogueEvents(string eventName, string eventParameter = null)
     {
         if (string.IsNullOrEmpty(eventName)) return;
 
@@ -165,7 +188,7 @@ public class DialogueManager : MonoBehaviour
                 break;
             
             case "AcceptQuest":
-                EventBus.RequestDialogueEvent(eventName, eventData);
+                EventBus.RequestDialogueEvent(eventName, eventParameter);
                 break;
         }
     }
@@ -176,5 +199,6 @@ public class DialogueManager : MonoBehaviour
         _currentNode = null;
         
         EventBus.RequestCloseMenu(_dialogueUI.DialoguePanel);      
+        _playerController.SetCanMove(true);
     }
 }

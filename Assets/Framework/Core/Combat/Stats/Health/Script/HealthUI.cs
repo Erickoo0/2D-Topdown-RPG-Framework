@@ -10,7 +10,7 @@ public class HealthUI : MonoBehaviour
     
     [Header("UI")]
     [Tooltip("If blank, default to parent object")]
-    [SerializeField] private Health hpTarget;
+    [SerializeField] private Health hpComponent;
     [SerializeField] private ProgressBar progressBarRef;
     [SerializeField] private bool showText;
 
@@ -18,29 +18,24 @@ public class HealthUI : MonoBehaviour
     private void Awake()
     {
         // If no health target (assigned ui), assume it's the parent object.
-        if (hpTarget == null) hpTarget = GetComponentInParent<Health>();
+        if (hpComponent == null) hpComponent = GetComponentInParent<Health>();
         if (progressBarRef == null && healthBarPrefab != null) SpawnHealthBar();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        if (hpTarget == null)
+        if (hpComponent == null)
         {
             Debug.LogWarning("Health target is null");
             return;
         }
         
-        hpTarget.OnHpUpdated += UpdateHpUI;
-        UpdateHpUI(hpTarget.HpCurrent);
+        hpComponent.OnHpUpdated += UpdateHpUI;
+        UpdateHpUI();
     }
-
-    private void OnDestroy()
-    {
-        if (hpTarget == null) return;
-        
-        hpTarget.OnHpUpdated -= UpdateHpUI;
-    }
-
+    
+    private void OnDisable() => hpComponent.OnHpUpdated -= UpdateHpUI;
+    
     private void SpawnHealthBar()
     {
         // Create the health bar as a child of this gameobject
@@ -52,12 +47,12 @@ public class HealthUI : MonoBehaviour
         if (progressBarRef == null) Debug.LogWarning("Health bar instance is null");
     }
     
-    private void UpdateHpUI(float hpCurrent)
+    private void UpdateHpUI()
     {
         // Safety Check
-        if (hpTarget is null || progressBarRef is null) return;
+        if (hpComponent is null || progressBarRef is null) return;
         
-        string label = showText ? $"HP: {hpCurrent}/{hpTarget.hpMax}" : "";
-        progressBarRef.SetValues(hpCurrent, hpTarget.hpMax, label);
+        string label = showText ? $"HP: {hpComponent.HpCurrent}/{hpComponent.hpMax}" : "";
+        progressBarRef.SetValues(hpComponent.HpCurrent, hpComponent.hpMax, label);
     }
 }

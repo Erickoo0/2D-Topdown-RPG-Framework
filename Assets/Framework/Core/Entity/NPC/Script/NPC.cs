@@ -22,9 +22,9 @@ public class Npc : MonoBehaviour, IInteractable
         return true;
     }
     
-    public void Interact()
+    public void Interact(PlayerController playerController)
     {
         if (!CanInteract()) return;
-        DialogueManager.Instance.StartDialogue(this);
+        DialogueManager.Instance.StartDialogue(this, playerController);
     }
 }

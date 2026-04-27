@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286c654a86bfddf49a552de14dc3c579, type: 3}
   m_Name: QuestBeefFarm
   m_EditorClassIdentifier: Assembly-CSharp::QuestSo
-  questID: 1
+  questID: Item_Green_Orc_001_Beef
   questName: Hungry Man
   questDescription: Feed orc some beef
   questObjectives:

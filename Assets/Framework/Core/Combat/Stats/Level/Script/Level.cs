@@ -20,14 +20,24 @@ public class Level : MonoBehaviour
     [SerializeField] private AnimationCurve customExpCurve;
     
     // Events
-    public event Action<int> OnLevelUpdated;
-    public event Action<int, int> OnExperienceGained; // Current EXP, EXP Needed for Next Level
+    public event Action OnLevelUpdated;
+    public event Action OnExperienceGained; // Current EXP, EXP Needed for Next Level
     public event Action OnMaxLevelReached;
     
     // Properties
-    public int LvlCurrent => lvlCurrent;
+    public int LvlCurrent
+    {
+        get => lvlCurrent;
+        set => lvlCurrent = value;
+    }
+
     public int LvlMax => lvlMax;
-    public int ExpCurrent => expCurrent;
+    public int ExpCurrent
+    {
+        get => expCurrent;
+        set => expCurrent = value;
+    }
+
     public int ExpToNextLvl => CalculateRequiredExp(lvlCurrent);
     public int ExpYield => baseExpOnDeath * LvlCurrent;
     
@@ -49,7 +59,7 @@ public class Level : MonoBehaviour
         {
             expCurrent -= ExpToNextLvl;
             lvlCurrent += 1;
-            OnLevelUpdated?.Invoke(lvlCurrent);
+            OnLevelUpdated?.Invoke();
 
             if (lvlCurrent >= lvlMax)
             {
@@ -59,7 +69,7 @@ public class Level : MonoBehaviour
             }
         }
         
-        OnExperienceGained?.Invoke(expCurrent, ExpToNextLvl);
+        OnExperienceGained?.Invoke();
     }
     
     public int CalculateRequiredExp(int level)
